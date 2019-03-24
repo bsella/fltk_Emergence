@@ -9,13 +9,18 @@ class Workspace : public Fl_Double_Window{
 public:
 	Workspace(int x, int y, int w, int h);
 	~Workspace();
-	void add_node(BaseNodeItem*);
-	void remove_node(BaseNodeItem*);
+	void add_node(NodeItem*);
+	void remove_node(NodeItem*);
 private:
-	std::list<BaseNodeItem*> nodes;
+	std::list<NodeItem*> nodes;
+	std::list<NodeItem*> selected;
 	void draw()override;
 	int handle(int)override;
 	float zoom;
+	static int rb_from_x, rb_from_y, rb_to_x, rb_to_y;
+	void update_rubberband(int, int);
+	void reset_rubberband();
+	NodeItem* top_node(int,int,int*)const;
 };
 
 #endif // WORKSPACE_H

@@ -1,9 +1,9 @@
 #include <vector>
 #include "core/node.h"
-class BaseNodeItem : public BaseNode{
+class NodeItem : public Node{
 public:
-	BaseNodeItem(int x, int y, int w, int h, int n);
-	virtual ~BaseNodeItem();
+	NodeItem(int x, int y, int w, int h, int n);
+	virtual ~NodeItem();
 	inline int x(){return _x;}
 	inline int y(){return _y;}
 	inline int w(){return _w;}
@@ -11,10 +11,12 @@ public:
 private:
 	int _x,_y, _w,_h;
 	const int width, height;
-	static BaseNodeItem* hover;
+	static NodeItem* hover;
+	static int socket_hover, socket_x, socket_y;
 	void draw()const;
 	virtual void draw_body()const;
-	bool inside(int,int)const;
+	int inside(int,int)const;
+	bool inside(int,int,int,int)const;
 	void set_pos(int,int);
 	void move(int,int);
 	void scale(float);

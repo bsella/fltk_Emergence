@@ -26,7 +26,7 @@ void MainWindow::resize(int X, int Y, int W, int H){
 }
 void MainWindow::init_gui(){
 	node_box = new NodeBox(0,menu_bar_height, w()/5, h()-menu_bar_height);
-    node_box->addTool("clr1", "Color1", "../color.png");
+    node_box->addTool("clr1", "Color1", "./../color.png");
     node_box->addTool("clr2", "Color2", "../color.png");
     node_box->addTool("clr3", "Color3", "../color.png");
 

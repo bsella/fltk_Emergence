@@ -1,8 +1,8 @@
 #include <vector>
-class BaseNode{
+class Node{
 public:
-	BaseNode(int);
-	~BaseNode();
+	Node(int);
+	~Node();
 protected:
-    std::vector<BaseNode*> inodes;
+    std::vector<Node*> inodes;
 };
