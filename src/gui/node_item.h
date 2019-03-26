@@ -1,24 +1,25 @@
+#pragma once
 #include <vector>
 #include "core/node.h"
-class NodeItem : public Node{
+#include "gui/item.h"
+class NodeItem : public Node, public Item{
 public:
 	NodeItem(int x, int y, int w, int h, int n);
 	virtual ~NodeItem();
-	inline int x(){return _x;}
-	inline int y(){return _y;}
-	inline int w(){return _w;}
-	inline int h(){return _h;}
-private:
-	int _x,_y, _w,_h;
-	const int width, height;
-	static NodeItem* hover;
-	static int socket_hover, socket_x, socket_y;
+
 	void draw()const;
+protected:
+	virtual bool inside(int,int)const;
+
+private:
+	static int socket_hover, socket_x, socket_y;
 	virtual void draw_body()const;
-	int inside(int,int)const;
-	bool inside(int,int,int,int)const;
-	void set_pos(int,int);
-	void move(int,int);
-	void scale(float);
+
+	void mouse_enter_event()override;
+	void mouse_leave_event()override;
+	bool mouse_press_event(int,int)override;
+	void mouse_move_event(int,int)override;
+	void mouse_release_event()override;
+
 	friend class Workspace;
 };

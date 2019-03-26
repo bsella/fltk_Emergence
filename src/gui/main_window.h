@@ -1,5 +1,4 @@
-#ifndef MAIN_WINDOW_H
-#define MAIN_WINDOW_H
+#pragma once
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Menu_Bar.H>
 #include "node_box.h"
@@ -18,4 +17,3 @@ private:
 	void init_gui();
 	static void quit(Fl_Widget*,void*);
 };
-#endif//MAIN_WINDOW_H

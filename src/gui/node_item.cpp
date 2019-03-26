@@ -2,7 +2,7 @@
 #include <FL/fl_draw.H>
 static const int socket_size=5;
 static const int head_size=5;
-NodeItem::NodeItem(int x, int y, int w, int h, int n):Node(n),_x(x),_y(y),width(w),height(h){
+NodeItem::NodeItem(int x, int y, int w, int h, int n):Node(n),Item(x,y,w,h){
 }
 NodeItem::~NodeItem(){}
 void NodeItem::draw_body()const{
@@ -29,7 +29,7 @@ void NodeItem::draw_body()const{
 }
 void NodeItem::draw()const{
 	if(_x+_w<0 || _y+_h<0) return;
-	if(hover==this && socket_hover==-1)
+	if(is_selected() || is_hover() && socket_hover==-1)
 		fl_line_style(0,2);
 	else
 		fl_line_style(0);
@@ -38,7 +38,7 @@ void NodeItem::draw()const{
 		const int Y= _y+i/(1+inodes.size())*_h;
 		fl_line(_x-socket_size, Y, _x, Y);
 		if(!inodes[i-1]){
-			if(hover==this && socket_hover==i)
+			if(is_hover() && socket_hover==i)
 				fl_line_style(0,2);
 			else
 				fl_line_style(0);
@@ -49,35 +49,35 @@ void NodeItem::draw()const{
 	fl_line(_x+_w, _y+_h/2, _x+_w+socket_size, _y+_h/2);
 	fl_line_style(0);
 }
-NodeItem* NodeItem::hover = nullptr;
+bool NodeItem::inside(int x, int y)const{
+	if(Item::inside(x,y)){
+		socket_hover=-1;
+		return true;
+	}
+	if(x<_x && x<=_x-socket_size && x>=_x-socket_size-head_size*2)
+		if((y-_y+head_size)%(_h/(inodes.size()+1)) < head_size*2){
+			socket_hover= (y-_y)/(_h/inodes.size())+1;
+			return true;
+		}
+	return false;
+}
 int NodeItem::socket_hover = 0;
 int NodeItem::socket_x;
 int NodeItem::socket_y = -1;
-int NodeItem::inside(int x, int y)const{
-	if(y<_y || y>_y+_h || x>_x+_w || x<=_x-socket_size-head_size*2)
-		return 0;
-	if(x>=_x)
-		return -1;
-	if(x>_x-socket_size || y-_y< head_size)
-		return 0;
-	if((y-_y+head_size)%(_h/(inodes.size()+1)) < head_size*2)
-		return (y-_y)/(_h/inodes.size()) + 1;
-	return 0;
+void NodeItem::mouse_enter_event(){
+	Item::mouse_enter_event();
 }
-bool NodeItem::inside(int x1, int y1, int x2, int y2)const{
-	if(x1>x2)std::swap(x1,x2);
-	if(y1>y2)std::swap(y1,y2);
-	return _x>x1 && _x<x2 && _x+_w>x1 && _x+_w<x2 && _y>y1 && _y<y2 && _y+_h>y1 && _y+_h<y2;
+void NodeItem::mouse_leave_event(){
+	Item::mouse_leave_event();
+//	socket_hover=0;
 }
-void NodeItem::set_pos(int x, int y){
-	_x=x-_w/2;
-	_y=y-_h/2;
+static int press_x, press_y;
+bool NodeItem::mouse_press_event(int x, int y){
+	press_x=x;
+	press_y=y;
+	return socket_hover==-1;
 }
-void NodeItem::move(int x,int y){
-	_x+=x;
-	_y+=y;
+void NodeItem::mouse_move_event(int,int){
 }
-void NodeItem::scale(float s){
-	_w=width*s;
-	_h=height*s;
+void NodeItem::mouse_release_event(){
 }

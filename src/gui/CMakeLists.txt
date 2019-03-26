@@ -19,7 +19,9 @@ add_library(gui
 	${HEADERS}
 	main_window.cpp
 	node_box.cpp
+	graphics_view.cpp
 	workspace.cpp
+	item.cpp
 	node_item.cpp
 )
 
