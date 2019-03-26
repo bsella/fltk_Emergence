@@ -1,12 +1,14 @@
 #include "node_item.h"
-#include <FL/fl_draw.H>
 static const int socket_size=5;
 static const int head_size=5;
+Fl_Color NodeItem::color()const{
+	return FL_GRAY;
+}
 NodeItem::NodeItem(int x, int y, int w, int h, int n):Node(n),Item(x,y,w,h){
 }
 NodeItem::~NodeItem(){}
 void NodeItem::draw_body()const{
-	fl_color(FL_RED);
+	fl_color(color());
 	const int W= _w/5,                   X1= _x+W, X3= _x+_w-2*W, X4= X3+W;
 	const int H= _h/(inodes.size()+1)/2, Y1= _y+H, Y3= _y+_h-2*H, Y4= Y3+H; 
 	fl_pie(_x, _y, 2*W, 2*H, 90,180);
@@ -29,7 +31,7 @@ void NodeItem::draw_body()const{
 }
 void NodeItem::draw()const{
 	if(_x+_w<0 || _y+_h<0) return;
-	if(is_selected() || is_hover() && socket_hover==-1)
+	if(is_selected() || (is_hover() && socket_hover==-1))
 		fl_line_style(0,2);
 	else
 		fl_line_style(0);
@@ -54,11 +56,17 @@ bool NodeItem::inside(int x, int y)const{
 		socket_hover=-1;
 		return true;
 	}
-	if(x<_x && x<=_x-socket_size && x>=_x-socket_size-head_size*2)
-		if((y-_y+head_size)%(_h/(inodes.size()+1)) < head_size*2){
-			socket_hover= (y-_y)/(_h/inodes.size())+1;
-			return true;
+	if(x<_x && x<=_x-socket_size && x>=_x-socket_size-head_size*2){
+		const int Y= y-_y+head_size, H=_h/(inodes.size()+1);
+		if(Y%H < head_size*2){
+			socket_hover= Y/H;
+			if(socket_hover>0 && socket_hover<=(int)inodes.size())
+				return true;
+			socket_hover=0;
+			return false;
 		}
+	}
+	socket_hover=0;
 	return false;
 }
 int NodeItem::socket_hover = 0;
@@ -72,10 +80,9 @@ void NodeItem::mouse_leave_event(){
 //	socket_hover=0;
 }
 static int press_x, press_y;
-bool NodeItem::mouse_press_event(int x, int y){
+void NodeItem::mouse_press_event(int x, int y){
 	press_x=x;
 	press_y=y;
-	return socket_hover==-1;
 }
 void NodeItem::mouse_move_event(int,int){
 }

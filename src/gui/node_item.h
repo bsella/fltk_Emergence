@@ -2,6 +2,7 @@
 #include <vector>
 #include "core/node.h"
 #include "gui/item.h"
+#include <FL/fl_draw.H>
 class NodeItem : public Node, public Item{
 public:
 	NodeItem(int x, int y, int w, int h, int n);
@@ -13,11 +14,12 @@ protected:
 
 private:
 	static int socket_hover, socket_x, socket_y;
+	virtual Fl_Color color()const;
 	virtual void draw_body()const;
 
 	void mouse_enter_event()override;
 	void mouse_leave_event()override;
-	bool mouse_press_event(int,int)override;
+	void mouse_press_event(int,int)override;
 	void mouse_move_event(int,int)override;
 	void mouse_release_event()override;
 

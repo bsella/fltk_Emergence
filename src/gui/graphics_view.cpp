@@ -67,7 +67,6 @@ int Graphics_View::handle(int e){
 	static bool skip_scroll=false; // The MOUSEWHEEL event is handled two times for some reason..
 	static const float ratio= (scale_factor-1)/scale_factor;
 	static int tmp_x, tmp_y;
-	static bool drag=false;
 	switch(e){
 	case FL_MOVE:
 		for(const auto i: items)
@@ -95,18 +94,15 @@ int Graphics_View::handle(int e){
 		tmp_x= Fl::event_x();
 		tmp_y= Fl::event_y();
 		if(hover){
-			drag=hover->mouse_press_event(tmp_x,tmp_y);
-			if(drag){
-				fl_cursor(FL_CURSOR_MOVE);
-				items.remove(hover);
-				items.push_front(hover);
-				if(!hover->is_selected()){
-					while(selected.size()){
-						(*selected.begin())->reset_selected();
-						selected.erase(selected.begin());
-					}
-					selected.push_front(hover);
+			fl_cursor(FL_CURSOR_MOVE);
+			items.remove(hover);
+			items.push_front(hover);
+			if(!hover->is_selected()){
+				while(selected.size()){
+					(*selected.begin())->reset_selected();
+					selected.erase(selected.begin());
 				}
+				selected.push_front(hover);
 			}
 		}
 		else{
@@ -118,11 +114,10 @@ int Graphics_View::handle(int e){
 		}
 		return 1;
 	case FL_RELEASE:
-		if(drag){
+		if(hover){
 			fl_cursor(FL_CURSOR_DEFAULT);
 			hover->mouse_release_event();
 			redraw();
-			drag=false;
 			return 1;
 		}
 		reset_rubberband();
@@ -133,7 +128,7 @@ int Graphics_View::handle(int e){
 			for(auto i: items)
 				i->move(Fl::event_x()-tmp_x, Fl::event_y()-tmp_y);
 		else
-			if(drag)
+			if(hover)
 				for(auto i: selected)
 					i->move(Fl::event_x()-tmp_x, Fl::event_y()-tmp_y);
 			else

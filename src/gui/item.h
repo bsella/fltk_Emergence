@@ -26,7 +26,7 @@ protected:
 	virtual void mouse_enter_event();
 	virtual void mouse_leave_event();
 	virtual void mouse_move_event(int,int);
-	virtual bool mouse_press_event(int,int);
+	virtual void mouse_press_event(int,int);
 	virtual void mouse_release_event();
 	virtual void mouse_drag_event();
 

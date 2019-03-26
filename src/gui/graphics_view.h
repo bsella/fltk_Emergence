@@ -9,12 +9,14 @@ public:
 	~Graphics_View();
 	void add_item(Item*);
 	void remove_item(Item*);
-//private:
+protected:
 	static Item* hover;
+	virtual int handle(int)override;
+
+private:
 	std::list<Item*> items;
 	std::list<Item*> selected;
 	void draw()override;
-	int handle(int)override;
 	float zoom;
 	void update_rubberband(int, int);
 	void reset_rubberband();
