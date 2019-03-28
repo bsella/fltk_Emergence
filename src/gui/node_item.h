@@ -14,6 +14,7 @@ protected:
 
 private:
 	static int socket_hover, socket_x, socket_y;
+	static bool socket_drag;
 	virtual Fl_Color color()const;
 	virtual void draw_body()const;
 

@@ -36,16 +36,21 @@ void NodeItem::draw()const{
 	else
 		fl_line_style(0);
 	draw_body();
+	fl_line_style(0);
 	for(float i=1; i<inodes.size()+1; i++){
 		const int Y= _y+i/(1+inodes.size())*_h;
 		fl_line(_x-socket_size, Y, _x, Y);
 		if(!inodes[i-1]){
-			if(is_hover() && socket_hover==i)
+			if(is_hover() && socket_hover==i){
 				fl_line_style(0,2);
-			else
+				if(socket_drag){
+					fl_circle(socket_x,socket_y, head_size);
+					fl_line_style(0);
+					fl_line(socket_x+head_size,socket_y, _x-socket_size,Y);
+				}else
+					fl_circle(_x-socket_size-head_size,Y, head_size);
 				fl_line_style(0);
-			fl_circle(_x-socket_size-head_size,Y, head_size);
-			fl_line_style(0);
+			}else fl_circle(_x-socket_size-head_size,Y, head_size);
 		}
 	}
 	fl_line(_x+_w, _y+_h/2, _x+_w+socket_size, _y+_h/2);
@@ -71,7 +76,8 @@ bool NodeItem::inside(int x, int y)const{
 }
 int NodeItem::socket_hover = 0;
 int NodeItem::socket_x;
-int NodeItem::socket_y = -1;
+int NodeItem::socket_y;
+bool NodeItem::socket_drag = false;
 void NodeItem::mouse_enter_event(){
 	Item::mouse_enter_event();
 }
