@@ -23,7 +23,7 @@ void Item::scale(float s){
 	_w=width*s;
 	_h=height*s;
 }
-void Item::mouse_enter_event(){
+void Item::mouse_enter_event(int,int){
 	set_hover();
 }
 void Item::mouse_leave_event(){

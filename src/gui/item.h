@@ -23,7 +23,7 @@ protected:
 	inline void reset_selected()     {flags&=253;}
 	inline bool is_selected()   const{return flags&2;}
 
-	virtual void mouse_enter_event();
+	virtual void mouse_enter_event(int,int);
 	virtual void mouse_leave_event();
 	virtual void mouse_move_event(int,int);
 	virtual void mouse_press_event(int,int);

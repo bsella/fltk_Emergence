@@ -1,6 +1,6 @@
 #include "node_item.h"
-static const int socket_size=5;
-static const int head_size=5;
+const int NodeItem::socket_size=5;
+const int NodeItem::head_size=5;
 Fl_Color NodeItem::color()const{
 	return FL_GRAY;
 }
@@ -50,40 +50,41 @@ void NodeItem::draw()const{
 				}else
 					fl_circle(_x-socket_size-head_size,Y, head_size);
 				fl_line_style(0);
-			}else fl_circle(_x-socket_size-head_size,Y, head_size);
+			}else
+				fl_circle(_x-socket_size-head_size,Y, head_size);
 		}
 	}
 	fl_line(_x+_w, _y+_h/2, _x+_w+socket_size, _y+_h/2);
 	fl_line_style(0);
 }
 bool NodeItem::inside(int x, int y)const{
-	if(Item::inside(x,y)){
-		socket_hover=-1;
+	if(Item::inside(x,y))
 		return true;
-	}
 	if(x<_x && x<=_x-socket_size && x>=_x-socket_size-head_size*2){
 		const int Y= y-_y+head_size, H=_h/(inodes.size()+1);
 		if(Y%H < head_size*2){
-			socket_hover= Y/H;
-			if(socket_hover>0 && socket_hover<=(int)inodes.size())
+			const int tmp= Y/H;
+			if(tmp>0 && tmp<=(int)inodes.size())
 				return true;
-			socket_hover=0;
 			return false;
 		}
 	}
-	socket_hover=0;
 	return false;
 }
 int NodeItem::socket_hover = 0;
 int NodeItem::socket_x;
 int NodeItem::socket_y;
 bool NodeItem::socket_drag = false;
-void NodeItem::mouse_enter_event(){
-	Item::mouse_enter_event();
+void NodeItem::mouse_enter_event(int x, int y){
+	Item::mouse_enter_event(x,y);
+	if(x>=_x)
+		socket_hover=-1;
+	else
+		socket_hover=(y-_y+head_size)/(_h/(inodes.size()+1));
 }
 void NodeItem::mouse_leave_event(){
 	Item::mouse_leave_event();
-//	socket_hover=0;
+	socket_hover=0;
 }
 static int press_x, press_y;
 void NodeItem::mouse_press_event(int x, int y){

@@ -11,10 +11,10 @@ public:
 	void remove_item(Item*);
 protected:
 	static Item* hover;
+	std::list<Item*> items;
 	virtual int handle(int)override;
 
 private:
-	std::list<Item*> items;
 	std::list<Item*> selected;
 	void draw()override;
 	float zoom;

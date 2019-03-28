@@ -77,7 +77,7 @@ int Graphics_View::handle(int e){
 				}
 				else{
 					if(hover) hover->mouse_leave_event();
-					i->mouse_enter_event();
+					i->mouse_enter_event(Fl::event_x(), Fl::event_y());
 					hover=i;
 					redraw();
 					return 1;

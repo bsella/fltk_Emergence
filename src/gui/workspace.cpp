@@ -24,6 +24,13 @@ int Workspace::handle(int e){
 		return Graphics_View::handle(e);
 	case FL_DRAG:
 		if(NodeItem::socket_drag){
+			for(const auto n: items)
+				if(((NodeItem*)n)->Item::inside(Fl::event_x(), Fl::event_y())){
+					NodeItem::socket_x= n->x()+n->w()+NodeItem::socket_size*2;
+					NodeItem::socket_y= n->y()+n->h()/2;
+					redraw();
+					return 1;
+				}
 			NodeItem::socket_x=Fl::event_x();
 			NodeItem::socket_y=Fl::event_y();
 			redraw();
