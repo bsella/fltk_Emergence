@@ -5,10 +5,10 @@ class Item{
 public:
 	Item(int x, int y, int w, int h);
 	virtual ~Item();
-	inline int x(){return _x;}
-	inline int y(){return _y;}
-	inline int w(){return _w;}
-	inline int h(){return _h;}
+	inline int x()const{return _x;}
+	inline int y()const{return _y;}
+	inline int w()const{return _w;}
+	inline int h()const{return _h;}
 	void set_pos(int,int);
 
 protected:

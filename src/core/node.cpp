@@ -4,3 +4,11 @@ Node::Node(int n){
         inodes.push_back(nullptr);
 }
 Node::~Node(){}
+void Node::connect(int input, Node* to){
+	if(!inodes[input])
+		inodes[input]=to;
+}
+void Node::disconnect(int input){
+	if(inodes[input])
+		inodes[input]= nullptr;
+}

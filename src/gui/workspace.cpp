@@ -39,6 +39,13 @@ int Workspace::handle(int e){
 		return Graphics_View::handle(e);
 	case FL_RELEASE:
 		if(NodeItem::socket_drag){
+			for(const auto i: items){
+				NodeItem* n= (NodeItem*)i;
+				if(n->Item::inside(Fl::event_x(), Fl::event_y())){
+					((NodeItem*)hover)->connect(NodeItem::socket_hover-1, n);
+					break;
+				}
+			}
 			NodeItem::socket_drag=false;
 			redraw();
 			return 1;

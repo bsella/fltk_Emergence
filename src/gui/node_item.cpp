@@ -52,6 +52,9 @@ void NodeItem::draw()const{
 				fl_line_style(0);
 			}else
 				fl_circle(_x-socket_size-head_size,Y, head_size);
+		}else{
+			const NodeItem* n= (NodeItem*)inodes[i-1];
+			fl_line(_x-socket_size,Y, n->x()+n->w()+socket_size, n->y()+n->h()/2);
 		}
 	}
 	fl_line(_x+_w, _y+_h/2, _x+_w+socket_size, _y+_h/2);
