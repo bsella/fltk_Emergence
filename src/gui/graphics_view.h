@@ -1,7 +1,7 @@
 #pragma once
 #include <FL/Fl_Double_Window.H>
 #include <list>
-#include "item.h"
+class Item;
 
 class Graphics_View : public Fl_Double_Window{
 public:
@@ -13,6 +13,11 @@ protected:
 	static Item* hover;
 	std::list<Item*> items;
 	virtual int handle(int)override;
+	virtual void mouse_move_event(int,int);
+	virtual void mouse_click_event(int,int,int);
+	virtual void mouse_press_event(int,int,int);
+	virtual void mouse_drag_event(int,int,int);
+	virtual void mouse_release_event(int);
 
 private:
 	std::list<Item*> selected;

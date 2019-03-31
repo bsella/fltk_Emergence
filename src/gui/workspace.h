@@ -10,4 +10,7 @@ public:
 	void remove_node(Node_Item*);
 private:
 	int handle(int)override;
+	void mouse_press_event(int,int,int)override;
+	void mouse_release_event(int)override;
+	void mouse_drag_event(int,int,int)override;
 };
