@@ -5,29 +5,29 @@ struct item_data{
 	std::string id;
 	Fl_Image* icon;
 };
-NodeBox::NodeBox(int x, int y, int w, int h):Fl_Browser(x,y,w,h){}
-void NodeBox::addTool(const char* id, const char* text, const char* icon_path){
+Node_Box::Node_Box(int x, int y, int w, int h):Fl_Browser(x,y,w,h){}
+void Node_Box::addTool(const char* id, const char* text, const char* icon_path){
 	item_data *newItem = new item_data{std::string(id), new Fl_PNG_Image(icon_path)};
 	add(text, newItem);
 	icon(size(), newItem->icon);
 }
-void NodeBox::item_draw(void* item, int x, int y, int w, int h)const{
+void Node_Box::item_draw(void* item, int x, int y, int w, int h)const{
 	if(!item)
 		return;
 	Fl_Browser::item_draw(item,x,y,w,h);
 	fl_line(x, y+h, x+w, y+h);
 }
-void NodeBox::remove(int line){
+void Node_Box::remove(int line){
 	if(line < 1 || line > size()) return;
 	delete ((item_data*)data(line))->icon;
 	Fl_Browser::remove(line);
 }
-NodeBox::~NodeBox(){
+Node_Box::~Node_Box(){
 	for(int i=1; i<=size(); i++)
 		remove(i);
 	clear();
 }
-int NodeBox::handle(int e){
+int Node_Box::handle(int e){
 	static void* tmp;
 			const char *msg = "It works!";
 	switch(e){

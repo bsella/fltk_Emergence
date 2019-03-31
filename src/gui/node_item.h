@@ -3,10 +3,10 @@
 #include "core/node.h"
 #include "gui/item.h"
 #include <FL/fl_draw.H>
-class NodeItem : public Node, public Item{
+class Node_Item : public Node, public Item{
 public:
-	NodeItem(int x, int y, int w, int h, int n);
-	virtual ~NodeItem();
+	Node_Item(int x, int y, int w, int h, int n);
+	virtual ~Node_Item();
 
 	void draw()const;
 protected:

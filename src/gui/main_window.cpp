@@ -1,22 +1,24 @@
 #include "main_window.h"
 #include <FL/Fl.H>
 #include <FL/Fl_Plugin.H>
-const unsigned int MainWindow::menu_bar_height = 30;
-MainWindow::MainWindow(int _w, int _h):Fl_Double_Window(_w, _h, "Emergence"){
+#include "gui/workspace.h"
+#include "gui/node_box.h"
+const unsigned int Main_Window::menu_bar_height = 30;
+Main_Window::Main_Window(int _w, int _h):Fl_Double_Window(_w, _h, "Emergence"){
     Fl_Plugin_Manager pm("nodes");
 	init_gui();
 	end();
     resizable(*this);
 }
-MainWindow::~MainWindow(){
+Main_Window::~Main_Window(){
 	delete node_box;
 	delete menu_bar;
     delete workspace;
 }
-int MainWindow::run(){
+int Main_Window::run(){
 	return Fl::run();
 }
-void MainWindow::resize(int X, int Y, int W, int H){
+void Main_Window::resize(int X, int Y, int W, int H){
 	Fl_Window::resize(X,Y,W,H);
 	menu_bar->size(W,menu_bar_height);
 	static const int node_box_min_width = 100;
@@ -24,8 +26,8 @@ void MainWindow::resize(int X, int Y, int W, int H){
 	node_box->resize(0,menu_bar_height, std::min(std::max(node_box->w(),node_box_min_width),node_box_max_width), H-menu_bar_height);
 	workspace->resize(node_box->w(), menu_bar_height, W-node_box->w(), H-menu_bar_height);
 }
-void MainWindow::init_gui(){
-	node_box = new NodeBox(0,menu_bar_height, w()/5, h()-menu_bar_height);
+void Main_Window::init_gui(){
+	node_box = new Node_Box(0,menu_bar_height, w()/5, h()-menu_bar_height);
     node_box->addTool("clr1", "Color1", "./../color.png");
     node_box->addTool("clr2", "Color2", "../color.png");
     node_box->addTool("clr3", "Color3", "../color.png");
@@ -47,6 +49,6 @@ void MainWindow::init_gui(){
 
 	workspace = new Workspace(w()/5, menu_bar_height, 4*w()/5, h()-menu_bar_height);
 }
-void MainWindow::quit(Fl_Widget*, void* w){
-	((MainWindow*)w)->hide();
+void Main_Window::quit(Fl_Widget*, void* w){
+	((Main_Window*)w)->hide();
 }

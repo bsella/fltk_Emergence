@@ -1,12 +1,13 @@
 #pragma once
 #include "graphics_view.h"
-#include "node_item.h"
+class Node_Item;
+
 class Workspace : public Graphics_View{
 public:
 	Workspace(int x, int y, int w, int h);
 	~Workspace();
-	void add_node(NodeItem*);
-	void remove_node(NodeItem*);
+	void add_node(Node_Item*);
+	void remove_node(Node_Item*);
 private:
 	int handle(int)override;
 };
