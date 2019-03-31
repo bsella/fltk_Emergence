@@ -13,9 +13,10 @@ void Workspace::remove_node(NodeItem*n){
 	remove_item(n);
 }
 int Workspace::handle(int e){
+	static NodeItem* hover_to= nullptr;
 	switch(e){
 	case FL_PUSH:
-		if(NodeItem::socket_hover>0 && !NodeItem::socket_drag){
+		if(NodeItem::socket_hover>0){
 			NodeItem::socket_x=Fl::event_x();
 			NodeItem::socket_y=Fl::event_y();
 			NodeItem::socket_drag=true;
@@ -24,27 +25,29 @@ int Workspace::handle(int e){
 		return Graphics_View::handle(e);
 	case FL_DRAG:
 		if(NodeItem::socket_drag){
-			for(const auto n: items)
-				if(((NodeItem*)n)->Item::inside(Fl::event_x(), Fl::event_y())){
+			for(const auto i: items){
+				NodeItem* n= ((NodeItem*)i);
+				if(n->Item::inside(Fl::event_x(), Fl::event_y()) && !n->is_looping((NodeItem*)hover)){
+					if(n==hover_to) return 0;
 					NodeItem::socket_x= n->x()+n->w()+NodeItem::socket_size*2;
 					NodeItem::socket_y= n->y()+n->h()/2;
+					hover_to= n;
 					redraw();
 					return 1;
 				}
+			}
 			NodeItem::socket_x=Fl::event_x();
 			NodeItem::socket_y=Fl::event_y();
+			hover_to= nullptr;
 			redraw();
 			return 1;
 		}
 		return Graphics_View::handle(e);
 	case FL_RELEASE:
 		if(NodeItem::socket_drag){
-			for(const auto i: items){
-				NodeItem* n= (NodeItem*)i;
-				if(n->Item::inside(Fl::event_x(), Fl::event_y())){
-					((NodeItem*)hover)->connect(NodeItem::socket_hover-1, n);
-					break;
-				}
+			if(hover_to){
+				((NodeItem*)hover)->connect(NodeItem::socket_hover-1, hover_to);
+				hover_to=nullptr;
 			}
 			NodeItem::socket_drag=false;
 			redraw();

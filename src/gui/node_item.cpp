@@ -89,10 +89,7 @@ void NodeItem::mouse_leave_event(){
 	Item::mouse_leave_event();
 	socket_hover=0;
 }
-static int press_x, press_y;
-void NodeItem::mouse_press_event(int x, int y){
-	press_x=x;
-	press_y=y;
+void NodeItem::mouse_press_event(int, int){
 }
 void NodeItem::mouse_move_event(int,int){
 }

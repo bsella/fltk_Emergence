@@ -97,6 +97,7 @@ int Graphics_View::handle(int e){
 			fl_cursor(FL_CURSOR_MOVE);
 			items.remove(hover);
 			items.push_front(hover);
+			hover->mouse_press_event(tmp_x,tmp_y);
 			if(!hover->is_selected()){
 				while(selected.size()){
 					(*selected.begin())->reset_selected();

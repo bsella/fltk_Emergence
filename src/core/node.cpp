@@ -12,3 +12,10 @@ void Node::disconnect(int input){
 	if(inodes[input])
 		inodes[input]= nullptr;
 }
+bool Node::is_looping(Node* source)const{
+	if(this==source) return true;
+	for(const auto n: inodes)
+		if(n && n->is_looping(source))
+			return true;
+	return false;
+}

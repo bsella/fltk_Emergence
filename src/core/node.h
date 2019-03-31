@@ -8,4 +8,5 @@ public:
 	void disconnect(int);
 protected:
     std::vector<Node*> inodes;
+	bool is_looping(Node*)const;
 };
