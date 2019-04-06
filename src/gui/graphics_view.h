@@ -12,12 +12,16 @@ public:
 protected:
 	static Item* hover;
 	std::list<Item*> items;
-	virtual int handle(int)override;
+	int handle(int)override;
 	virtual void mouse_move_event(int,int);
 	virtual void mouse_click_event(int,int,int);
 	virtual void mouse_press_event(int,int,int);
 	virtual void mouse_drag_event(int,int,int);
 	virtual void mouse_release_event(int);
+	virtual void mouse_wheel_event(int,int);
+	virtual void dnd_enter_event(int,int);
+	virtual void dnd_drag_event(int,int);
+	virtual void dnd_leave_event();
 
 private:
 	std::list<Item*> selected;

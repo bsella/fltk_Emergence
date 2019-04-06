@@ -58,9 +58,7 @@ void Graphics_View::reset_rubberband(){
 	rb_from_x=-1;
 }
 int Graphics_View::handle(int e){
-	static const float scale_factor=1.1;
 	static bool skip_scroll=false; // The MOUSEWHEEL event is handled two times for some reason..
-	static const float ratio= (scale_factor-1)/scale_factor;
 	static int tmp_x, tmp_y;
 	static bool click= false;
 	switch(e){
@@ -89,20 +87,16 @@ int Graphics_View::handle(int e){
 	case FL_MOUSEWHEEL:
 		skip_scroll=!skip_scroll;
 		if(skip_scroll) return 0;
-		if(Fl::event_dy()<0)
-			zoom*=scale_factor;
-		else
-			zoom/=scale_factor;
-		for(auto i: items){
-			const float X = float(Fl::event_x()-i->x())/i->w();
-			const float Y = float(Fl::event_y()-i->y())/i->h();
-			if(Fl::event_dy()<0)
-				i->move(-X*(scale_factor-1)*i->w(), -Y*(scale_factor-1)*i->h());
-			else
-				i->move(X*(i->w()*ratio), Y*(i->h()*ratio));
-			i->scale(zoom);
-		}
-		redraw();
+		mouse_wheel_event(Fl::event_dx(),Fl::event_dy());
+		return 1;
+	case FL_DND_ENTER:
+		dnd_enter_event(Fl::event_x(), Fl::event_y());
+		return 1;
+	case FL_DND_DRAG:
+		dnd_drag_event(Fl::event_x(), Fl::event_y());
+		return 1;
+	case FL_DND_LEAVE:
+		dnd_leave_event();
 		return 1;
 	}
 	return Fl_Double_Window::handle(e);
@@ -172,5 +166,26 @@ void Graphics_View::mouse_release_event(int){
 		fl_cursor(FL_CURSOR_DEFAULT);
 		hover->mouse_release_event();
 	}else reset_rubberband();
+	redraw();
+}
+void Graphics_View::dnd_enter_event(int,int){}
+void Graphics_View::dnd_drag_event(int,int){}
+void Graphics_View::dnd_leave_event(){}
+void Graphics_View::mouse_wheel_event(int, int dy){
+	static const float scale_factor=1.1;
+	static const float ratio= (scale_factor-1)/scale_factor;
+	if(dy<0)
+		zoom*=scale_factor;
+	else
+		zoom/=scale_factor;
+	for(auto i: items){
+		const float X = float(Fl::event_x()-i->x())/i->w();
+		const float Y = float(Fl::event_y()-i->y())/i->h();
+		if(dy<0)
+			i->move(-X*(scale_factor-1)*i->w(), -Y*(scale_factor-1)*i->h());
+		else
+			i->move(X*(i->w()*ratio), Y*(i->h()*ratio));
+		i->scale(zoom);
+	}
 	redraw();
 }

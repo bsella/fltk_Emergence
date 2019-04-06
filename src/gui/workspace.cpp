@@ -14,26 +14,6 @@ void Workspace::remove_node(Node_Item*n){
 	remove_item(n);
 }
 static Node_Item* hover_to= nullptr;
-int Workspace::handle(int e){
-	switch(e){
-	case FL_DND_ENTER:
-		hover= new Node_Item(0,0,30,30,2);
-		add_node((Node_Item*)hover);
-		hover->set_pos(Fl::event_x(), Fl::event_y());
-		redraw();
-		return 1;
-	case FL_DND_DRAG:
-		if(hover)
-			hover->set_pos(Fl::event_x(), Fl::event_y());
-		redraw();
-		return 1;
-	case FL_DND_LEAVE:
-		remove_node((Node_Item*)hover);
-		redraw();
-		return 1;
-	}
-	return Graphics_View::handle(e);
-}
 void Workspace::mouse_press_event(int x, int y, int button){
 	if(Node_Item::socket_hover>0 && button==FL_LEFT_MOUSE){
 		Node_Item::socket_x=Fl::event_x();
@@ -69,4 +49,19 @@ void Workspace::mouse_drag_event(int dx, int dy, int button){
 		hover_to= nullptr;
 		redraw();
 	}else Graphics_View::mouse_drag_event(dx, dy, button);
+}
+void Workspace::dnd_enter_event(int x, int y){
+	hover= new Node_Item(0,0,30,30,2);
+	add_node((Node_Item*)hover);
+	hover->set_pos(x, y);
+	redraw();
+}
+void Workspace::dnd_drag_event(int x, int y){
+	if(hover)
+		hover->set_pos(x, y);
+	redraw();
+}
+void Workspace::dnd_leave_event(){
+	remove_node((Node_Item*)hover);
+	redraw();
 }
