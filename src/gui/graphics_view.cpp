@@ -122,7 +122,12 @@ void Graphics_View::mouse_move_event(int x,int y){
 		redraw();
 	}
 }
-void Graphics_View::mouse_click_event(int,int,int){
+void Graphics_View::mouse_click_event(int x, int y, int button){
+	for(const auto i: items)
+		if(i->inside(x,y)){
+			i->mouse_click_event(x,y,button);
+			return;
+		}
 }
 void Graphics_View::mouse_drag_event(int dx, int dy, int button){
 	if(button!=FL_LEFT_MOUSE)
@@ -138,7 +143,7 @@ void Graphics_View::mouse_drag_event(int dx, int dy, int button){
 }
 void Graphics_View::mouse_press_event(int x, int y, int button){
 	if(hover){
-		fl_cursor(FL_CURSOR_MOVE);
+		//fl_cursor(FL_CURSOR_MOVE);
 		items.remove(hover);
 		items.push_front(hover);
 		hover->mouse_press_event(x,y);

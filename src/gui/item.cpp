@@ -33,3 +33,4 @@ void Item::mouse_move_event(int,int){}
 void Item::mouse_press_event(int,int){}
 void Item::mouse_release_event(){}
 void Item::mouse_drag_event(){}
+void Item::mouse_click_event(int,int,int){}

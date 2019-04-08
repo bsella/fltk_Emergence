@@ -3,6 +3,7 @@
 #include "core/node.h"
 #include "gui/item.h"
 #include <FL/fl_draw.H>
+class Fl_Menu_Item;
 class Node_Item : public Node, public Item{
 public:
 	Node_Item(int x, int y, int w, int h, int n);
@@ -10,6 +11,7 @@ public:
 
 	void draw()const;
 protected:
+	virtual void context_menu(std::vector<Fl_Menu_Item>&);
 	virtual bool inside(int,int)const;
 
 private:
@@ -24,6 +26,7 @@ private:
 	void mouse_press_event(int,int)override;
 	void mouse_move_event(int,int)override;
 	void mouse_release_event()override;
+	void mouse_click_event(int,int,int)override;
 
 	friend class Workspace;
 };

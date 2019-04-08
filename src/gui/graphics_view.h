@@ -12,7 +12,6 @@ public:
 protected:
 	static Item* hover;
 	std::list<Item*> items;
-	int handle(int)override;
 	virtual void mouse_move_event(int,int);
 	virtual void mouse_click_event(int,int,int);
 	virtual void mouse_press_event(int,int,int);
@@ -29,5 +28,5 @@ private:
 	float zoom;
 	void update_rubberband(int, int);
 	void reset_rubberband();
-	Item* top_item(int,int,int*)const;
+	int handle(int)override;
 };

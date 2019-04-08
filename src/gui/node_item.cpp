@@ -1,4 +1,6 @@
 #include "node_item.h"
+#include <FL/Fl_Menu_Item.H>
+#include <string>
 const int Node_Item::socket_size=5;
 const int Node_Item::head_size=5;
 Fl_Color Node_Item::color()const{
@@ -94,4 +96,50 @@ void Node_Item::mouse_press_event(int, int){
 void Node_Item::mouse_move_event(int,int){
 }
 void Node_Item::mouse_release_event(){
+}
+void Node_Item::mouse_click_event(int x, int y, int button){
+	if(button== FL_RIGHT_MOUSE){
+		std::vector<Fl_Menu_Item> menu;
+		context_menu(menu);
+		menu.push_back({});
+		const Fl_Menu_Item* m= menu.data()->popup(x,y);
+		if(m && m->callback() && m->user_data())
+			m->do_callback(0,m->user_data());
+	}
+}
+
+struct disconnect_ud{
+	Node_Item* node;
+	unsigned int i;
+};
+void disconnect_cb(Fl_Widget*, void* d){
+	disconnect_ud* ud= (disconnect_ud*)d;
+	if(ud->node)
+		ud->node->disconnect(ud->i);
+}
+
+void Node_Item::context_menu(std::vector<Fl_Menu_Item>& menu){
+	menu.push_back(Fl_Menu_Item{"Copy",0,0,0,0,0,0,0,0});
+	menu.push_back(Fl_Menu_Item{"Cut",0,0,0,0,0,0,0,0});
+	menu.push_back(Fl_Menu_Item{"Paste",0,0,0,FL_MENU_DIVIDER,0,0,0,0});
+	menu.push_back(Fl_Menu_Item{"Delete",0,0,0,FL_MENU_DIVIDER,0,0,0,0});
+	if(inodes.size()==0) return;
+	
+	menu.push_back({"disconnect", 0, 0, 0, FL_SUBMENU,0,0,0,0});
+
+	static std::vector<std::string> numbers;
+	if(numbers.size()<inodes.size())
+		for(unsigned int i=numbers.size(); i<inodes.size(); i++)
+			numbers.push_back(std::to_string(i));
+	static std::vector<disconnect_ud> ud;
+	for(unsigned int i=0; i<inodes.size(); i++)
+		if(ud.size()>i){
+			ud[i].node=this;
+			ud[i].i=i;
+		}else
+			ud.push_back(disconnect_ud{this,i});
+	for(unsigned int i=0; i<inodes.size(); i++)
+		menu.push_back({numbers[i].c_str(),0, disconnect_cb, &ud[i], inodes[i]? 0:FL_MENU_INACTIVE,0,0,0,0});
+	
+	menu.push_back({});
 }

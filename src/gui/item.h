@@ -29,6 +29,7 @@ protected:
 	virtual void mouse_press_event(int,int);
 	virtual void mouse_release_event();
 	virtual void mouse_drag_event();
+	virtual void mouse_click_event(int,int,int);
 
 private:
 	unsigned char flags; // 1:hover 2:select
