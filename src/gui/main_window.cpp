@@ -3,6 +3,7 @@
 #include <FL/Fl_Plugin.H>
 #include "gui/workspace.h"
 #include "gui/node_box.h"
+#include "core/resources.h"
 const unsigned int Main_Window::menu_bar_height = 30;
 Main_Window::Main_Window(int _w, int _h):Fl_Double_Window(_w, _h, "Emergence"){
     Fl_Plugin_Manager pm("nodes");
@@ -27,10 +28,11 @@ void Main_Window::resize(int X, int Y, int W, int H){
 	workspace->resize(node_box->w(), menu_bar_height, W-node_box->w(), H-menu_bar_height);
 }
 void Main_Window::init_gui(){
+
 	node_box = new Node_Box(0,menu_bar_height, w()/5, h()-menu_bar_height);
-    node_box->addTool("clr1", "Color1", "./../color.png");
-    node_box->addTool("clr2", "Color2", "../color.png");
-    node_box->addTool("clr3", "Color3", "../color.png");
+    node_box->addTool("clr1", "Color1", RELATIVE("../color.png"));
+    node_box->addTool("clr2", "Color2", RELATIVE("../color.png"));
+    node_box->addTool("clr3", "Color3", RELATIVE("../color.png"));
 
 	menu_bar = new Fl_Menu_Bar(0,0,w(), menu_bar_height);
 	menu_bar->add("File/New", "^n", nullptr);
