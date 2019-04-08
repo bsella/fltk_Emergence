@@ -23,9 +23,7 @@ private:
 
 	void mouse_enter_event(int,int)override;
 	void mouse_leave_event()override;
-	void mouse_press_event(int,int)override;
 	void mouse_move_event(int,int)override;
-	void mouse_release_event()override;
 	void mouse_click_event(int,int,int)override;
 
 	friend class Workspace;

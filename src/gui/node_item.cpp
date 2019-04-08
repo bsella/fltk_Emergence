@@ -91,11 +91,9 @@ void Node_Item::mouse_leave_event(){
 	Item::mouse_leave_event();
 	socket_hover=0;
 }
-void Node_Item::mouse_press_event(int, int){
-}
-void Node_Item::mouse_move_event(int,int){
-}
-void Node_Item::mouse_release_event(){
+void Node_Item::mouse_move_event(int x,	int y){
+	if(x<_x)
+		socket_hover=(y-_y+head_size)/(_h/(inodes.size()+1));
 }
 void Node_Item::mouse_click_event(int x, int y, int button){
 	if(button== FL_RIGHT_MOUSE){
