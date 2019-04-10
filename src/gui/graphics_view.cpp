@@ -21,7 +21,7 @@ static int rb_to_y;
 void Graphics_View::draw(){
 	Fl_Double_Window::draw();
 	for(auto i= items.rbegin(); i!=items.rend(); i++)
-		if((*i)->x()<w() && (*i)->y()<h())
+		//if((*i)->x()<w() && (*i)->y()<h())
 			(*i)->draw();
 	if(rb_from_x!=-1){
 		fl_line_style(FL_DASH);

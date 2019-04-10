@@ -46,7 +46,7 @@ void Main_Window::init_gui(){
 	menu_bar->add("Edit/Cut", "^x", nullptr);
 	menu_bar->add("Edit/Copy", "^c", nullptr);
 	menu_bar->add("Edit/Paste", "^v", nullptr);
-	menu_bar->add("Edit/_Delete", "127", nullptr);
+	menu_bar->add("Edit/_Delete", FL_Delete, nullptr);
 	menu_bar->add("Edit/Select all", "^a", nullptr);
 
 	workspace = new Workspace(w()/5, menu_bar_height, 4*w()/5, h()-menu_bar_height);

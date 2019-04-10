@@ -32,7 +32,7 @@ void Node_Item::draw_body()const{
 	fl_line(_x, Y1, _x, Y4);
 }
 void Node_Item::draw()const{
-	if(_x+_w<0 || _y+_h<0) return;
+	//if(_x+_w<0 || _y+_h<0) return;
 	if(is_selected() || (is_hover() && socket_hover==-1))
 		fl_line_style(0,2);
 	else
