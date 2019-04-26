@@ -1,0 +1,3 @@
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PLUGIN_TARGET_PATH}/main)
+
+add_subdirectory(io)

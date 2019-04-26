@@ -1,9 +1,4 @@
-#add_subdirectory(color)
-#add_subdirectory(compare)
-#add_subdirectory(condition)
-#add_subdirectory(functions)
-#add_subdirectory(image)
-#add_subdirectory(logic)
-#add_subdirectory(lut)
-add_subdirectory(math)
-#add_subdirectory(io)
+set(PLUGIN_TARGET_PATH ${CMAKE_BINARY_DIR}/lib)
+
+add_subdirectory(types)
+add_subdirectory(main)
