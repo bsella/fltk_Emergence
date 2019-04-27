@@ -1,6 +1,6 @@
 #pragma once
 #include <FL/Fl_Double_Window.H>
-class Node_Box;
+class Toolbox;
 class Workspace;
 class Fl_Menu_Bar;
 
@@ -9,7 +9,7 @@ public:
 	Main_Window(int,int);
 	~Main_Window();
 	static int run();
-	Node_Box* node_box=nullptr;
+	Toolbox* toolbox=nullptr;
 	Fl_Menu_Bar* menu_bar=nullptr;
 private:
 	Workspace* workspace=nullptr;

@@ -3,7 +3,7 @@
 #include <FL/Fl_Menu_Bar.H>
 #include <FL/Fl_Double_Window.H>
 #include "gui/workspace.h"
-#include "gui/node_box.h"
+#include "gui/toolbox/toolbox.h"
 #include "core/resources.h"
 
 const unsigned int Main_Window::menu_bar_height = 30;
@@ -13,7 +13,7 @@ Main_Window::Main_Window(int _w, int _h):Fl_Double_Window(_w, _h, "Emergence"){
     resizable(*this);
 }
 Main_Window::~Main_Window(){
-	delete node_box;
+	delete toolbox;
 	delete menu_bar;
     delete workspace;
 }
@@ -21,19 +21,18 @@ int Main_Window::run(){
 	return Fl::run();
 }
 void Main_Window::resize(int X, int Y, int W, int H){
-	Fl_Window::resize(X,Y,W,H);
+	Fl_Double_Window::resize(X,Y,W,H);
 	menu_bar->size(W,menu_bar_height);
-	static const int node_box_min_width = 100;
-	static const int node_box_max_width = 140;
-	node_box->resize(0,menu_bar_height, std::min(std::max(node_box->w(),node_box_min_width),node_box_max_width), H-menu_bar_height);
-	workspace->resize(node_box->w(), menu_bar_height, W-node_box->w(), H-menu_bar_height);
+	static const int toolbox_min_width = 100;
+	static const int toolbox_max_width = 140;
+	toolbox->resize(0,menu_bar_height, std::min(std::max(toolbox->w(),toolbox_min_width),toolbox_max_width), H-menu_bar_height);
+	workspace->resize(toolbox->w(), menu_bar_height, W-toolbox->w(), H-menu_bar_height);
 }
 void Main_Window::init_gui(){
-
-	node_box = new Node_Box(0,menu_bar_height, w()/5, h()-menu_bar_height);
-    node_box->addTool("clr1", "Color1", RELATIVE("../color.png"));
-    node_box->addTool("clr2", "Color2", RELATIVE("../color.png"));
-    node_box->addTool("clr3", "Color3", RELATIVE("../color.png"));
+	toolbox = new Toolbox(0,menu_bar_height, w()/5, h()-menu_bar_height);
+	Toolbox::add("clr1", "Color1", RELATIVE("../color.png"));
+    Toolbox::add("clr2", "Color2", RELATIVE("../color.png"));
+    Toolbox::add("clr3", "Color3", RELATIVE("../color.png"));
 
 	menu_bar = new Fl_Menu_Bar(0,0,w(), menu_bar_height);
 	menu_bar->add("File/New", "^n", nullptr);

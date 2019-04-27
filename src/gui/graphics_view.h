@@ -1,9 +1,9 @@
 #pragma once
-#include <FL/Fl_Double_Window.H>
+#include <FL/Fl_Widget.H>
 #include <list>
 class Item;
 
-class Graphics_View : public Fl_Double_Window{
+class Graphics_View : public Fl_Widget{
 public:
 	Graphics_View(int x, int y, int w, int h);
 	~Graphics_View();
@@ -11,7 +11,7 @@ public:
 	void remove_item(Item*);
 protected:
 	static Item* hover;
-	std::list<Item*> items;
+	std::list<Item*>* items= nullptr;
 	virtual void mouse_move_event(int,int);
 	virtual void mouse_click_event(int,int,int);
 	virtual void mouse_press_event(int,int,int);
@@ -21,10 +21,10 @@ protected:
 	virtual void dnd_enter_event(int,int);
 	virtual void dnd_drag_event(int,int);
 	virtual void dnd_leave_event();
+	void draw()override;
 
 private:
 	std::list<Item*> selected;
-	void draw()override;
 	float zoom;
 	void update_rubberband(int, int);
 	void reset_rubberband();

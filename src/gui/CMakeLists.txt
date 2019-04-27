@@ -13,12 +13,14 @@ include_directories(
 
 FILE(GLOB HEADERS
 	*.h
+	toolbox/*.h
 )
 
 add_library(gui
 	${HEADERS}
 	main_window.cpp
-	node_box.cpp
+	toolbox/toolbox.cpp
+	toolbox/toolbox_item.cpp
 	graphics_view.cpp
 	workspace.cpp
 	item.cpp

@@ -1,6 +1,8 @@
 #include "item.h"
 #include <FL/fl_draw.H>
 Item::Item(int x, int y, int w, int h):_x(x),_y(y),width(w),height(h){
+	_w= width;
+	_h= height;
 }
 Item::~Item(){}
 bool Item::inside(int x, int y)const{
@@ -32,5 +34,5 @@ void Item::mouse_leave_event(){
 void Item::mouse_move_event(int,int){}
 void Item::mouse_press_event(int,int){}
 void Item::mouse_release_event(){}
-void Item::mouse_drag_event(){}
+void Item::mouse_drag_event(int, int){}
 void Item::mouse_click_event(int,int,int){}

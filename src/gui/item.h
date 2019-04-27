@@ -10,10 +10,10 @@ public:
 	inline int w()const{return _w;}
 	inline int h()const{return _h;}
 	void set_pos(int,int);
+	int _x,_y, _w,_h;
 
 protected:
 	virtual bool inside(int,int)const;
-	int _x,_y, _w,_h;
 	const int width, height;
 
 	inline void set_hover()          {flags|=1;}
@@ -28,7 +28,7 @@ protected:
 	virtual void mouse_move_event(int,int);
 	virtual void mouse_press_event(int,int);
 	virtual void mouse_release_event();
-	virtual void mouse_drag_event();
+	virtual void mouse_drag_event(int,int);
 	virtual void mouse_click_event(int,int,int);
 
 private:
