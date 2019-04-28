@@ -1,4 +1,5 @@
 #include "toolbox.h"
+#include "toolbox_item.h"
 #include <FL/fl_draw.H>
 
 std::list<Item*> Toolbox::toolbox_items;
@@ -10,7 +11,7 @@ Toolbox::~Toolbox(){}
 void Toolbox::mouse_wheel_event(int, int){
 }
 static unsigned int y_bottom= 0;
-void Toolbox::add(const std::string& id, const char* text, const char* icon_path){
+void Toolbox::add(const char* id, const char* text, const char* icon_path){
 	toolbox_items.push_back(new Toolbox_Item(y_bottom,id,text,icon_path));
 	y_bottom+= Toolbox_Item::h;
 }

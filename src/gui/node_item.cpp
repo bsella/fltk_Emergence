@@ -119,7 +119,6 @@ void disconnect_cb(Fl_Widget*, void* d){
 void Node_Item::context_menu(std::vector<Fl_Menu_Item>& menu){
 	menu.push_back(Fl_Menu_Item{"Copy",0,0,0,0,0,0,0,0});
 	menu.push_back(Fl_Menu_Item{"Cut",0,0,0,0,0,0,0,0});
-	menu.push_back(Fl_Menu_Item{"Paste",0,0,0,FL_MENU_DIVIDER,0,0,0,0});
 	menu.push_back(Fl_Menu_Item{"Delete",0,0,0,FL_MENU_DIVIDER,0,0,0,0});
 	if(inodes.size()==0) return;
 	

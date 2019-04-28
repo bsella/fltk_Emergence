@@ -3,7 +3,7 @@
 #include <FL/Fl.H>
 
 const unsigned int Toolbox_Item::h= 36;
-Toolbox_Item::Toolbox_Item(int y, const std::string& id, const char* text, const char* icon_path)
+Toolbox_Item::Toolbox_Item(int y, const char* id, const char* text, const char* icon_path)
 	:Item(0, y, 0, h), id(id), text(text){
 	icon= new Fl_PNG_Image(icon_path);
 }

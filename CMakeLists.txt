@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(Emergence)
 
-set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -pedantic -Wextra")
+set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -pedantic -Wextra -fPIC")
 
 include_directories(
    ${CMAKE_SOURCE_DIR}/src

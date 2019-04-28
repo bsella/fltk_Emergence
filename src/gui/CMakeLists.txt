@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -pedantic -Wextra")
+set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -pedantic -Wextra -fPIC")
 
 set(FLTK_SKIP_OPENGL true)
 set(FLTK_SKIP_FLUID true)

@@ -50,6 +50,10 @@ void Main_Window::init_gui(){
 	menu_bar->add("Edit/Select all", "^a", nullptr);
 
 	workspace = new Workspace(w()/5, menu_bar_height, 4*w()/5, h()-menu_bar_height);
+	
+	add(menu_bar);
+	add_resizable(*toolbox);
+	add_resizable(*workspace);
 }
 void Main_Window::quit(Fl_Widget*, void* w){
 	((Main_Window*)w)->hide();

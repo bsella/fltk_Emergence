@@ -12,9 +12,11 @@ public:
 	void set_pos(int,int);
 	int _x,_y, _w,_h;
 
-protected:
 	virtual bool inside(int,int)const;
-	const int width, height;
+	bool inside(int,int,int,int)const;
+
+	void move(int,int);
+	void scale(float);
 
 	inline void set_hover()          {flags|=1;}
 	inline void reset_hover()        {flags&=254;}
@@ -22,6 +24,9 @@ protected:
 	inline void set_selected()       {flags|=2;}
 	inline void reset_selected()     {flags&=253;}
 	inline bool is_selected()   const{return flags&2;}
+
+protected:
+	const int width, height;
 
 	virtual void mouse_enter_event(int,int);
 	virtual void mouse_leave_event();
@@ -34,11 +39,7 @@ protected:
 private:
 	unsigned char flags; // 1:hover 2:select
 
-	friend class Graphics_View;
-
-	bool inside(int,int,int,int)const;
-	void move(int,int);
-	void scale(float);
 	virtual void draw()const=0;
 
+	friend class Graphics_View;
 };
