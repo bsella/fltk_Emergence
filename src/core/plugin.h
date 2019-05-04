@@ -1,5 +1,5 @@
 #pragma once
-#include <gui/main_window.h>
+class Main_Window;
 
 class Plugin {
 public:
@@ -9,6 +9,8 @@ public:
 
 	void (*destroy_function)(Plugin*);
 	void* lib;
+
+	void (*toolbox_add_cb)(const char*,const char*, const char*);//Must make this static
 };
 
 typedef Plugin* create_t();

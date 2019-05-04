@@ -1,7 +1,8 @@
 #include <core/plugin.h>
+#include <gui/main_window.h>
 #include <FL/Fl_Menu_Bar.H>
-#include <gui/toolbox/toolbox.h>
 #include "input_node.h"
+#include "gui/main_window.h"
 
 class Io_Plugin : public Plugin{
 public:
@@ -18,5 +19,7 @@ void Io_Plugin::init_gui (Main_Window* mw)const{
 	mw->menu_bar->add("Insert/Y");
 	mw->menu_bar->add("Insert/Output");
 
-	//Toolbox::add(&X_Node_Item::make, "X", "../color.png");
+	toolbox_add_cb("x", "X", "../color.png");
+	toolbox_add_cb("y", "Y", "../color.png");
+	toolbox_add_cb("output", "Output", "../color.png");
 }

@@ -2,6 +2,7 @@
 #include "core/resources.h"
 #define PLUGIN_CPP
 #include "core/plugin.h"
+#include "gui/toolbox/toolbox.h"
 
 std::string relative_path;
 int main(int argc, char **argv){
@@ -11,8 +12,10 @@ int main(int argc, char **argv){
 	win.show(argc,argv);
 	std::vector<Plugin*> plugins = load_all_plugins(RELATIVE("lib/main"));
 	for(auto p : plugins){
+		p->toolbox_add_cb= &Toolbox::add;
 		p->init_gui(&win);
 	}
+	int ret = Main_Window::run();
 	unload_all_plugins(plugins);
-	return Main_Window::run();
+	return ret;
 }

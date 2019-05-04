@@ -30,9 +30,6 @@ void Main_Window::resize(int X, int Y, int W, int H){
 }
 void Main_Window::init_gui(){
 	toolbox = new Toolbox(0,menu_bar_height, w()/5, h()-menu_bar_height);
-	Toolbox::add("clr1", "Color1", RELATIVE("../color.png"));
-    Toolbox::add("clr2", "Color2", RELATIVE("../color.png"));
-    Toolbox::add("clr3", "Color3", RELATIVE("../color.png"));
 
 	menu_bar = new Fl_Menu_Bar(0,0,w(), menu_bar_height);
 	menu_bar->add("File/New", "^n", nullptr);
