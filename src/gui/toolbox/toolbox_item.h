@@ -5,12 +5,12 @@
 
 class Toolbox_Item : public Item {
 public:
-	Toolbox_Item(int y, const char* id, const char* text, const char* icon_path);
+	Toolbox_Item(int y, make_node_item_t factory, const char* text, const char* icon_path);
 	~Toolbox_Item();
 	static const unsigned int h;
 private:
 	Fl_PNG_Image* icon;
-	const char* id;
+	make_node_item_t factory;
 	const char* text;
 	void mouse_enter_event(int,int)override;
 	void mouse_leave_event()override;

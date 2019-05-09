@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
 
-set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -pedantic -Wextra -fPIC")
-
 set(FLTK_SKIP_OPENGL true)
 set(FLTK_SKIP_FLUID true)
 find_package(FLTK REQUIRED)
@@ -11,20 +9,34 @@ include_directories(
    ${FLTK_INCLUDE_DIR}
 )
 
-FILE(GLOB HEADERS
-	*.h
-	toolbox/*.h
+set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -pedantic -Wextra -fPIC")
+
+add_library(graphics_view
+	graphics_view.cpp
+	graphics_view.h
+	item.cpp
+	item.h
 )
+
+add_library(workspace
+	workspace.cpp
+	workspace.h
+	node_item.cpp
+	node_item.h
+)
+target_link_libraries(workspace graphics_view core)
 
 add_library(gui
-	${HEADERS}
 	main_window.cpp
-	toolbox/toolbox.cpp
-	toolbox/toolbox_item.cpp
-	graphics_view.cpp
-	workspace.cpp
-	item.cpp
-	node_item.cpp
+	main_window.h
 )
 
-target_link_libraries(gui ${FLTK_LIBRARIES})
+add_library(toolbox
+	toolbox/toolbox.cpp
+	toolbox/toolbox.h
+	toolbox/toolbox_item.cpp
+	toolbox/toolbox_item.h
+)
+target_link_libraries(toolbox graphics_view)
+
+target_link_libraries(gui workspace toolbox ${FLTK_LIBRARIES})

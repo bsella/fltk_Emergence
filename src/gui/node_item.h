@@ -4,12 +4,17 @@
 #include "gui/item.h"
 #include <FL/fl_draw.H>
 class Fl_Menu_Item;
+class Node_Item;
+
+typedef Node_Item* (*make_node_item_t)(int,int,void*);
+
 class Node_Item : public Node, public Item{
 public:
 	Node_Item(int x, int y, int w, int h, int n);
 	virtual ~Node_Item();
 
 	void draw()const;
+	static make_node_item_t dnd_node_factory;
 protected:
 	virtual void context_menu(std::vector<Fl_Menu_Item>&);
 	virtual bool inside(int,int)const;
@@ -29,4 +34,9 @@ private:
 	friend class Workspace;
 };
 
-typedef Node_Item* (*make_item_t)(int,int);
+
+//struct node_item_dnd_d{
+//	make_node_item_t factory;
+//	int x; int y;
+//	void* data;
+//};

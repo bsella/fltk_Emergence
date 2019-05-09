@@ -1,37 +1,56 @@
 #pragma once
+#include <../plugins/plugin.h>
 class Main_Window;
 
 class Plugin {
 public:
-	virtual ~Plugin(){}
-	virtual void init_core(void*)const=0;
-	virtual void init_gui (Main_Window*)const=0;
+	Plugin(const std::string&);
+	~Plugin();
+	void init_gui(Main_Window*);
 
-	void (*destroy_function)(Plugin*);
+private:
+	void (*destroy_function)(_Plugin*);
 	void* lib;
 
-	void (*toolbox_add_cb)(const char*,const char*, const char*);//Must make this static
+	_Plugin* plugin= nullptr;
 };
 
-typedef Plugin* create_t();
-typedef void destroy_t(Plugin*);
+#include <iostream>
+#include <dlfcn.h>
+#include <gui/toolbox/toolbox.h>
+#include <core/resources.h>
 
-#define CREATE_DESTROY_C(subclass) extern "C"{\
-	Plugin* create(){\
-		return new subclass;\
-	}\
-	void destroy(Plugin* p){\
-		delete p;\
-	}\
+typedef _Plugin* create_t();
+typedef void destroy_t(_Plugin*);
+
+Plugin::Plugin(const std::string& path){
+	lib = dlopen(path.c_str(), RTLD_LAZY);
+	if(!lib){
+		std::cerr << "Error openning library: " << dlerror() << std::endl;
+		return;
+	}
+	dlerror();
+
+	create_t* create_plugin = (create_t*) dlsym(lib, "create");
+	const char* dlsym_error = dlerror();
+	if(dlsym_error){
+		std::cerr << "Error loading symbol create: " << dlsym_error << std::endl;
+		return;
+	}
+	destroy_function = (destroy_t*) dlsym(lib,"destroy");
+	dlsym_error= dlerror();
+	if(dlsym_error){
+		std::cerr << "Error loading symbol destroy: " << dlsym_error << std::endl;
+		return;
+	}
+	plugin = create_plugin();
+	plugin->toolbox_add_cb= &Toolbox::add;
+	plugin->relative_path= &relative_path;
 }
-
-#ifdef PLUGIN_CPP
-#include <string>
-#include <vector>
-
-Plugin* load_plugin(const std::string& path);
-void unload_plugin(Plugin* plugin);
-
-std::vector<Plugin*> load_all_plugins(const std::string& dir_path);
-void unload_all_plugins(std::vector<Plugin*> plugins);
-#endif
+Plugin::~Plugin(){
+	destroy_function(plugin);
+	dlclose(lib);
+}
+void Plugin::init_gui(Main_Window* mw){
+	plugin->init_gui(mw);
+}

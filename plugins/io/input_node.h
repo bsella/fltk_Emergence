@@ -4,7 +4,7 @@
 class X_Node : public Node{
 public:
    	X_Node();
-	static Node* make();
+	static Node* make(void*);
 private:
 	//void kernel()const override;
 };
@@ -12,7 +12,7 @@ private:
 class Y_Node : public Node{
 public:
    	Y_Node();
-	static Node* make();
+	static Node* make(void*);
 private:
 	//void kernel()const override;
 };
@@ -20,7 +20,7 @@ private:
 class Ratio_Node : public Node{
 public:
    	Ratio_Node();
-	static Node* make();
+	static Node* make(void*);
 private:
 	//void kernel()const override;
 };
@@ -28,7 +28,7 @@ private:
 class X_Node_Item : public Node_Item{
 public:
    	X_Node_Item(int,int);
-	static Node_Item* make(int,int);
+	static Node_Item* make(int,int,void*);
 private:
 	void draw_body()const override;
 };
@@ -36,7 +36,7 @@ private:
 class Y_Node_Item : public Node_Item{
 public:
    	Y_Node_Item(int,int);
-	static Node_Item* make(int,int);
+	static Node_Item* make(int,int,void*);
 private:
 	void draw_body()const override;
 };
@@ -44,7 +44,7 @@ private:
 class Ratio_Node_Item : public Node_Item{
 public:
    	Ratio_Node_Item(int,int);
-	static Node_Item* make(int,int);
+	static Node_Item* make(int,int,void*);
 private:
 	void draw_body()const override;
 };

@@ -1,8 +1,9 @@
 #include "gui/main_window.h"
 #include "core/resources.h"
-#define PLUGIN_CPP
 #include "core/plugin.h"
-#include "gui/toolbox/toolbox.h"
+#include <dirent.h>
+#include <vector>
+#include <dirent.h>
 
 std::string relative_path;
 int main(int argc, char **argv){
@@ -10,12 +11,20 @@ int main(int argc, char **argv){
 	relative_path= relative_path.substr(0,relative_path.find_last_of("/\\")) +'/';
 	Main_Window win(500, 550);
 	win.show(argc,argv);
-	std::vector<Plugin*> plugins = load_all_plugins(RELATIVE("lib/main"));
-	for(auto p : plugins){
-		p->toolbox_add_cb= &Toolbox::add;
-		p->init_gui(&win);
+
+	DIR* plugin_dir;
+	struct dirent *ent;
+	std::vector<Plugin*> plugins;
+	if((plugin_dir= opendir(RELATIVE("lib"))) != NULL){
+		while((ent= readdir(plugin_dir)) != NULL)
+			if(ent->d_name[0]!='.'){
+				Plugin* p= new Plugin(std::string(RELATIVE("lib")) + '/' + std::string(ent->d_name));
+				p->init_gui(&win);
+				plugins.push_back(p);
+			}
 	}
 	int ret = Main_Window::run();
-	unload_all_plugins(plugins);
+	for(auto p : plugins)
+		delete p;
 	return ret;
 }

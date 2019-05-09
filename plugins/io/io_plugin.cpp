@@ -1,10 +1,10 @@
-#include <core/plugin.h>
+#include <../plugins/plugin.h>
 #include <gui/main_window.h>
 #include <FL/Fl_Menu_Bar.H>
 #include "input_node.h"
-#include "gui/main_window.h"
+#include <core/resources.h>
 
-class Io_Plugin : public Plugin{
+class Io_Plugin : public _Plugin{
 public:
 	void init_core(void*)const;
 	void init_gui (Main_Window*)const;
@@ -17,9 +17,9 @@ void Io_Plugin::init_core(void*)const{
 void Io_Plugin::init_gui (Main_Window* mw)const{
 	mw->menu_bar->add("Insert/X");
 	mw->menu_bar->add("Insert/Y");
-	mw->menu_bar->add("Insert/Output");
+	mw->menu_bar->add("Insert/Ratio");
 
-	toolbox_add_cb("x", "X", "../color.png");
-	toolbox_add_cb("y", "Y", "../color.png");
-	toolbox_add_cb("output", "Output", "../color.png");
+	toolbox_add_cb(&X_Node_Item::make, "X", RELATIVE("../plugins/io/x.png"));
+	toolbox_add_cb(&Y_Node_Item::make, "Y", RELATIVE("../plugins/io/y.png"));
+	toolbox_add_cb(&Ratio_Node_Item::make, "Ratio", nullptr);
 }

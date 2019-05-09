@@ -1,13 +1,14 @@
 #pragma once
 #include <list>
 #include <gui/graphics_view.h>
+#include <gui/node_item.h>
 class Toolbox_Item;
 
 class Toolbox : public Graphics_View{
 public:
 	Toolbox(int x, int y, int w, int h);
 	~Toolbox();
-	static void add(const char* id, const char* text, const char* icon_path= nullptr);
+	static void add(make_node_item_t factory, const char* text, const char* icon_path= nullptr);
 	static void remove(Toolbox_Item*);
 	static std::list<Item*> toolbox_items;
 private:

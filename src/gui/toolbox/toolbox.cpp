@@ -11,8 +11,8 @@ Toolbox::~Toolbox(){}
 void Toolbox::mouse_wheel_event(int, int){
 }
 static unsigned int y_bottom= 0;
-void Toolbox::add(const char* id, const char* text, const char* icon_path){
-	toolbox_items.push_back(new Toolbox_Item(y_bottom,id,text,icon_path));
+void Toolbox::add(make_node_item_t factory, const char* text, const char* icon_path){
+	toolbox_items.push_back(new Toolbox_Item(y_bottom,factory,text,icon_path));
 	y_bottom+= Toolbox_Item::h;
 }
 void Toolbox::remove(Toolbox_Item*){
