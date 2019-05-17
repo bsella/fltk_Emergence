@@ -9,8 +9,6 @@ include_directories(
    ${FLTK_INCLUDE_DIR}
 )
 
-set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -pedantic -Wextra -fPIC")
-
 add_library(graphics_view
 	graphics_view.cpp
 	graphics_view.h

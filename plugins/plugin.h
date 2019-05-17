@@ -8,10 +8,8 @@ public:
 	virtual ~_Plugin(){}
 protected:
 	virtual void init_core(void*)const=0;
-	virtual void init_gui (Main_Window*)const=0;
+	virtual void init_gui(Main_Window*)const=0;
 
-	void (*toolbox_add_cb)(Node_Item*(*)(int,int,void*), const char*, const char*);
-	std::string* relative_path;
 	friend class Plugin;
 };
 

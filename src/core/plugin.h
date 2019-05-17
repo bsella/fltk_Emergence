@@ -44,8 +44,6 @@ Plugin::Plugin(const std::string& path){
 		return;
 	}
 	plugin = create_plugin();
-	plugin->toolbox_add_cb= &Toolbox::add;
-	plugin->relative_path= &relative_path;
 }
 Plugin::~Plugin(){
 	destroy_function(plugin);
