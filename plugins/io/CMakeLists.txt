@@ -8,5 +8,9 @@ add_library(io
 	input_node.cpp
 	input_node_item.h
 	input_node_item.cpp
+	output_node.h
+	output_node.cpp
+	output_node_item.h
+	output_node_item.cpp
 	)
 target_link_libraries(io_plugin io)

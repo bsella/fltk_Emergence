@@ -1,5 +1,5 @@
 #include "node.h"
-Node::Node(int n){
+Node::Node(int n, bool hasOutput):hasOutput(hasOutput){
     for(int i=0; i<n; i++)
         inodes.push_back(nullptr);
 }

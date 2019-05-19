@@ -10,7 +10,7 @@ typedef Node_Item* (*make_node_item_t)(int,int,void*);
 
 class Node_Item : public Node, public Item{
 public:
-	Node_Item(int x, int y, int w, int h, int n);
+	Node_Item(int x, int y, int w, int h, int n, bool hasOutput=true);
 	virtual ~Node_Item();
 
 	void draw()const;

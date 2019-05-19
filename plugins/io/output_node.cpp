@@ -1,0 +1,3 @@
+#include "output_node.h"
+
+Output_Node::Output_Node(): Node(1, false){}

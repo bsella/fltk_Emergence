@@ -7,7 +7,8 @@ make_node_item_t Node_Item::dnd_node_factory;
 Fl_Color Node_Item::color()const{
 	return FL_GRAY;
 }
-Node_Item::Node_Item(int x, int y, int w, int h, int n):Node(n),Item(x,y,w,h){
+Node_Item::Node_Item(int x, int y, int w, int h, int n, bool hasOutput)
+	:Node(n, hasOutput),Item(x,y,w,h){
 }
 Node_Item::~Node_Item(){}
 void Node_Item::draw_body()const{
@@ -40,6 +41,7 @@ void Node_Item::draw()const{
 		fl_line_style(0);
 	draw_body();
 	fl_line_style(0);
+	fl_color(FL_BLACK);
 	for(float i=1; i<inodes.size()+1; i++){
 		const int Y= _y+i/(1+inodes.size())*_h;
 		fl_line(_x-socket_size, Y, _x, Y);
@@ -60,7 +62,7 @@ void Node_Item::draw()const{
 			fl_line(_x-socket_size,Y, n->x()+n->w()+socket_size, n->y()+n->h()/2);
 		}
 	}
-	fl_line(_x+_w, _y+_h/2, _x+_w+socket_size, _y+_h/2);
+	if(hasOutput) fl_line(_x+_w, _y+_h/2, _x+_w+socket_size, _y+_h/2);
 	fl_line_style(0);
 }
 bool Node_Item::inside(int x, int y)const{
