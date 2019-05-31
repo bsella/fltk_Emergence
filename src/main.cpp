@@ -1,5 +1,5 @@
 #include "gui/main_window.h"
-#include "core/resources.h"
+#include "resources.h"
 #include "core/plugin.h"
 #include <dirent.h>
 #include <vector>

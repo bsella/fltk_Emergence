@@ -7,10 +7,31 @@ make_node_item_t Node_Item::dnd_node_factory;
 Fl_Color Node_Item::color()const{
 	return FL_GRAY;
 }
-Node_Item::Node_Item(int x, int y, int w, int h, int n, bool hasOutput)
-	:Node(n, hasOutput),Item(x,y,w,h){
+Node_Item::Node_Item(int x, int y, int w, int h, Node* n)
+	:Item(x,y,w,h), core_node(n){
+	for(unsigned int i=0; i<n->inodes.size(); i++)
+		inodes.push_back(nullptr);
 }
 Node_Item::~Node_Item(){}
+void Node_Item::connect(int index, Node_Item* to){
+	if(!inodes[index]){
+		inodes[index]= to;
+		core_node->connect(index, to->core_node);
+	}
+}
+void Node_Item::disconnect(int index){
+	if(inodes[index]){
+		inodes[index]= nullptr;
+		core_node->disconnect(index);
+	}
+}
+bool Node_Item::is_looping(Node_Item* source)const{
+	if(this==source) return true;
+	for(const auto n: inodes)
+		if(n && n->is_looping(source))
+			return true;
+	return false;
+}
 void Node_Item::draw_body()const{
 	fl_color(color());
 	const int W= _w/5,                   X1= _x+W, X3= _x+_w-2*W, X4= X3+W;
@@ -42,8 +63,8 @@ void Node_Item::draw()const{
 	draw_body();
 	fl_line_style(0);
 	fl_color(FL_BLACK);
-	for(float i=1; i<inodes.size()+1; i++){
-		const int Y= _y+i/(1+inodes.size())*_h;
+	for(float i=1; i<input_size()+1; i++){
+		const int Y= _y+i/(1+input_size())*_h;
 		fl_line(_x-socket_size, Y, _x, Y);
 		if(!inodes[i-1]){
 			if(is_hover() && socket_hover==i){
@@ -58,11 +79,11 @@ void Node_Item::draw()const{
 			}else
 				fl_circle(_x-socket_size-head_size,Y, head_size);
 		}else{
-			const Node_Item* n= (Node_Item*)inodes[i-1];
+			const Node_Item* n= inodes[i-1];
 			fl_line(_x-socket_size,Y, n->x()+n->w()+socket_size, n->y()+n->h()/2);
 		}
 	}
-	if(hasOutput) fl_line(_x+_w, _y+_h/2, _x+_w+socket_size, _y+_h/2);
+	if(hasOutput()) fl_line(_x+_w, _y+_h/2, _x+_w+socket_size, _y+_h/2);
 	fl_line_style(0);
 }
 bool Node_Item::inside(int x, int y)const{

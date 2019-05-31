@@ -18,7 +18,7 @@ private:
 #include <iostream>
 #include <dlfcn.h>
 #include <gui/toolbox/toolbox.h>
-#include <core/resources.h>
+#include <resources.h>
 
 typedef _Plugin* create_t();
 typedef void destroy_t(_Plugin*);

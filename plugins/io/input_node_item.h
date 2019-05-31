@@ -1,4 +1,5 @@
 #include <gui/node_item.h>
+#include "input_node.h"
 
 class X_Node_Item : public Node_Item{
 public:

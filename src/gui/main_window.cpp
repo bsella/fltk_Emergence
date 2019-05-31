@@ -4,7 +4,7 @@
 #include <FL/Fl_Double_Window.H>
 #include "gui/workspace.h"
 #include "gui/toolbox/toolbox.h"
-#include "core/resources.h"
+#include "resources.h"
 
 const unsigned int Main_Window::menu_bar_height = 30;
 Main_Window::Main_Window(int _w, int _h):Fl_Double_Window(_w, _h, "Emergence"){

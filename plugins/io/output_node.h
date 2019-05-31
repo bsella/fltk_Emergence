@@ -5,5 +5,5 @@ public:
    	Output_Node();
 	static Node* make(void*);
 private:
-	//void kernel()const override;
+	void kernel()override;
 };

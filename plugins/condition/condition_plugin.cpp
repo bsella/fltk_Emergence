@@ -2,8 +2,8 @@
 #include <gui/main_window.h>
 #include <gui/toolbox/toolbox.h>
 #include <FL/Fl_Menu_Bar.H>
-#include "if_node.h"
-#include <core/resources.h>
+#include "if_node_item.h"
+#include <resources.h>
 
 class Condition_Plugin : public _Plugin{
 public:

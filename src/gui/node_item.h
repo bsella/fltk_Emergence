@@ -1,26 +1,33 @@
 #pragma once
 #include <vector>
-#include "core/node.h"
 #include "gui/item.h"
 #include <FL/fl_draw.H>
 class Fl_Menu_Item;
+class Node;
 class Node_Item;
-
 typedef Node_Item* (*make_node_item_t)(int,int,void*);
 
-class Node_Item : public Node, public Item{
+class Node_Item : public Item{
 public:
-	Node_Item(int x, int y, int w, int h, int n, bool hasOutput=true);
+	Node_Item(int x, int y, int w, int h, Node* n);
 	virtual ~Node_Item();
 
 	void draw()const;
 	static make_node_item_t dnd_node_factory;
+	void connect(int, Node_Item*);
+	void disconnect(int);
+	bool is_looping(Node_Item*)const;
+
 protected:
 	virtual void context_menu(std::vector<Fl_Menu_Item>&);
 	virtual bool inside(int,int)const;
 	virtual void draw_body()const;
 
 private:
+	Node* core_node;
+	inline int input_size()const{return core_node->inodes.size();}
+	inline bool hasOutput()const{return core_node->hasOutput;}
+	std::vector<Node_Item*> inodes;
 	static const int socket_size, head_size;
 	static int socket_hover, socket_x, socket_y;
 	static bool socket_drag;
@@ -33,10 +40,3 @@ private:
 
 	friend class Workspace;
 };
-
-
-//struct node_item_dnd_d{
-//	make_node_item_t factory;
-//	int x; int y;
-//	void* data;
-//};

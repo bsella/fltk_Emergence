@@ -4,7 +4,7 @@
 #include <FL/Fl_Menu_Bar.H>
 #include "input_node_item.h"
 #include "output_node_item.h"
-#include <core/resources.h>
+#include <resources.h>
 
 class Io_Plugin : public _Plugin{
 public:

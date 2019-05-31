@@ -1,8 +1,8 @@
 #include "input_node_item.h"
 
-X_Node_Item::X_Node_Item(int x, int y): Node_Item(x,y,70,50,0){}
-Y_Node_Item::Y_Node_Item(int x, int y): Node_Item(x,y,70,50,0){}
-Ratio_Node_Item::Ratio_Node_Item(int x, int y): Node_Item(x,y,70,50,0){}
+X_Node_Item::X_Node_Item(int x, int y): Node_Item(x,y,70,50, new X_Node){}
+Y_Node_Item::Y_Node_Item(int x, int y): Node_Item(x,y,70,50, new Y_Node){}
+Ratio_Node_Item::Ratio_Node_Item(int x, int y): Node_Item(x,y,70,50, new Ratio_Node){}
 
 Node_Item* X_Node_Item::make(int x, int y, void*){
 	return new X_Node_Item(x,y);

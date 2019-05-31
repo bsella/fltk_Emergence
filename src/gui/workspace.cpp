@@ -97,7 +97,9 @@ void Workspace::mouse_drag_event(int dx, int dy, int button){
 	if(Node_Item::socket_drag && button==FL_LEFT_MOUSE){
 		for(const auto i: *items){
 			Node_Item* n= ((Node_Item*)i);
-			if(n->Item::inside(Fl::event_x(), Fl::event_y()) && !n->is_looping((Node_Item*)hover) && n->hasOutput){
+			if(!n->hasOutput()) continue;
+			if(!n->Item::inside(Fl::event_x(), Fl::event_y())) continue;
+			if(!n->is_looping((Node_Item*)hover)){
 				if(n==hover_to) return;
 				Node_Item::socket_x= n->x()+n->w()+Node_Item::socket_size*2;
 				Node_Item::socket_y= n->y()+n->h()/2;
