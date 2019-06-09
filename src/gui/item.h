@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "core/node.h"
+
 class Item{
 public:
 	Item(int x, int y, int w, int h);

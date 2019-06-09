@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
 #include "gui/item.h"
+#include "core/node.h"
 #include <FL/fl_draw.H>
 class Fl_Menu_Item;
-class Node;
 class Node_Item;
 typedef Node_Item* (*make_node_item_t)(int,int,void*);
 
@@ -19,12 +19,12 @@ public:
 	bool is_looping(Node_Item*)const;
 
 protected:
+	Node* core_node;
 	virtual void context_menu(std::vector<Fl_Menu_Item>&);
 	virtual bool inside(int,int)const;
 	virtual void draw_body()const;
 
 private:
-	Node* core_node;
 	inline int input_size()const{return core_node->inodes.size();}
 	inline bool hasOutput()const{return core_node->hasOutput;}
 	std::vector<Node_Item*> inodes;

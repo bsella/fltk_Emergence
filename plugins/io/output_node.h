@@ -6,4 +6,5 @@ public:
 	static Node* make(void*);
 private:
 	void kernel()override;
+	void connect(int, Node*)override;
 };

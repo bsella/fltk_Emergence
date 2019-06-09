@@ -124,7 +124,6 @@ void Workspace::mouse_drag_event(int dx, int dy, int button){
 	}
 	redraw();
 }
-#include <iostream>
 void Workspace::dnd_enter_event(int x, int y){
 	make_node_item_t make = Node_Item::dnd_node_factory;
 	hover= make(x,y,nullptr);

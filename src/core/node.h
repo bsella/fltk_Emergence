@@ -1,19 +1,30 @@
 #pragma once
 #include <vector>
-#include "data_t.h"
+#include <list>
+class Data_t;
 
 class Node{
 public:
 	Node(int, bool hasOutput=true);
     ~Node();
 	const bool hasOutput;
-    void connect(int,Node*);
+    virtual void connect(int,Node*);
 	void disconnect(int);
-protected:
 	Data_t* cache;
+	bool valid;
+	virtual void prepare_program(std::vector<Node*>& program)const;
 	virtual void kernel()=0;
+
+protected:
     std::vector<Node*> inodes;
     bool is_looping(Node*)const;
+
+	bool uniform= false;
+
+private:
+	std::list<Node*> onodes;
+	void update_valid();
+	void update_uniform();
 
 	friend class Node_Item;
 };
