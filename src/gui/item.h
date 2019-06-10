@@ -16,7 +16,7 @@ public:
 	bool inside(int,int,int,int)const;
 
 	void move(int,int);
-	void scale(float);
+	virtual void scale(float);
 
 	inline void set_hover()          {flags|=1;}
 	inline void reset_hover()        {flags&=254;}

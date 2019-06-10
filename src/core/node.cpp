@@ -11,22 +11,8 @@ void Node::connect(int input, Node* to){
 	if(!inodes[input])
 		inodes[input]=to;
 	to->onodes.push_back(this);
-	uniform= true;
-	valid= true;
-	for(const auto n : inodes)
-		if(!n){
-			uniform= false;
-			valid= false;
-			break;
-		}
-		else{
-			if(!n->uniform) uniform= false;
-			if(!n->valid)   valid=   false;
-		}
-	for(auto n : onodes){
-		n->update_valid();
-		n->update_uniform();
-	}
+	update_valid();
+	update_uniform();
 }
 void Node::disconnect(int input){
 	if(inodes[input]){
@@ -43,22 +29,22 @@ void Node::disconnect(int input){
 void Node::update_valid(){
 	valid= true;
 	for(const auto n: inodes)
-		if(!n->valid){
+		if(!n || !n->valid){
 			valid= false;
 			break;
 		}
 	for(auto n: onodes)
-		n->update_valid();
+		if(n) n->update_valid();
 }
 void Node::update_uniform(){
 	uniform= true;
 	for(const auto n: inodes)
-		if(!n->uniform){
+		if(!n || !n->uniform){
 			uniform= false;
 			break;
 		}
 	for(auto n: onodes)
-		n->update_uniform();
+		if(n) n->update_uniform();
 }
 bool Node::is_looping(Node* source)const{
 	if(this==source) return true;
