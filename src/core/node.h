@@ -13,7 +13,7 @@ public:
 	Data_t* cache;
 	bool valid;
 	virtual void prepare_program(std::vector<Node*>& program)const;
-	virtual void kernel()=0;
+	virtual void update_cache()=0;
 
 protected:
     std::vector<Node*> inodes;

@@ -5,7 +5,7 @@ If_Node::If_Node():Node(3){}
 
 Node* If_Node::make(void*){return new If_Node;}
 
-void If_Node::kernel(){
+void If_Node::update_cache(){
 	//if((bool)*cache)
 	//	cache= then_program->execute();
 	//else

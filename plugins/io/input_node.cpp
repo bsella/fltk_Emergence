@@ -1,37 +1,24 @@
 #include "input_node.h"
-#include <core/real_t.h>
 
-double input_x;
-double input_y;
-double input_ratio;
+Real_t input_x;
+Real_t input_y;
+Real_t input_ratio;
 
 X_Node::X_Node(): Node(0){
-	cache = new Real_t;
+	cache = &input_x;
 }
 Y_Node::Y_Node(): Node(0){
-	cache = new Real_t;
+	cache = &input_y;
 }
 Ratio_Node::Ratio_Node(): Node(0){
-	cache = new Real_t;
+	cache = &input_ratio;
 	uniform= true;
 }
 
-X_Node::~X_Node(){
-	delete cache;
-}
-Y_Node::~Y_Node(){
-	delete cache;
-}
-Ratio_Node::~Ratio_Node(){
-	delete cache;
-}
+void X_Node::update_cache(){}
+void Y_Node::update_cache(){}
+void Ratio_Node::update_cache(){}
 
-void X_Node::kernel(){
-	*(Real_t*)cache = input_x;
-}
-void Y_Node::kernel(){
-	*(Real_t*)cache = input_y;
-}
-void Ratio_Node::kernel(){
-	*(Real_t*)cache = input_ratio;
-}
+void X_Node::prepare_program(std::vector<Node*>&)const{}
+void Y_Node::prepare_program(std::vector<Node*>&)const{}
+void Ratio_Node::prepare_program(std::vector<Node*>&)const{}

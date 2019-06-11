@@ -7,6 +7,7 @@ public:
 	static Node* make(void*);
 	std::vector<Node*> program;
 private:
-	void kernel()override;
+	void update_cache()override;
 	void connect(int, Node*)override;
+	void prepare_program(std::vector<Node*>&)const override;
 };

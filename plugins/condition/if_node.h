@@ -6,6 +6,6 @@ public:
    	If_Node();
 	static Node* make(void*);
 private:
-	void kernel()override;
+	void update_cache()override;
 	void prepare_program(std::vector<Node*>& program)const override;
 };
