@@ -20,4 +20,9 @@ add_library(real
 	real_t.cpp
 )
 
-target_link_libraries(core -Wl,--whole-archive data real -Wl,--no-whole-archive)
+add_library(bool
+	bool_t.h
+	bool_t.cpp
+)
+
+target_link_libraries(core -Wl,--whole-archive data real bool -Wl,--no-whole-archive)

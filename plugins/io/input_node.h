@@ -12,7 +12,7 @@ public:
 	static Node* make(void*);
 private:
 	void update_cache()override;
-	void prepare_program(std::vector<Node*>&)const override;
+	void prepare_program(std::vector<Node*>&) override;
 };
 
 class Y_Node : public Node{
@@ -21,7 +21,7 @@ public:
 	static Node* make(void*);
 private:
 	void update_cache()override;
-	void prepare_program(std::vector<Node*>&)const override;
+	void prepare_program(std::vector<Node*>&) override;
 };
 
 class Ratio_Node : public Node{
@@ -30,5 +30,5 @@ public:
 	static Node* make(void*);
 private:
 	void update_cache()override;
-	void prepare_program(std::vector<Node*>&)const override;
+	void prepare_program(std::vector<Node*>&) override;
 };

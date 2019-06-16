@@ -19,6 +19,6 @@ void X_Node::update_cache(){}
 void Y_Node::update_cache(){}
 void Ratio_Node::update_cache(){}
 
-void X_Node::prepare_program(std::vector<Node*>&)const{}
-void Y_Node::prepare_program(std::vector<Node*>&)const{}
-void Ratio_Node::prepare_program(std::vector<Node*>&)const{}
+void X_Node::prepare_program(std::vector<Node*>&){}
+void Y_Node::prepare_program(std::vector<Node*>&){}
+void Ratio_Node::prepare_program(std::vector<Node*>&){}

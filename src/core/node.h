@@ -6,24 +6,24 @@ class Data_t;
 class Node{
 public:
 	Node(int, bool hasOutput=true);
-    ~Node();
+    virtual ~Node();
 	const bool hasOutput;
-    virtual void connect(int,Node*);
+    void connect(int,Node*);
 	void disconnect(int);
 	Data_t* cache;
 	bool valid;
-	virtual void prepare_program(std::vector<Node*>& program)const;
+	virtual void prepare_program(std::vector<Node*>& program);
 	virtual void update_cache()=0;
 
 protected:
     std::vector<Node*> inodes;
     bool is_looping(Node*)const;
 
+	virtual void update_valid();
 	bool uniform= false;
 
 private:
 	std::list<Node*> onodes;
-	void update_valid();
 	void update_uniform();
 
 	friend class Node_Item;

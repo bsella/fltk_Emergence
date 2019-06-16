@@ -6,8 +6,9 @@ public:
    	Output_Node();
 	static Node* make(void*);
 	std::vector<Node*> program;
+	Node* first;
 private:
 	void update_cache()override;
-	void connect(int, Node*)override;
-	void prepare_program(std::vector<Node*>&)const override;
+	void update_valid()override;
+	void prepare_program(std::vector<Node*>&) override;
 };

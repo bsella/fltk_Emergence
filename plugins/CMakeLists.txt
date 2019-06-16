@@ -5,4 +5,4 @@ add_definitions(-DEMERGENCE_PLUGIN)
 set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -pedantic -Wextra -fPIC")
 
 add_subdirectory(io)
-add_subdirectory(condition)
+add_subdirectory(compare)

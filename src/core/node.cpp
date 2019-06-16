@@ -53,9 +53,9 @@ bool Node::is_looping(Node* source)const{
 			return true;
 	return false;
 }
-void Node::prepare_program(std::vector<Node*>& program)const{
+void Node::prepare_program(std::vector<Node*>& program){
 	if(!uniform)
 		for(auto n : inodes)
 			n->prepare_program(program);
-	program.push_back((Node*)this);
+	program.push_back(this);
 }

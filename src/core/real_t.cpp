@@ -1,6 +1,6 @@
 #include "real_t.h"
 
-Real_t::Real_t(double d){
+Real_t::Real_t(double d):Data_t(real_t_id){
 	value= d;
 }
 unsigned Real_t::to_color()const{
@@ -9,6 +9,3 @@ unsigned Real_t::to_color()const{
 	const unsigned char c= value*0xff;
 	return (((((c<<8) | c) << 8) | c) << 8) | 0xff;
 }
-//void Real_t::operator =(double d){
-//	value=d;
-//}

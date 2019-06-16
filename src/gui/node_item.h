@@ -14,7 +14,7 @@ public:
 
 	void draw()const;
 	static make_node_item_t dnd_node_factory;
-	virtual void connect(int, Node_Item*);
+	void connect(int, Node_Item*);
 	void disconnect(int);
 	bool is_looping(Node_Item*)const;
 
