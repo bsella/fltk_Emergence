@@ -6,7 +6,7 @@ Item::Item(int x, int y, int w, int h):_x(x),_y(y),width(w),height(h){
 }
 Item::~Item(){}
 bool Item::inside(int x, int y)const{
-	return y>_y && y<_y+_h && x<_x+_w && x>_x;
+	return y>_y && y<_y+h() && x<_x+w() && x>_x;
 }
 bool Item::inside(int x1, int y1, int x2, int y2)const{
 	if(x1>x2)std::swap(x1,x2);

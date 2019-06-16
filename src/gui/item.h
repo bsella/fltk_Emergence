@@ -7,8 +7,8 @@ public:
 	virtual ~Item();
 	inline int x()const{return _x;}
 	inline int y()const{return _y;}
-	inline int w()const{return _w;}
-	inline int h()const{return _h;}
+	virtual inline int w()const{return _w;}
+	virtual inline int h()const{return _h;}
 	void set_pos(int,int);
 	int _x,_y, _w,_h;
 

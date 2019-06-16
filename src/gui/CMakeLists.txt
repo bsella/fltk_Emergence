@@ -34,7 +34,12 @@ add_library(toolbox
 	toolbox/toolbox.h
 	toolbox/toolbox_item.cpp
 	toolbox/toolbox_item.h
+	toolbox/toolbox_category.cpp
+	toolbox/toolbox_category.h
+	toolbox/toolbox_node_item.cpp
+	toolbox/toolbox_node_item.h
 )
 target_link_libraries(toolbox graphics_view)
 
-target_link_libraries(gui workspace toolbox ${FLTK_LIBRARIES})
+target_link_libraries(gui -Wl,--whole-archive workspace toolbox -Wl,--no-whole-archive ${FLTK_LIBRARIES})
+#target_link_libraries(gui workspace toolbox ${FLTK_LIBRARIES})

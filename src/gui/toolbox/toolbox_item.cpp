@@ -1,10 +1,8 @@
 #include "toolbox_item.h"
 #include <FL/fl_draw.H>
-#include <FL/Fl.H>
 
-const unsigned int Toolbox_Item::h= 36;
-Toolbox_Item::Toolbox_Item(int y, make_node_item_t factory, const char* text, const char* icon_path)
-	:Item(0, y, 0, h), factory(factory), text(text){
+Toolbox_Item::Toolbox_Item(int h, const char* text, const char* icon_path)
+	:Item(0, 0, 0, h), text(text){
 	icon= new Fl_PNG_Image(icon_path);
 }
 Toolbox_Item::~Toolbox_Item(){
@@ -15,12 +13,4 @@ void Toolbox_Item::draw()const{
 	fl_color(FL_BLACK);
 	fl_draw(text, _x+36, _y+_h/2+4);
 	icon->draw(_x+4, _y+_h/2- icon->h()/2);
-}
-void Toolbox_Item::mouse_enter_event(int,int){
-}
-void Toolbox_Item::mouse_leave_event(){
-}
-void Toolbox_Item::mouse_drag_event(int,int){
-	Node_Item::dnd_node_factory = factory;
- 	Fl::dnd();
 }
