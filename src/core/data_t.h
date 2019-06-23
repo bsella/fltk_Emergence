@@ -2,9 +2,9 @@
 
 class Data_t{
 public:
-	const unsigned type_id;
-	template<typename T> explicit operator T()const;
+	virtual explicit operator bool()const;
+	virtual explicit operator double()const;
+	virtual bool operator ==(const Data_t&)const;
 	virtual unsigned to_color()const=0;
-	Data_t(unsigned);
 	virtual ~Data_t();
 };

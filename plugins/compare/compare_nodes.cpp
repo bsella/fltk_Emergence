@@ -34,62 +34,14 @@ Node* EQ_Node::make(void*){return new EQ_Node;}
 Node* NE_Node::make(void*){return new NE_Node;}
 
 void GT_Node::update_cache(){
-	switch(inodes[0]->cache->type_id){
-		case real_t_id:
-			if(inodes[1]->cache->type_id == real_t_id){
-				*(Bool_t*)cache= ((Real_t*)inodes[0]->cache)->value>((Real_t*)inodes[1]->cache)->value;
-				return;
-			}
-			break;
-		default:break;
-	}
-	*(Bool_t*)cache=false;
+	*(Bool_t*)cache=(double)*inodes[0]->cache > (double)*inodes[1]->cache;
 }
 void LT_Node::update_cache(){
-	switch(inodes[0]->cache->type_id){
-		case real_t_id:
-			if(inodes[1]->cache->type_id == real_t_id){
-				*(Bool_t*)cache= ((Real_t*)inodes[0]->cache)->value<((Real_t*)inodes[1]->cache)->value;
-				return;
-			}
-			break;
-		default:break;
-	}
-	*(Bool_t*)cache=false;
+	*(Bool_t*)cache=(double)*inodes[0]->cache < (double)*inodes[1]->cache;
 }
 void EQ_Node::update_cache(){
-	switch(inodes[0]->cache->type_id){
-		case real_t_id:
-			if(inodes[1]->cache->type_id == real_t_id){
-				*(Bool_t*)cache= ((Real_t*)inodes[0]->cache)->value==((Real_t*)inodes[1]->cache)->value;
-				return;
-			}
-			break;
-		case bool_t_id:
-			if(inodes[1]->cache->type_id == bool_t_id){
-				*(Bool_t*)cache= ((Bool_t*)inodes[0]->cache)->value==((Bool_t*)inodes[1]->cache)->value;
-				return;
-			}
-			break;
-		default:break;
-	}
-	*(Bool_t*)cache=false;
+	*(Bool_t*)cache= *inodes[0]->cache == *inodes[1]->cache;
 }
 void NE_Node::update_cache(){
-	switch(inodes[0]->cache->type_id){
-		case real_t_id:
-			if(inodes[1]->cache->type_id == real_t_id){
-				*(Bool_t*)cache= ((Real_t*)inodes[0]->cache)->value!=((Real_t*)inodes[1]->cache)->value;
-				return;
-			}
-			break;
-		case bool_t_id:
-			if(inodes[1]->cache->type_id == bool_t_id){
-				*(Bool_t*)cache= ((Bool_t*)inodes[0]->cache)->value!=((Bool_t*)inodes[1]->cache)->value;
-				return;
-			}
-			break;
-		default:break;
-	}
-	*(Bool_t*)cache=false;
+	*(Bool_t*)cache= !(*inodes[0]->cache == *inodes[1]->cache);
 }
