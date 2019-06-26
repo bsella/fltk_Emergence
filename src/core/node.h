@@ -10,7 +10,7 @@ public:
 	const bool hasOutput;
     void connect(int,Node*);
 	void disconnect(int);
-	Data_t* cache;
+	Data_t* cache= nullptr;
 	bool valid;
 	virtual void prepare_program(std::vector<Node*>& program);
 	virtual void update_cache()=0;

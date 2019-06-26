@@ -20,6 +20,7 @@ protected:
 	virtual void mouse_wheel_event(int,int);
 	virtual void dnd_enter_event(int,int);
 	virtual void dnd_drag_event(int,int);
+	virtual void dnd_drop_event(int,int);
 	virtual void dnd_leave_event();
 	virtual void draw()override;
 

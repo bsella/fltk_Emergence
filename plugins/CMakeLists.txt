@@ -6,3 +6,4 @@ set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -pedantic -Wextra -fPIC")
 
 add_subdirectory(io)
 add_subdirectory(compare)
+add_subdirectory(color)

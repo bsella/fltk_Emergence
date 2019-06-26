@@ -164,3 +164,4 @@ void Node_Item::context_menu(std::vector<Fl_Menu_Item>& menu){
 	
 	menu.push_back({});
 }
+bool Node_Item::settle(){return true;}

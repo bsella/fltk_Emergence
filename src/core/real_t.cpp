@@ -10,3 +10,6 @@ unsigned Real_t::to_color()const{
 	return (((((c<<8) | c) << 8) | c) << 8) | 0xff;
 }
 Real_t::operator bool()const{return value!=0.0;}
+Real_t::operator unsigned()const{
+	return to_color();
+}

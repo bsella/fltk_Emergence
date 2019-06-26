@@ -20,6 +20,7 @@ private:
 	void mouse_drag_event(int,int,int)override;
 	void dnd_enter_event(int,int)override;
 	void dnd_drag_event(int,int)override;
+	void dnd_drop_event(int,int)override;
 	void dnd_leave_event()override;
 	void mouse_wheel_event(int,int)override;
 };

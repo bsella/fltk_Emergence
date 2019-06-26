@@ -38,5 +38,7 @@ private:
 	void mouse_move_event(int,int)override;
 	void mouse_click_event(int,int,int)override;
 
+	virtual bool settle();
+
 	friend class Workspace;
 };

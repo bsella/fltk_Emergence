@@ -7,3 +7,4 @@ unsigned Bool_t::to_color()const{
 	return value? 0xffffffff : 0x000000ff;
 }
 Bool_t::operator double()const{return value? 1.0:0.0;}
+Bool_t::operator unsigned()const{return to_color();}

@@ -1,12 +1,16 @@
 #include "data_t.h"
+#include <stdlib.h>
 
 Data_t::~Data_t(){}
 Data_t::operator bool()const{
-	return false;
+	return rand();
 }
 Data_t::operator double()const{
-	return 0.0;
+	return rand();
+}
+Data_t::operator unsigned()const{
+	return rand();
 }
 bool Data_t::operator ==(const Data_t&)const{
-	return false;
+	return rand();
 }

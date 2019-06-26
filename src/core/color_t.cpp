@@ -1,0 +1,22 @@
+#include "color_t.h"
+
+Color_t::Color_t(unsigned color){
+	r= (color>>24) /255.0f;
+	g= (color>>16 & 0x000ff00) /255.0f;
+	b= (color>>8  & 0x00000ff) /255.0f;
+}
+Color_t::Color_t(float r, float g, float b){
+	this->r= r;
+	this->g= g;
+	this->b= b;
+}
+unsigned Color_t::to_color()const{
+	const unsigned char temp_r = r*255;
+	const unsigned char temp_g = g*255;
+	const unsigned char temp_b = b*255;
+	return ((((temp_r<<8) | temp_g) << 8) | temp_b) << 8;
+}
+Color_t::operator bool()const{return true;}
+Color_t::operator double()const{return (r+g+b)/3;}
+Color_t::operator unsigned()const{return to_color();}
+

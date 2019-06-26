@@ -67,6 +67,9 @@ int Graphics_View::handle(int e){
 	case FL_DND_DRAG:
 		dnd_drag_event(Fl::event_x(), Fl::event_y());
 		return 1;
+	case FL_DND_RELEASE:
+		dnd_drop_event(Fl::event_x(), Fl::event_y());
+		break;
 	case FL_DND_LEAVE:
 		dnd_leave_event();
 		return 1;
@@ -106,5 +109,6 @@ void Graphics_View::mouse_release_event(int){
 }
 void Graphics_View::dnd_enter_event(int,int){}
 void Graphics_View::dnd_drag_event(int,int){}
+void Graphics_View::dnd_drop_event(int,int){}
 void Graphics_View::dnd_leave_event(){}
 void Graphics_View::mouse_wheel_event(int, int){}
