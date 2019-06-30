@@ -1,4 +1,5 @@
 #include "if_node_item.h"
+#include <FL/fl_draw.H>
 
 If_Node_Item::If_Node_Item(int x, int y): Node_Item(x,y,50,100, new If_Node){}
 
@@ -13,7 +14,7 @@ void If_Node_Item::draw_body()const{
 	fl_draw("else", _x+_w/2-14, _y+3*_h/4+6);
 }
 
-Fl_Color If_Node_Item::color()const{
+unsigned int If_Node_Item::color()const{
 	return 0xb4b4ffff;
 }
 

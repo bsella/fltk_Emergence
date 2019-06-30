@@ -1,4 +1,5 @@
 #include "input_node_item.h"
+#include <FL/fl_draw.H>
 
 X_Node_Item::X_Node_Item(int x, int y): Node_Item(x,y,70,50, new X_Node){}
 Y_Node_Item::Y_Node_Item(int x, int y): Node_Item(x,y,70,50, new Y_Node){}

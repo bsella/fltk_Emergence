@@ -2,10 +2,12 @@
 #include <FL/Fl.H>
 #include "gui/node_item.h"
 #include <algorithm>
+#include <FL/fl_draw.H>
 
 Workspace::Workspace(int x, int y, int w, int h): Graphics_View(x,y,w,h){
 	items = new std::list<Item*>;
 	zoom=1;
+	Fl::visual(FL_DOUBLE|FL_RGB);
 }
 Workspace::~Workspace(){
 	delete items;

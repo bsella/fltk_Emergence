@@ -7,5 +7,5 @@ public:
 	static Node_Item* make(int,int,void*);
 private:
 	void draw_body()const override;
-	Fl_Color color()const override;
+	unsigned int color()const override;
 };

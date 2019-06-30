@@ -2,7 +2,6 @@
 #include <vector>
 #include "gui/item.h"
 #include "core/node.h"
-#include <FL/fl_draw.H>
 class Fl_Menu_Item;
 class Node_Item;
 typedef Node_Item* (*make_node_item_t)(int,int,void*);
@@ -31,7 +30,7 @@ private:
 	static const int socket_size, head_size;
 	static int socket_hover, socket_x, socket_y;
 	static bool socket_drag;
-	virtual Fl_Color color()const;
+	virtual unsigned int color()const;
 
 	void mouse_enter_event(int,int)override;
 	void mouse_leave_event()override;

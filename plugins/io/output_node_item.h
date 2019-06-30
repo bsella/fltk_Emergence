@@ -7,7 +7,7 @@ public:
 private:
 	bool image_valid= false;
 	void draw_body()const override;
-	std::vector<unsigned int> image;
+	std::vector<unsigned int> draw_buffer;
 	void update_image();
 	void scale(float)override;
 };

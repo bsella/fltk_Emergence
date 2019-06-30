@@ -6,9 +6,13 @@
 
 Color_Node_Item::Color_Node_Item(int x, int y): Node_Item(x, y, 16, 16, new Color_Node){}
 
-Fl_Color Color_Node_Item::color()const{
-	if(core_node->cache)
-		return core_node->cache->to_color();
+unsigned int Color_Node_Item::color()const{
+	if(core_node->cache){
+		const unsigned char temp_r = ((Color_t*)core_node->cache)->r*255;
+		const unsigned char temp_g = ((Color_t*)core_node->cache)->g*255;
+		const unsigned char temp_b = ((Color_t*)core_node->cache)->b*255;
+		return (((((temp_r<<8) | temp_g) << 8) | temp_b) << 8) | 0xff;
+	}
 	return 0;
 }
 void Color_Node_Item::draw_body()const{

@@ -6,7 +6,7 @@ public:
 	Color_Node_Item(int, int);
 	static Node_Item* make(int,int,void*);
 protected:
-	Fl_Color color()const override;
+	unsigned int color()const override;
 	void draw_body()const override;
 	bool settle()override;
 };
