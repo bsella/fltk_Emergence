@@ -37,7 +37,7 @@ protected:
 	virtual void mouse_click_event(int,int,int);
 
 private:
-	unsigned char flags; // 1:hover 2:select
+	unsigned char flags=0; // 1:hover 2:select
 
 	virtual void draw()const=0;
 

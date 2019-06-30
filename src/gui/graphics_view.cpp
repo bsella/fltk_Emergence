@@ -9,7 +9,6 @@ Graphics_View::Graphics_View(int x, int y, int w, int h): Fl_Widget(x,y,w,h){
 }
 Graphics_View::~Graphics_View(){
 }
-Item* Graphics_View::hover=nullptr;
 void Graphics_View::draw(){
 	fl_draw_box(box(), x(), y(), w(), h(), color());
 	if(!items) return;
@@ -30,8 +29,13 @@ int Graphics_View::handle(int e){
 	static int tmp_x, tmp_y, dx, dy;
 	static bool click= false;
 	switch(e){
+	case FL_LEAVE:
+		mouse_leave_event();
+		hover=nullptr;
+		return 1;
 	case FL_ENTER:
 		Fl::belowmouse(this);
+		mouse_enter_event(Fl::event_x(), Fl::event_y());
 		return 1;
 	case FL_MOVE:
 		mouse_move_event(Fl::event_x(), Fl::event_y());
@@ -94,6 +98,14 @@ void Graphics_View::mouse_move_event(int x, int y){
 		hover=nullptr;
 		redraw();
 	}
+}
+void Graphics_View::mouse_enter_event(int x, int y){
+	mouse_move_event(x,y);
+	if(hover) hover->mouse_enter_event(x,y);
+}
+void Graphics_View::mouse_leave_event(){
+	if(hover) hover->mouse_leave_event();
+	redraw();
 }
 void Graphics_View::mouse_click_event(int x, int y, int button){
 	if(hover) hover->mouse_click_event(x,y, button);

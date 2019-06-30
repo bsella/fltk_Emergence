@@ -10,8 +10,10 @@ public:
 	void add_item(Item*);
 	void remove_item(Item*);
 protected:
-	static Item* hover;
+	Item* hover= nullptr;
 	std::list<Item*>* items= nullptr;
+	virtual void mouse_enter_event(int,int);
+	virtual void mouse_leave_event();
 	virtual void mouse_move_event(int,int);
 	virtual void mouse_click_event(int,int,int);
 	virtual void mouse_press_event(int,int,int);
