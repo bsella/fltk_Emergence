@@ -18,13 +18,6 @@ public:
 	void move(int,int);
 	virtual void scale(float);
 
-	inline void set_hover()          {flags|=1;}
-	inline void reset_hover()        {flags&=254;}
-	inline bool is_hover()      const{return flags&1;}
-	inline void set_selected()       {flags|=2;}
-	inline void reset_selected()     {flags&=253;}
-	inline bool is_selected()   const{return flags&2;}
-
 protected:
 	const int width, height;
 
@@ -37,8 +30,6 @@ protected:
 	virtual void mouse_click_event(int,int,int);
 
 private:
-	unsigned char flags=0; // 1:hover 2:select
-
 	virtual void draw()const=0;
 
 	friend class Graphics_View;

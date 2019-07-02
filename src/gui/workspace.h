@@ -9,7 +9,7 @@ public:
 	void add_node(Node_Item*);
 	void remove_node(Node_Item*);
 private:
-	std::list<Item*> selected;
+	std::list<Node_Item*> selected;
 	float zoom;
 	void draw()override;
 	void update_rubberband(int, int);

@@ -7,7 +7,6 @@
 Workspace::Workspace(int x, int y, int w, int h): Graphics_View(x,y,w,h){
 	items = new std::list<Item*>;
 	zoom=1;
-	Fl::visual(FL_DOUBLE|FL_RGB);
 }
 Workspace::~Workspace(){
 	delete items;
@@ -18,17 +17,19 @@ static int rb_to_x;
 static int rb_to_y;
 void Workspace::update_rubberband(int dx, int dy){
 	for(auto it=selected.rbegin(); it!=selected.rend(); it++)
-		if(!(*it)->inside(rb_from_x, rb_from_y, rb_to_x, rb_to_y)){
-			(*it)->reset_selected();
+		if(!(((Item*)*it))->inside(rb_from_x, rb_from_y, rb_to_x, rb_to_y)){
+			(*it)->selected= false;
 			selected.remove(*it);
 		}
 	if(items)
-	for(const auto i: *items)
+	for(const auto i: *items){
+		Node_Item* ni= (Node_Item*)i;
 		if(i->inside(rb_from_x, rb_from_y, rb_to_x, rb_to_y))
-			if(std::find(selected.begin(), selected.end(), i) == selected.end()){
-				selected.push_back(i);
-				i->set_selected();
+			if(std::find(selected.begin(), selected.end(), ni) == selected.end()){
+				selected.push_back(ni);
+				ni->selected= true;
 			}
+	}
 	rb_to_x+=dx;
 	rb_to_y+=dy;
 }
@@ -62,18 +63,18 @@ void Workspace::mouse_press_event(int x, int y, int button){
 			//fl_cursor(FL_CURSOR_MOVE);
 			items->remove(hover);
 			items->push_front(hover);
-			if(!hover->is_selected()){
+			if(!((Node_Item*)hover)->selected){
 				while(selected.size()){
-					(*selected.begin())->reset_selected();
+					(*selected.begin())->selected= false;
 					selected.erase(selected.begin());
 				}
-				selected.push_front(hover);
+				selected.push_front((Node_Item*)hover);
 			}
 		}
 		else{
 			if(button==FL_LEFT_MOUSE){
 				while(selected.size()){
-					(*selected.begin())->reset_selected();
+					(*selected.begin())->selected= false;
 					selected.erase(selected.begin());
 				}
 				rb_from_x= rb_to_x= x;

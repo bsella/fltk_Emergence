@@ -58,7 +58,7 @@ void Node_Item::draw_body()const{
 }
 void Node_Item::draw()const{
 	//if(_x+_w<0 || _y+_h<0) return;
-	if(is_selected() || (is_hover() && socket_hover==-1))
+	if(selected || (hover && socket_hover==-1))
 		fl_line_style(0,2);
 	else
 		fl_line_style(0);
@@ -69,7 +69,7 @@ void Node_Item::draw()const{
 		const int Y= _y+i/(1+input_size())*_h;
 		fl_line(_x-socket_size, Y, _x, Y);
 		if(!inodes[i-1]){
-			if(is_hover() && socket_hover==i){
+			if(hover && socket_hover==i){
 				fl_line_style(0,2);
 				if(socket_drag){
 					fl_circle(socket_x,socket_y, head_size);
@@ -107,14 +107,14 @@ int Node_Item::socket_x;
 int Node_Item::socket_y;
 bool Node_Item::socket_drag = false;
 void Node_Item::mouse_enter_event(int x, int y){
-	Item::mouse_enter_event(x,y);
+	hover= true;
 	if(x>=_x)
 		socket_hover=-1;
 	else
 		socket_hover=(y-_y+head_size)/(_h/(inodes.size()+1));
 }
 void Node_Item::mouse_leave_event(){
-	Item::mouse_leave_event();
+	hover= false;
 	socket_hover=0;
 }
 void Node_Item::mouse_move_event(int x,	int y){

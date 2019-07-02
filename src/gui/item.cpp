@@ -25,12 +25,8 @@ void Item::scale(float s){
 	_w=width*s;
 	_h=height*s;
 }
-void Item::mouse_enter_event(int,int){
-	set_hover();
-}
-void Item::mouse_leave_event(){
-	reset_hover();
-}
+void Item::mouse_enter_event(int,int){}
+void Item::mouse_leave_event(){}
 void Item::mouse_move_event(int,int){}
 void Item::mouse_press_event(int,int){}
 void Item::mouse_release_event(){}

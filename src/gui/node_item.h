@@ -24,6 +24,7 @@ protected:
 	virtual void draw_body()const;
 
 private:
+	bool hover=false, selected=false;
 	inline int input_size()const{return core_node->inodes.size();}
 	inline bool hasOutput()const{return core_node->hasOutput;}
 	std::vector<Node_Item*> inodes;
