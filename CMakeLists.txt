@@ -16,5 +16,4 @@ add_subdirectory(src/gui)
 add_subdirectory(src/core)
 add_subdirectory(plugins)
 
-set(CMAKE_EXE_LINKER_FLAGS "-ldl")
-target_link_libraries(Emergence gui core)
+target_link_libraries(Emergence gui core -ldl)

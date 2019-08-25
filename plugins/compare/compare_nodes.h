@@ -1,37 +1,39 @@
 #include <core/node.h>
 
-class GT_Node : public Node{
+class Compare_Node : public Node{
 public:
-	GT_Node();
-	~GT_Node()override;
-	static Node* make(void*);
-private:
+	Compare_Node();
+	virtual ~Compare_Node();
+protected:
+	void (*update_func)(Node**, void*);
+	virtual void compile(std::vector<Node*>&)=0;
 	void update_cache()override;
 };
 
-class LT_Node : public Node{
+class GT_Node : public Compare_Node{
 public:
-	LT_Node();
-	~LT_Node()override;
 	static Node* make(void*);
 private:
-	void update_cache()override;
+	void compile(std::vector<Node*>&)override;
 };
 
-class EQ_Node : public Node{
+class LT_Node : public Compare_Node{
 public:
-	EQ_Node();
-	~EQ_Node()override;
 	static Node* make(void*);
 private:
-	void update_cache()override;
+	void compile(std::vector<Node*>&)override;
 };
 
-class NE_Node : public Node{
+class EQ_Node : public Compare_Node{
 public:
-	NE_Node();
-	~NE_Node()override;
 	static Node* make(void*);
 private:
-	void update_cache()override;
+	void compile(std::vector<Node*>&)override;
+};
+
+class NE_Node : public Compare_Node{
+public:
+	static Node* make(void*);
+private:
+	void compile(std::vector<Node*>&)override;
 };

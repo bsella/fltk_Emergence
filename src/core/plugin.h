@@ -6,6 +6,7 @@ class Plugin {
 public:
 	Plugin(const std::string&);
 	~Plugin();
+	void init_core();
 	void init_gui(Main_Window*);
 
 private:
@@ -48,6 +49,9 @@ Plugin::Plugin(const std::string& path){
 Plugin::~Plugin(){
 	destroy_function(plugin);
 	dlclose(lib);
+}
+void Plugin::init_core(){
+	plugin->init_core(nullptr);
 }
 void Plugin::init_gui(Main_Window* mw){
 	plugin->init_gui(mw);

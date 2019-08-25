@@ -4,7 +4,7 @@
 #include <FL/fl_draw.H>
 
 const int Node_Item::socket_size=5;
-const int Node_Item::head_size=5;
+const int Node_Item::head_size=8;
 make_node_item_t Node_Item::dnd_node_factory;
 Fl_Color Node_Item::color()const{
 	return FL_GRAY;

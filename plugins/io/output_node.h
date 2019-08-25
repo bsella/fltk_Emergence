@@ -10,5 +10,5 @@ public:
 private:
 	void update_cache()override;
 	void update_valid()override;
-	void prepare_program(std::vector<Node*>&) override;
+	void compile(std::vector<Node*>&) override;
 };

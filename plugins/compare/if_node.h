@@ -8,5 +8,5 @@ private:
 	std::vector<Node*> then_program;
 	std::vector<Node*> else_program;
 	void update_cache()override;
-	void prepare_program(std::vector<Node*>& program)override;
+	void compile(std::vector<Node*>& program)override;
 };

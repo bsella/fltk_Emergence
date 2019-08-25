@@ -6,5 +6,3 @@ Bool_t::Bool_t(bool b){
 unsigned Bool_t::to_color()const{
 	return value? 0xffffffff : 0x00000000;
 }
-Bool_t::operator double()const{return value? 1.0:0.0;}
-Bool_t::operator unsigned()const{return to_color();}

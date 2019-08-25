@@ -9,7 +9,3 @@ unsigned Real_t::to_color()const{
 	const unsigned char c= value*0xff;
 	return (((((0xff<<8) | c) << 8) | c) << 8) | c;
 }
-Real_t::operator bool()const{return value!=0.0;}
-Real_t::operator unsigned()const{
-	return to_color();
-}

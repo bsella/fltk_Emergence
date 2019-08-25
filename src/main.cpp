@@ -19,6 +19,7 @@ int main(int argc, char **argv){
 		while((ent= readdir(plugin_dir)) != NULL)
 			if(ent->d_name[0]!='.'){
 				Plugin* p= new Plugin(std::string(RELATIVE("lib")) + '/' + std::string(ent->d_name));
+				p->init_core();
 				p->init_gui(&win);
 				plugins.push_back(p);
 			}

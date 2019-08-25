@@ -12,7 +12,7 @@ public:
 	void disconnect(int);
 	Data_t* cache= nullptr;
 	bool valid;
-	virtual void prepare_program(std::vector<Node*>& program);
+	virtual void compile(std::vector<Node*>& program);
 	virtual void update_cache()=0;
 
 protected:

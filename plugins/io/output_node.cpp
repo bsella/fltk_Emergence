@@ -3,16 +3,16 @@
 Output_Node::Output_Node(): Node(1, false){}
 
 void Output_Node::update_cache(){}
-void Output_Node::prepare_program(std::vector<Node*>& prog){
+void Output_Node::compile(std::vector<Node*>& prog){
 	//cache= inodes[0]->cache;
 	first= inodes[0];
 	for(auto n : inodes)
-		n->prepare_program(prog);
+		n->compile(prog);
 }
 void Output_Node::update_valid(){
 	Node::update_valid();
 	if(valid){
 		program.clear();
-		prepare_program(program);
+		compile(program);
 	}
 }

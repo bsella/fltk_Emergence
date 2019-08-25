@@ -16,7 +16,3 @@ unsigned Color_t::to_color()const{
 	const unsigned char temp_b = b*255;
 	return (((((0xff<<8) | temp_b) << 8) | temp_g) << 8) | temp_r;
 }
-Color_t::operator bool()const{return true;}
-Color_t::operator double()const{return (r+g+b)/3;}
-Color_t::operator unsigned()const{return to_color();}
-
