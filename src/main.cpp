@@ -15,14 +15,24 @@ int main(int argc, char **argv){
 	DIR* plugin_dir;
 	struct dirent *ent;
 	std::vector<Plugin*> plugins;
+	if((plugin_dir= opendir(RELATIVE("lib_t"))) != NULL){
+		while((ent= readdir(plugin_dir)) != NULL)
+			if(ent->d_name[0]!='.'){
+				Plugin* p= new Plugin(std::string(RELATIVE("lib_t")) + '/' + std::string(ent->d_name));
+				p->init();
+				plugins.push_back(p);
+			}
+		closedir(plugin_dir);
+	}
 	if((plugin_dir= opendir(RELATIVE("lib"))) != NULL){
 		while((ent= readdir(plugin_dir)) != NULL)
 			if(ent->d_name[0]!='.'){
 				Plugin* p= new Plugin(std::string(RELATIVE("lib")) + '/' + std::string(ent->d_name));
-				p->init_core();
+				p->init();
 				p->init_gui(&win);
 				plugins.push_back(p);
 			}
+		closedir(plugin_dir);
 	}
 	int ret = Main_Window::run();
 	for(auto p : plugins)

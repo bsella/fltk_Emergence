@@ -1,6 +1,6 @@
 #include "compare_nodes.h"
-#include <core/bool_t.h>
-#include <core/real_t.h>
+#include <bool/bool_t.h>
+#include <core/type_manager.h>
 
 Compare_Node::Compare_Node():Node(2){
 	cache= new Bool_t;
@@ -19,17 +19,17 @@ Node* NE_Node::make(void*){return new NE_Node;}
 
 void GT_Node::compile(std::vector<Node*>& program){
 	Node::compile(program);
-	update_func= Data_t::get_func("gt", {typeid(*inodes[0]->cache), typeid(*inodes[1]->cache)});
+	update_func= get_func("gt", {inodes[0]->cache->id, inodes[1]->cache->id});
 }
 void LT_Node::compile(std::vector<Node*>& program){
 	Node::compile(program);
-	update_func= Data_t::get_func("lt", {typeid(*inodes[0]->cache), typeid(*inodes[1]->cache)});
+	update_func= get_func("lt", {inodes[0]->cache->id, inodes[1]->cache->id});
 }
 void EQ_Node::compile(std::vector<Node*>& program){
 	Node::compile(program);
-	update_func= Data_t::get_func("eq", {typeid(*inodes[0]->cache), typeid(*inodes[1]->cache)});
+	update_func= get_func("eq", {inodes[0]->cache->id, inodes[1]->cache->id});
 }
 void NE_Node::compile(std::vector<Node*>& program){
 	Node::compile(program);
-	update_func= Data_t::get_func("ne", {typeid(*inodes[0]->cache), typeid(*inodes[1]->cache)});
+	update_func= get_func("ne", {inodes[0]->cache->id, inodes[1]->cache->id});
 }

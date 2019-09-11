@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0.0)
 
-#include_directories()
+add_definitions(-DCOLOR_PLUGIN)
 
 add_library(color_plugin SHARED color_plugin.cpp)
 add_library(color
@@ -9,4 +9,4 @@ add_library(color
 	color_node_item.h
 	color_node_item.cpp
 	)
-target_link_libraries(color_plugin color)
+target_link_libraries(color_plugin color color_t)

@@ -1,11 +1,12 @@
 #include "color_t.h"
+#include <core/type_manager.h>
 
-Color_t::Color_t(unsigned color){
+Color_t::Color_t(unsigned color): Data_t(get_type_id("color")){
 	r= (color>>24) /255.0f;
 	g= (color>>16 & 0x000ff00) /255.0f;
 	b= (color>>8  & 0x00000ff) /255.0f;
 }
-Color_t::Color_t(float r, float g, float b){
+Color_t::Color_t(float r, float g, float b): Data_t(get_type_id("color")){
 	this->r= r;
 	this->g= g;
 	this->b= b;

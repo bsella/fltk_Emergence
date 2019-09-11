@@ -8,23 +8,27 @@
 #include "compare_node_items.h"
 #include <resources.h>
 #include "func_def.h"
-#include <core/real_t.h>
+#include <real/real_t.h>
+#include <core/type_manager.h>
 
 class Compare_Plugin : public _Plugin{
 public:
-	void init_core(void*)const;
-	void init_gui (Main_Window*)const;
+	void init()const override;
+	void init_gui(Main_Window*)const override;
 };
 
 CREATE_DESTROY_C(Compare_Plugin)
 
-void Compare_Plugin::init_core(void*)const{
-	Data_t::add_func("gt", &gt_compare_real, {typeid(Real_t), typeid(Real_t)});
-	Data_t::add_func("lt", &lt_compare_real, {typeid(Real_t), typeid(Real_t)});
-	Data_t::add_func("eq", &eq_compare_real, {typeid(Real_t), typeid(Real_t)});
-	Data_t::add_func("ne", &ne_compare_real, {typeid(Real_t), typeid(Real_t)});
+void Compare_Plugin::init()const{
+	int real_id= get_type_id("real");
+	if(real_id != -1){
+		set_func("gt", &gt_compare_real, {(unsigned)real_id, (unsigned)real_id});
+		set_func("lt", &lt_compare_real, {(unsigned)real_id, (unsigned)real_id});
+		set_func("eq", &eq_compare_real, {(unsigned)real_id, (unsigned)real_id});
+		set_func("ne", &ne_compare_real, {(unsigned)real_id, (unsigned)real_id});
+	}
 }
-void Compare_Plugin::init_gui (Main_Window* mw)const{
+void Compare_Plugin::init_gui(Main_Window* mw)const{
 	mw->menu_bar->add("Insert/Compare");
 
 	auto cat = new Toolbox_Category("Compare", nullptr);

@@ -1,17 +1,17 @@
 #include "input_node.h"
 
-Real_t input_x;
-Real_t input_y;
-Real_t input_ratio;
+Real_t* input_x;
+Real_t* input_y;
+Real_t* input_ratio;
 
 X_Node::X_Node(): Node(0){
-	cache = &input_x;
+	cache = input_x;
 }
 Y_Node::Y_Node(): Node(0){
-	cache = &input_y;
+	cache = input_y;
 }
 Ratio_Node::Ratio_Node(): Node(0){
-	cache = &input_ratio;
+	cache = input_ratio;
 	uniform= true;
 }
 

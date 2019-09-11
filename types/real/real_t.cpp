@@ -1,6 +1,7 @@
 #include "real_t.h"
+#include <core/type_manager.h>
 
-Real_t::Real_t(double d){
+Real_t::Real_t(double d): Data_t(get_type_id("real")){
 	value= d;
 }
 unsigned Real_t::to_color()const{

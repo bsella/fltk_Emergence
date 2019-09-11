@@ -5,6 +5,7 @@ set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -pedantic -Wextra -rdynamic")
 
 include_directories(
    ${CMAKE_SOURCE_DIR}/src
+   ${CMAKE_SOURCE_DIR}/types
 )
 
 add_executable(Emergence
@@ -12,8 +13,9 @@ add_executable(Emergence
 	src/core/plugin.h
 )
 
-add_subdirectory(src/gui)
 add_subdirectory(src/core)
+add_subdirectory(src/gui)
+add_subdirectory(types)
 add_subdirectory(plugins)
 
 target_link_libraries(Emergence gui core -ldl)

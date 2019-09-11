@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0.0)
 
-#include_directories()
+add_definitions(-DIO_PLUGIN)
 
 add_library(io_plugin SHARED io_plugin.cpp)
 add_library(io
@@ -13,4 +13,4 @@ add_library(io
 	output_node_item.h
 	output_node_item.cpp
 	)
-target_link_libraries(io_plugin io)
+target_link_libraries(io_plugin io real_t)

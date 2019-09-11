@@ -9,14 +9,11 @@
 
 class Color_Plugin : public _Plugin{
 public:
-	void init_core(void*)const;
-	void init_gui (Main_Window*)const;
+	void init_gui(Main_Window*)const override;
 };
 
 CREATE_DESTROY_C(Color_Plugin)
 
-void Color_Plugin::init_core(void*)const{
-}
 void Color_Plugin::init_gui(Main_Window* mw)const{
 	mw->menu_bar->add("Insert/Color");
 

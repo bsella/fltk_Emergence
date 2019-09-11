@@ -1,5 +1,5 @@
 #include "func_def.h"
-#include <core/real_t.h>
+#include <real/real_t.h>
 
 ///REAL
 void gt_compare_real(Node** nodes, void* ret){

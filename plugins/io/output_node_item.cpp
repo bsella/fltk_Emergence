@@ -26,11 +26,11 @@ void Output_Node_Item::draw_body()const{
 }
 void Output_Node_Item::update_image(){
 	draw_buffer.resize(_w*_h);
-	input_ratio= (double)_w/_h;
+	*input_ratio= (double)_w/_h;
 	for(int x=0; x<_w; x++){
-		input_x= (double)x/_w;
+		*input_x= (double)x/_w;
 		for(int y=0; y<_h; y++){
-			input_y= (double)y/_h;
+			*input_y= (double)y/_h;
 			for(unsigned i=0; i<((Output_Node*)core_node)->program.size(); i++)
 				((Output_Node*)core_node)->program[i]->update_cache();
 			draw_buffer[x+_w*y]=((Output_Node*)core_node)->first->cache->to_color();

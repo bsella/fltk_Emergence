@@ -1,5 +1,5 @@
 #include "if_node.h"
-#include <core/bool_t.h>
+#include <bool/bool_t.h>
 
 If_Node::If_Node():Node(3){}
 

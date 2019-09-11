@@ -1,12 +1,12 @@
 #pragma once
 #include <../plugins/plugin.h>
-class Main_Window;
+#include <string>
 
 class Plugin {
 public:
 	Plugin(const std::string&);
 	~Plugin();
-	void init_core();
+	void init();
 	void init_gui(Main_Window*);
 
 private:
@@ -50,8 +50,8 @@ Plugin::~Plugin(){
 	destroy_function(plugin);
 	dlclose(lib);
 }
-void Plugin::init_core(){
-	plugin->init_core(nullptr);
+void Plugin::init(){
+	plugin->init();
 }
 void Plugin::init_gui(Main_Window* mw){
 	plugin->init_gui(mw);

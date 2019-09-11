@@ -10,13 +10,16 @@
 
 class Io_Plugin : public _Plugin{
 public:
-	void init_core(void*)const;
-	void init_gui (Main_Window*)const;
+	void init()const override;
+	void init_gui(Main_Window*)const override;
 };
 
 CREATE_DESTROY_C(Io_Plugin)
 
-void Io_Plugin::init_core(void*)const{
+void Io_Plugin::init()const{
+	input_x= new Real_t;
+	input_y= new Real_t;
+	input_ratio= new Real_t;
 }
 void Io_Plugin::init_gui(Main_Window* mw)const{
 	mw->menu_bar->add("Insert/X");

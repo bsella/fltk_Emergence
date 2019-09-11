@@ -1,6 +1,6 @@
 #include "color_node_item.h"
 #include "color_node.h"
-#include <core/color_t.h>
+#include <color/color_t.h>
 #include <FL/fl_draw.H>
 #include <FL/Fl_Color_Chooser.H>
 

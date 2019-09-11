@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.0.0)
 
+add_definitions(-DCOMPARE_PLUGIN)
+
 add_library(compare_plugin SHARED compare_plugin.cpp)
 add_library(compare
 	func_def.cpp
@@ -12,4 +14,4 @@ add_library(compare
 	compare_node_items.h
 	compare_node_items.cpp
 	)
-target_link_libraries(compare_plugin compare)
+target_link_libraries(compare_plugin compare bool_t color_t)

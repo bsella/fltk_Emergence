@@ -1,5 +1,5 @@
 #include "color_node.h"
-#include <core/color_t.h>
+#include <color/color_t.h>
 
 Color_Node::Color_Node(): Node(0){}
 
