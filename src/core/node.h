@@ -13,7 +13,7 @@ public:
 	Data_t* cache= nullptr;
 	bool valid;
 	virtual void compile(std::vector<Node*>& program);
-	virtual void update_cache()=0;
+	virtual void execute();
 
 protected:
     std::vector<Node*> inodes;
@@ -21,10 +21,14 @@ protected:
 
 	virtual void update_valid();
 	bool uniform= false;
+	void invalidate_output_types();
+	virtual void update_types();
 
 private:
 	std::list<Node*> onodes;
 	void update_uniform();
+	bool valid_types= false;
+	virtual void update_cache()=0;
 
 	friend class Node_Item;
 };

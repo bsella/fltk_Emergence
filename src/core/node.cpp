@@ -59,3 +59,13 @@ void Node::compile(std::vector<Node*>& program){
 			n->compile(program);
 	program.push_back(this);
 }
+void Node::invalidate_output_types(){
+	for(const auto n: onodes)
+		n->valid_types= false;
+}
+void Node::update_types(){}
+void Node::execute(){
+	if(!valid_types) update_types();
+	valid_types= true;
+	update_cache();
+}

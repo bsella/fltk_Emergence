@@ -8,3 +8,5 @@ public:
 	inline void operator =(bool b){value=b;}
 	bool value;
 };
+
+void to_bool(Node**, void*);

@@ -11,4 +11,6 @@ CREATE_DESTROY_C(Bool_t_Plugin)
 
 void Bool_t_Plugin::init()const{
 	add_type("bool");
+	unsigned int bool_id= get_type_id("bool");
+	set_func("to_bool", &to_bool, {bool_id});
 }
