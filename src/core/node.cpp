@@ -54,11 +54,19 @@ bool Node::is_looping(Node* source)const{
 			return true;
 	return false;
 }
+unsigned int Node::last_compile_id= 0;
+void Node::compile_recursive(std::vector<Node*>& program){
+	if(compile_id!=last_compile_id){
+		if(!uniform)
+			for(auto n : inodes)
+				n->compile_recursive(program);
+		program.push_back(this);
+		compile_id= last_compile_id;
+	}
+}
 void Node::compile(std::vector<Node*>& program){
-	if(!uniform)
-		for(auto n : inodes)
-			n->compile(program);
-	program.push_back(this);
+	last_compile_id++;
+	compile_recursive(program);
 }
 void Node::invalidate_output_types(){
 	for(const auto n: onodes)

@@ -12,7 +12,8 @@ public:
 	void disconnect(int);
 	Data_t* cache= nullptr;
 	bool valid;
-	virtual void compile(std::vector<Node*>& program);
+	void compile(std::vector<Node*>& program);
+	virtual void compile_recursive(std::vector<Node*>& program);
 	virtual void execute();
 
 protected:
@@ -23,6 +24,8 @@ protected:
 	bool uniform= false;
 	void invalidate_output_types();
 	virtual void update_types();
+	unsigned int compile_id=0;
+	static unsigned int last_compile_id;
 
 private:
 	std::list<Node*> onodes;

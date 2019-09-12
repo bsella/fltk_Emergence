@@ -9,7 +9,7 @@ private:
 	std::vector<Node*> then_program;
 	std::vector<Node*> else_program;
 	void update_cache()override;
-	void compile(std::vector<Node*>& program)override;
+	void compile_recursive(std::vector<Node*>&)override;
 	void update_types()override;
 	func_t to_bool;
 	bool last_res;

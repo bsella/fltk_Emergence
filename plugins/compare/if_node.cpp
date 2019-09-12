@@ -21,15 +21,19 @@ void If_Node::update_cache(){
 		invalidate_output_types();
 	last_res= res;
 }
-void If_Node::compile(std::vector<Node*>& program){
-	inodes[1]->compile(program);
-	program.push_back(this);
-
-	then_program.clear();
-	inodes[0]->compile(then_program);
-
-	else_program.clear();
-	inodes[2]->compile(else_program);
+void If_Node::compile_recursive(std::vector<Node*>& program){
+	if(compile_id != last_compile_id){
+		inodes[1]->compile_recursive(program);
+		program.push_back(this);
+	
+		then_program.clear();
+		inodes[0]->compile(then_program);
+	
+		else_program.clear();
+		inodes[2]->compile(else_program);
+		
+		compile_id= last_compile_id;
+	}
 }
 void If_Node::update_types(){
 	to_bool= get_func("to_bool", {inodes[1]->cache->id});

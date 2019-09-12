@@ -9,7 +9,8 @@ public:
 protected:
 	func_t update_func;
 	Real_t real_cache;
-	void init_cache(Node**);
+	void init_cache1(Node**);
+	void init_cache2(Node**);
 private:
 	void update_cache()override;
 	virtual void update_types()override=0;
