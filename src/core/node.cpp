@@ -21,6 +21,7 @@ void Node::disconnect(int input){
 	}
 	uniform= false;
 	valid= false;
+	valid_types= false;
 	for(auto n : onodes){
 		n->update_valid();
 		n->update_uniform();
