@@ -4,9 +4,11 @@
 class Bool_t : public Data_t{
 public:
 	explicit Bool_t(bool b= false);
-	unsigned to_color()const override;
 	inline void operator =(bool b){value=b;}
 	bool value;
 };
 
+class Node;
+
+void to_color(Node**, void*);
 void to_bool(Node**, void*);

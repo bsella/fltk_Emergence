@@ -11,9 +11,10 @@ Color_t::Color_t(float r, float g, float b): Data_t(get_type_id("color")){
 	this->g= g;
 	this->b= b;
 }
-unsigned Color_t::to_color()const{
-	const unsigned char temp_r = r*255;
-	const unsigned char temp_g = g*255;
-	const unsigned char temp_b = b*255;
-	return (((((0xff<<8) | temp_b) << 8) | temp_g) << 8) | temp_r;
+
+void to_color(Node** nodes, void* ptr){
+	const unsigned char temp_r = ((Color_t*)nodes[0]->cache)->r*255;
+	const unsigned char temp_g = ((Color_t*)nodes[0]->cache)->g*255;
+	const unsigned char temp_b = ((Color_t*)nodes[0]->cache)->b*255;
+	*((unsigned*)ptr)= (((((0xff<<8) | temp_b) << 8) | temp_g) << 8) | temp_r;
 }

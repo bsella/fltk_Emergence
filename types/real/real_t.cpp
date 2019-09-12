@@ -5,13 +5,20 @@
 Real_t::Real_t(double d): Data_t(get_type_id("real")){
 	value= d;
 }
-unsigned Real_t::to_color()const{
-	if(value>=1) return 0xffffffff;
-	if(value<=0) return 0xff000000;
-	const unsigned char c= value*0xff;
-	return (((((0xff<<8) | c) << 8) | c) << 8) | c;
-}
 
+void to_color(Node** nodes, void* ptr){
+	double value=((Real_t*)nodes[0]->cache)->value;
+	if(value>=1){
+		*((unsigned*)ptr)= 0xffffffff;
+		return;
+	}
+	if(value<=0){
+		*((unsigned*)ptr)= 0xff000000;
+		return;
+	}
+	const unsigned char c= value*0xff;
+	*((unsigned*)ptr)= (((((0xff<<8) | c) << 8) | c) << 8) | c;
+}
 void to_bool(Node** nodes, void* ptr){
 	*((bool*)ptr)=((Real_t*)nodes[0]->cache)->value != 0;
 }

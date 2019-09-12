@@ -13,6 +13,7 @@ Node_Item* Output_Node_Item::make(int x, int y, void*){
 void Output_Node_Item::draw_body()const{
 	if(core_node->valid){
 		if(!image_valid) ((Output_Node_Item*)this)->update_image();
+		((Output_Node_Item*)this)->image_valid= true;
 		fl_draw_image((const unsigned char*)draw_buffer.data(), _x, _y, _w, _h, 4);
 	}
 	else{
@@ -30,7 +31,7 @@ void Output_Node_Item::update_image(){
 			*input_y= (double)y/_h;
 			for(unsigned i=0; i<((Output_Node*)core_node)->program.size(); i++)
 				((Output_Node*)core_node)->program[i]->execute();
-			draw_buffer[x+_w*y]=((Output_Node*)core_node)->first->cache->to_color();
+			draw_buffer[x+_w*y]=((Output_Node*)core_node)->pixel_cache;
 		}
 	}
 }
