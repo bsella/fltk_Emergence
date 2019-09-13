@@ -10,7 +10,6 @@ public:
 CREATE_DESTROY_C(Color_t_Plugin)
 
 void Color_t_Plugin::init()const{
-	add_type("color");
 	unsigned int color_id= get_type_id("color");
 	set_func("to_color", &Color_t::to_color, {color_id});
 }

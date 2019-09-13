@@ -22,13 +22,11 @@ void Color_Plugin::init()const{
 	const int real_id= get_type_id("real");
 	set_func("rgb", &rgb_to_color_t, {(unsigned)real_id, (unsigned)real_id, (unsigned)real_id});
 }
-#include <iostream>
 void Color_Plugin::init_gui(Main_Window* mw)const{
 	mw->menu_bar->add("Insert/Color");
 
 	auto cat = new Toolbox_Category("Color", nullptr);
 	cat->add(new Toolbox_Node_Item("Color", RELATIVE("../plugins/color/color.png"), &Color_Node_Item::make));
-    std::cout << RELATIVE("../plugins/color/color.png") << std::endl;
 	cat->add(new Toolbox_Node_Item("RGB",  &RGB_Node_Item::make));
 
 	Toolbox::add(cat);

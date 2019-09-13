@@ -19,7 +19,6 @@ public:
 
 CREATE_DESTROY_C(Compare_Plugin)
 
-#include <iostream>
 void Compare_Plugin::init()const{
 	int real_id= get_type_id("real");
 	if(real_id != -1){

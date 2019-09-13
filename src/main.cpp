@@ -4,6 +4,7 @@
 #include <dirent.h>
 #include <vector>
 #include <dirent.h>
+#include <core/type_manager.h>
 
 std::string relative_path;
 int main(int argc, char **argv){
@@ -18,11 +19,14 @@ int main(int argc, char **argv){
 	if((plugin_dir= opendir(RELATIVE("lib_t"))) != NULL){
 		while((ent= readdir(plugin_dir)) != NULL)
 			if(ent->d_name[0]!='.'){
-				Plugin* p= new Plugin(std::string(RELATIVE("lib_t")) + '/' + std::string(ent->d_name));
-				p->init();
-				plugins.push_back(p);
+				plugins.push_back(new Plugin(std::string(RELATIVE("lib_t")) + '/' + std::string(ent->d_name)));
+				std::string type(ent->d_name);
+				type= type.substr(3, type.find("_t")-3);
+				add_type(type);
 			}
 		closedir(plugin_dir);
+		for(Plugin* p: plugins)
+			p->init();
 	}
 	if((plugin_dir= opendir(RELATIVE("lib"))) != NULL){
 		while((ent= readdir(plugin_dir)) != NULL)

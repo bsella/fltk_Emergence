@@ -10,7 +10,6 @@ public:
 CREATE_DESTROY_C(Real_t_Plugin)
 
 void Real_t_Plugin::init()const{
-	add_type("real");
 	unsigned int real_id= get_type_id("real");
 	set_func("to_color", &Real_t::to_color, {real_id});
 	set_func("to_bool", &Real_t::to_bool, {real_id});
