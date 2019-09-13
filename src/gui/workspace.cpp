@@ -3,6 +3,7 @@
 #include "gui/node_item.h"
 #include <algorithm>
 #include <FL/fl_draw.H>
+#include <FL/Fl_Menu_Item.H>
 
 Workspace::Workspace(int x, int y, int w, int h): Graphics_View(x,y,w,h){
 	items = new std::list<Item*>;
@@ -17,18 +18,14 @@ static int rb_to_x;
 static int rb_to_y;
 void Workspace::update_rubberband(int dx, int dy){
 	for(auto it=selected.rbegin(); it!=selected.rend(); it++)
-		if(!(((Item*)*it))->inside(rb_from_x, rb_from_y, rb_to_x, rb_to_y)){
-			(*it)->selected= false;
-			selected.remove(*it);
-		}
+		if(!(((Item*)*it))->inside(rb_from_x, rb_from_y, rb_to_x, rb_to_y))
+			deselect(*it);
 	if(items)
 	for(const auto i: *items){
 		Node_Item* ni= (Node_Item*)i;
 		if(i->inside(rb_from_x, rb_from_y, rb_to_x, rb_to_y))
-			if(std::find(selected.begin(), selected.end(), ni) == selected.end()){
-				selected.push_back(ni);
-				ni->selected= true;
-			}
+			if(std::find(selected.begin(), selected.end(), ni) == selected.end())
+				select(ni);
 	}
 	rb_to_x+=dx;
 	rb_to_y+=dy;
@@ -49,9 +46,6 @@ void Workspace::add_node(Node_Item*n){
 	add_item(n);
 	n->scale(zoom);
 }
-void Workspace::remove_node(Node_Item*n){
-	remove_item(n);
-}
 static Node_Item* hover_to= nullptr;
 void Workspace::mouse_press_event(int x, int y, int button){
 	if(Node_Item::socket_hover>0 && button==FL_LEFT_MOUSE){
@@ -64,19 +58,13 @@ void Workspace::mouse_press_event(int x, int y, int button){
 			items->remove(hover);
 			items->push_front(hover);
 			if(!((Node_Item*)hover)->selected){
-				while(selected.size()){
-					(*selected.begin())->selected= false;
-					selected.erase(selected.begin());
-				}
+				deselect_all();
 				selected.push_front((Node_Item*)hover);
 			}
 		}
 		else{
 			if(button==FL_LEFT_MOUSE){
-				while(selected.size()){
-					(*selected.begin())->selected= false;
-					selected.erase(selected.begin());
-				}
+				deselect_all();
 				rb_from_x= rb_to_x= x;
 				rb_from_y= rb_to_y= y;
 			}
@@ -141,7 +129,7 @@ void Workspace::dnd_drag_event(int x, int y){
 }
 void Workspace::dnd_drop_event(int, int){
 	if(!((Node_Item*)hover)->settle()){
-		remove_node((Node_Item*)hover);
+		remove_item((Node_Item*)hover);
 		delete hover;
 		hover= nullptr;
 	}
@@ -149,7 +137,7 @@ void Workspace::dnd_drop_event(int, int){
 	redraw();
 }
 void Workspace::dnd_leave_event(){
-	remove_node((Node_Item*)hover);
+	remove_item((Node_Item*)hover);
 	redraw();
 }
 void Workspace::mouse_wheel_event(int, int dy){
@@ -169,4 +157,51 @@ void Workspace::mouse_wheel_event(int, int dy){
 		i->scale(zoom);
 	}
 	redraw();
+}
+void Workspace::select(Node_Item* node){
+	if(std::find(selected.begin(), selected.end(), node) == selected.end())
+		selected.push_back(node);
+	node->selected=true;
+}
+void select_all(Fl_Widget* widget, void*){
+	Workspace* ws = (Workspace*)widget;
+	ws->selected.clear();
+	for(auto& n: *ws->items)
+		ws->select((Node_Item*)n);
+}
+void Workspace::deselect(Node_Item* node){
+	selected.remove(node);
+	node->selected=false;
+}
+void Workspace::deselect_all(){
+	for(auto n : selected)
+		n->selected= false;
+	selected.clear();
+}
+void remove_selected(Fl_Widget* widget, void*){
+	Workspace* ws = (Workspace*)widget;
+	for(auto& n: ws->selected){
+		n->disconnect_all();
+		ws->items->remove(n);
+		delete n;
+	}
+	ws->selected.clear();
+}
+void copy(Fl_Widget*, void*){}
+void Workspace::mouse_click_event(int x, int y, int button){
+	if(button== FL_RIGHT_MOUSE){
+		std::vector<Fl_Menu_Item> menu;
+		int flags = selected.size()? 0:FL_MENU_INACTIVE;
+		menu.push_back(Fl_Menu_Item{"Copy",0,0,0,flags,0,0,0,0});
+		menu.push_back(Fl_Menu_Item{"Cut",0,0,0,flags,0,0,0,0});
+		menu.push_back(Fl_Menu_Item{"Paste",0,0,0,FL_MENU_DIVIDER,0,0,0,0});
+		menu.push_back(Fl_Menu_Item{"Delete",0,&remove_selected,this, flags,0,0,0,0});
+		menu.push_back(Fl_Menu_Item{"Select All",0,&select_all,this,0,0,0,0,0});
+		if(hover)
+			((Node_Item*)hover)->context_menu(menu);
+		menu.push_back({});
+		const Fl_Menu_Item* m= menu.data()->popup(x,y);
+		if(m && m->callback() && m->user_data())
+			m->do_callback(this,m->user_data());
+	}
 }

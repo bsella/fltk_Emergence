@@ -8,17 +8,14 @@ Node::Node(int n, bool hasOutput):hasOutput(hasOutput){
 }
 Node::~Node(){}
 void Node::connect(int input, Node* to){
-	if(!inodes[input])
-		inodes[input]=to;
+	inodes[input]=to;
 	to->onodes.push_back(this);
 	update_valid();
 	update_uniform();
 }
 void Node::disconnect(int input){
-	if(inodes[input]){
-		inodes[input]->onodes.remove(this);
-		inodes[input]= nullptr;
-	}
+	inodes[input]->onodes.remove(this);
+	inodes[input]= nullptr;
 	uniform= false;
 	valid= false;
 	valid_types= false;

@@ -2,6 +2,7 @@
 #include <FL/Fl_Menu_Item.H>
 #include <string>
 #include <FL/fl_draw.H>
+#include "workspace.h"
 
 const int Node_Item::socket_size=5;
 const int Node_Item::head_size=8;
@@ -14,18 +15,18 @@ Node_Item::Node_Item(int x, int y, int w, int h, Node* n)
 	for(unsigned int i=0; i<n->inodes.size(); i++)
 		inodes.push_back(nullptr);
 }
-Node_Item::~Node_Item(){}
+Node_Item::~Node_Item(){
+	delete core_node;
+}
 void Node_Item::connect(int index, Node_Item* to){
-	if(!inodes[index]){
-		inodes[index]= to;
-		core_node->connect(index, to->core_node);
-	}
+	core_node->connect(index, to->core_node);
+	inodes[index]= to;
+	to->onodes.push_back(this);
 }
 void Node_Item::disconnect(int index){
-	if(inodes[index]){
-		inodes[index]= nullptr;
-		core_node->disconnect(index);
-	}
+	core_node->disconnect(index);
+	inodes[index]->onodes.remove(this);
+	inodes[index]= nullptr;
 }
 bool Node_Item::is_looping(Node_Item* source)const{
 	if(this==source) return true;
@@ -121,17 +122,6 @@ void Node_Item::mouse_move_event(int x,	int y){
 	if(x<_x)
 		socket_hover=(y-_y+head_size)/(_h/(inodes.size()+1));
 }
-void Node_Item::mouse_click_event(int x, int y, int button){
-	if(button== FL_RIGHT_MOUSE){
-		std::vector<Fl_Menu_Item> menu;
-		context_menu(menu);
-		menu.push_back({});
-		const Fl_Menu_Item* m= menu.data()->popup(x,y);
-		if(m && m->callback() && m->user_data())
-			m->do_callback(0,m->user_data());
-	}
-}
-
 struct disconnect_ud{
 	Node_Item* node;
 	unsigned int i;
@@ -141,14 +131,23 @@ void disconnect_cb(Fl_Widget*, void* d){
 	if(ud->node)
 		ud->node->disconnect(ud->i);
 }
+void Node_Item::disconnect_all(){
+	for(unsigned int i=0; i< core_node->inodes.size(); i++)
+		if(inodes[i])
+			disconnect(i);
+	std::list<Node_Item*> temp= onodes;
+	for(auto on: temp)
+		for(unsigned int i=0; i<on->inodes.size(); i++)
+			if(on->inodes[i]==this)
+				on->disconnect(i);
+}
 
 void Node_Item::context_menu(std::vector<Fl_Menu_Item>& menu){
-	menu.push_back(Fl_Menu_Item{"Copy",0,0,0,0,0,0,0,0});
-	menu.push_back(Fl_Menu_Item{"Cut",0,0,0,0,0,0,0,0});
-	menu.push_back(Fl_Menu_Item{"Delete",0,0,0,FL_MENU_DIVIDER,0,0,0,0});
 	if(inodes.size()==0) return;
-	
-	menu.push_back({"disconnect", 0, 0, 0, FL_SUBMENU,0,0,0,0});
+
+	menu.back().flags|= FL_MENU_DIVIDER;
+
+	menu.push_back({"Disconnect", 0, 0, 0, FL_SUBMENU,0,0,0,0});
 
 	static std::vector<std::string> numbers;
 	if(numbers.size()<inodes.size())
