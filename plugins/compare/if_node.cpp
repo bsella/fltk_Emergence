@@ -1,5 +1,6 @@
 #include "if_node.h"
 #include <bool/bool_t.h>
+#include <stdlib.h>
 
 If_Node::If_Node():Node(3){}
 
@@ -7,7 +8,8 @@ Node* If_Node::make(void*){return new If_Node;}
 
 void If_Node::update_cache(){
 	bool res;
-	to_bool(inodes.data()+1, &res);
+	if(to_bool) to_bool(inodes.data()+1, &res);
+	else res= (float)::rand() / RAND_MAX < .5;
 	if(res){
 		for(unsigned i=0; i<then_program.size(); i++)
 			then_program[i]->execute();
@@ -27,10 +29,10 @@ void If_Node::compile_recursive(std::vector<Node*>& program){
 		program.push_back(this);
 	
 		then_program.clear();
-		inodes[0]->compile(then_program);
+		inodes[0]->compile_recursive(then_program);
 	
 		else_program.clear();
-		inodes[2]->compile(else_program);
+		inodes[2]->compile_recursive(else_program);
 		
 		compile_id= last_compile_id;
 	}

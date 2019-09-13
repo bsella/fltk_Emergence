@@ -7,7 +7,7 @@ class Node;
 typedef void (*func_t)(Node**, void*);
 
 struct func_map_tree{
-	func_t func;
+	func_t func= nullptr;
 	struct func_map_tree* next= nullptr;
 };
 

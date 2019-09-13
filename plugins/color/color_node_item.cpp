@@ -4,7 +4,7 @@
 #include <FL/fl_draw.H>
 #include <FL/Fl_Color_Chooser.H>
 
-Color_Node_Item::Color_Node_Item(int x, int y): Node_Item(x, y, 16, 16, new Color_Node){}
+Color_Node_Item::Color_Node_Item(int x, int y, void* ptr): Node_Item(x, y, 16, 16, new Color_Node(ptr)){}
 
 unsigned int Color_Node_Item::color()const{
 	if(core_node->cache){
@@ -22,13 +22,18 @@ void Color_Node_Item::draw_body()const{
 	fl_circle(_x+_w/2,_y+_h/2, _w/2);
 }
 
-Node_Item* Color_Node_Item::make(int x, int y, void*){
-	return new Color_Node_Item(x,y);
+Node_Item* Color_Node_Item::make(int x, int y, void* ptr){
+	return new Color_Node_Item(x,y, ptr);
 }
 
 bool Color_Node_Item::settle(){
 	double r,g,b;
 	int ret= fl_color_chooser("Choose a color", r,g,b);
-	if(ret) core_node->cache= new Color_t(r,g,b);
+	if(ret){
+		((Color_t*)core_node->cache)->r= r;
+		((Color_t*)core_node->cache)->g= g;
+		((Color_t*)core_node->cache)->b= b;
+		((Color_t*)core_node->cache)->a= 1;
+	}
 	return ret;
 }

@@ -3,7 +3,7 @@
 
 class Color_Node : public Node{
 public:
-   	Color_Node();
+   	Color_Node(void*);
    	~Color_Node();
 	static Node* make(void*);
 private:

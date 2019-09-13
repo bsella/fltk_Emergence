@@ -6,9 +6,12 @@ Bool_t::Bool_t(bool b): Data_t(get_type_id("bool")){
 	value= b;
 }
 
-void to_color(Node** nodes, void* ptr){
-	*((unsigned*)ptr)= ((Bool_t*)nodes[0]->cache)->value? 0xffffffff:0xff000000;
+void Bool_t::rand(Node**, void* ptr){
+	((Bool_t*)ptr)->value= (float)::rand() / RAND_MAX < .5;
 }
-void to_bool(Node** nodes, void* ptr){
+void Bool_t::to_color(Node** nodes, void* ptr){
+	*((unsigned*)ptr)= ((Bool_t*)nodes[0]->cache)->value? 0xffffffff:0x000000ff;
+}
+void Bool_t::to_bool(Node** nodes, void* ptr){
 	*((bool*)ptr)=((Bool_t*)nodes[0]->cache)->value;
 }
