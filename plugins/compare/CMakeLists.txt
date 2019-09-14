@@ -14,4 +14,11 @@ add_library(compare
 	compare_node_items.h
 	compare_node_items.cpp
 	)
+
+resource(gt.png)
+resource(lt.png)
+resource(eq.png)
+resource(ne.png)
+resource(if.png)
+
 target_link_libraries(compare_plugin compare bool_t color_t)

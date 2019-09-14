@@ -26,7 +26,7 @@ void Color_Plugin::init_gui(Main_Window* mw)const{
 	mw->menu_bar->add("Insert/Color");
 
 	auto cat = new Toolbox_Category("Color", nullptr);
-	cat->add(new Toolbox_Node_Item("Color", RELATIVE("../plugins/color/color.png"), &Color_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("Color", RELATIVE("plugins/color/color.png"), &Color_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("RGB",  &RGB_Node_Item::make));
 
 	Toolbox::add(cat);

@@ -15,4 +15,12 @@ add_library(math
 	func_def.h
 	func_def.cpp
 	)
+resource(add.png)
+resource(subtract.png)
+resource(multiply.png)
+resource(divide.png)
+resource(neg.png)
+resource(sqrt.png)
+resource(sin.png)
+resource(cos.png)
 target_link_libraries(math_plugin math real_t)

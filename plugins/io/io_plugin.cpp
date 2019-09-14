@@ -28,10 +28,10 @@ void Io_Plugin::init_gui(Main_Window* mw)const{
 	mw->menu_bar->add("Insert/Ratio");
 
 	auto cat = new Toolbox_Category("I/O", nullptr);
-	cat->add(new Toolbox_Node_Item("X",      RELATIVE("../plugins/io/x.png"),      &X_Node_Item::make));
-	cat->add(new Toolbox_Node_Item("Y",      RELATIVE("../plugins/io/y.png"),      &Y_Node_Item::make));
-	cat->add(new Toolbox_Node_Item("Ratio",                                        &Ratio_Node_Item::make));
-	cat->add(new Toolbox_Node_Item("Output", RELATIVE("../plugins/io/output.png"), &Output_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("X",      RELATIVE("plugins/io/x.png"),      &X_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("Y",      RELATIVE("plugins/io/y.png"),      &Y_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("Ratio",                                     &Ratio_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("Output", RELATIVE("plugins/io/output.png"), &Output_Node_Item::make));
 
 	Toolbox::add(cat);
 }

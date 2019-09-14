@@ -8,6 +8,10 @@ include_directories(
    ${CMAKE_SOURCE_DIR}/types
 )
 
+macro(resource file_name)
+	configure_file(${file_name} ${file_name} COPYONLY)
+endmacro()
+
 add_executable(Emergence
 	src/main.cpp
 	src/core/plugin.h

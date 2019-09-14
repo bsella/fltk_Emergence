@@ -42,8 +42,8 @@ void Math_Plugin::init_gui(Main_Window*)const{
 	cat->add(new Toolbox_Node_Item("Negative",    &Neg_Node_Item::icon,      &Neg_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Square Root", &Sqrt_Node_Item::icon,     &Sqrt_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Absolute",    &Abs_Node_Item::make));
-	cat->add(new Toolbox_Node_Item("Sin",         RELATIVE("../plugins/math/sin.png"), &Sin_Node_Item::make));
-	cat->add(new Toolbox_Node_Item("Cos",         RELATIVE("../plugins/math/cos.png"), &Cos_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("Sin",         RELATIVE("plugins/math/sin.png"), &Sin_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("Cos",         RELATIVE("plugins/math/cos.png"), &Cos_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Min",         &Min_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Max",         &Max_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Power",       &Pow_Node_Item::make));

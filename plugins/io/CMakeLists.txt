@@ -13,4 +13,9 @@ add_library(io
 	output_node_item.h
 	output_node_item.cpp
 	)
+
+resource(x.png)
+resource(y.png)
+resource(output.png)
+
 target_link_libraries(io_plugin io real_t)

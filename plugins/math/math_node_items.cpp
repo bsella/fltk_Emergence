@@ -25,12 +25,12 @@ Max_Node_Item::Max_Node_Item(int x, int y): Math_Node_Item(x, y, nullptr, new Ma
 Pow_Node_Item::Pow_Node_Item(int x, int y): Math_Node_Item(x, y, nullptr, new Pow_Node){}
 Log_Node_Item::Log_Node_Item(int x, int y): Math_Node_Item(x, y, nullptr, new Log_Node){}
 
-Fl_PNG_Image Add_Node_Item::icon(RELATIVE("../plugins/math/add.png"));
-Fl_PNG_Image Sub_Node_Item::icon(RELATIVE("../plugins/math/subtract.png"));
-Fl_PNG_Image Mul_Node_Item::icon(RELATIVE("../plugins/math/multiply.png"));
-Fl_PNG_Image Div_Node_Item::icon(RELATIVE("../plugins/math/divide.png"));
-Fl_PNG_Image Neg_Node_Item::icon(RELATIVE("../plugins/math/neg.png"));
-Fl_PNG_Image Sqrt_Node_Item::icon(RELATIVE("../plugins/math/sqrt.png"));
+Fl_PNG_Image Add_Node_Item::icon(RELATIVE("plugins/math/add.png"));
+Fl_PNG_Image Sub_Node_Item::icon(RELATIVE("plugins/math/subtract.png"));
+Fl_PNG_Image Mul_Node_Item::icon(RELATIVE("plugins/math/multiply.png"));
+Fl_PNG_Image Div_Node_Item::icon(RELATIVE("plugins/math/divide.png"));
+Fl_PNG_Image Neg_Node_Item::icon(RELATIVE("plugins/math/neg.png"));
+Fl_PNG_Image Sqrt_Node_Item::icon(RELATIVE("plugins/math/sqrt.png"));
 
 Node_Item* Add_Node_Item::make(int x, int y, void*){return new Add_Node_Item(x,y);}
 Node_Item* Sub_Node_Item::make(int x, int y, void*){return new Sub_Node_Item(x,y);}
