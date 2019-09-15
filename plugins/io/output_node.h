@@ -1,6 +1,5 @@
 #include <core/node.h>
 #include <vector>
-#include <core/type_manager.h>
 
 class Output_Node : public Node{
 public:
@@ -12,5 +11,4 @@ private:
 	void update_cache()override;
 	void update_types()override;
 	void update_valid()override;
-	func_t to_color;
 };

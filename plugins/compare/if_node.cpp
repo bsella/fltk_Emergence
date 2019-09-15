@@ -8,7 +8,7 @@ Node* If_Node::make(void*){return new If_Node;}
 
 void If_Node::update_cache(){
 	bool res;
-	if(to_bool) to_bool(inodes.data()+1, &res);
+	if(main_func) main_func(inodes.data()+1, &res);
 	else res= (float)::rand() / RAND_MAX < .5;
 	if(res){
 		for(unsigned i=0; i<then_program.size(); i++)
@@ -38,5 +38,5 @@ void If_Node::compile_recursive(std::vector<Node*>& program){
 	}
 }
 void If_Node::update_types(){
-	to_bool= get_func("to_bool", {inodes[1]->cache->id});
+	main_func= get_func("to_bool", {inodes[1]->cache->id});
 }

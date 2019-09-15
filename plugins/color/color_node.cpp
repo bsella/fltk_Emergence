@@ -8,6 +8,7 @@ Color_Node::Color_Node(void* ptr): Node(0){
 		float* f= (float*)ptr;
 		cache= new Color_t(f[0],f[1],f[2],f[3]);
 	}
+	uniform= true;
 }
 
 Color_Node::~Color_Node(){

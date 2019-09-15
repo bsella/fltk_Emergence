@@ -15,10 +15,10 @@ LT_Node_Item::LT_Node_Item(int x, int y): Compare_Node_Item(x, y, &icon, new LT_
 EQ_Node_Item::EQ_Node_Item(int x, int y): Compare_Node_Item(x, y, &icon, new EQ_Node){}
 NE_Node_Item::NE_Node_Item(int x, int y): Compare_Node_Item(x, y, &icon, new NE_Node){}
 
-Fl_PNG_Image GT_Node_Item::icon(RELATIVE("../plugins/compare/gt.png"));
-Fl_PNG_Image LT_Node_Item::icon(RELATIVE("../plugins/compare/lt.png"));
-Fl_PNG_Image EQ_Node_Item::icon(RELATIVE("../plugins/compare/eq.png"));
-Fl_PNG_Image NE_Node_Item::icon(RELATIVE("../plugins/compare/ne.png"));
+Fl_PNG_Image GT_Node_Item::icon(RELATIVE("plugins/compare/gt.png"));
+Fl_PNG_Image LT_Node_Item::icon(RELATIVE("plugins/compare/lt.png"));
+Fl_PNG_Image EQ_Node_Item::icon(RELATIVE("plugins/compare/eq.png"));
+Fl_PNG_Image NE_Node_Item::icon(RELATIVE("plugins/compare/ne.png"));
 
 Node_Item* GT_Node_Item::make(int x, int y, void*){return new GT_Node_Item(x,y);}
 Node_Item* LT_Node_Item::make(int x, int y, void*){return new LT_Node_Item(x,y);}

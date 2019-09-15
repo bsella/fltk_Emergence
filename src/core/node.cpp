@@ -70,6 +70,9 @@ void Node::invalidate_output_types(){
 		n->valid_types= false;
 }
 void Node::update_types(){}
+void Node::update_cache(){
+	main_func(inodes.data(), cache);
+}
 void Node::execute(){
 	if(!valid_types) update_types();
 	valid_types= true;

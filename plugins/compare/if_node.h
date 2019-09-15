@@ -11,6 +11,5 @@ private:
 	void update_cache()override;
 	void compile_recursive(std::vector<Node*>&)override;
 	void update_types()override;
-	func_t to_bool;
 	bool last_res;
 };

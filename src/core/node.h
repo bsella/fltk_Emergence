@@ -19,19 +19,19 @@ public:
 protected:
     std::vector<Node*> inodes;
     bool is_looping(Node*)const;
-
 	virtual void update_valid();
 	bool uniform= false;
 	void invalidate_output_types();
 	virtual void update_types();
 	unsigned int compile_id=0;
 	static unsigned int last_compile_id;
+	void (*main_func)(Node**, void*);
 
 private:
 	std::list<Node*> onodes;
 	void update_uniform();
 	bool valid_types= false;
-	virtual void update_cache()=0;
+	virtual void update_cache();
 
 	friend class Node_Item;
 };

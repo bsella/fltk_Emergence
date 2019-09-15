@@ -1,6 +1,7 @@
 #include "rgb_node.h"
 #include <color/color_t.h>
 #include <real/real_t.h>
+#include <core/type_manager.h>
 
 RGB_Node::RGB_Node(): Node(3){
 	cache= new Color_t;
@@ -14,12 +15,9 @@ Node* RGB_Node::make(void*){
 }
 
 void RGB_Node::update_types(){
-	update_func= get_func("rgb", {inodes[0]->cache->id,inodes[1]->cache->id,inodes[2]->cache->id});
-	if(!update_func)
-		update_func= &Color_t::rand;
-}
-void RGB_Node::update_cache(){
-	update_func(inodes.data(), cache);
+	main_func= get_func("rgb", {inodes[0]->cache->id,inodes[1]->cache->id,inodes[2]->cache->id});
+	if(!main_func)
+		main_func= &Color_t::rand;
 }
 
 void rgb_to_color_t(Node** nodes, void* ptr){

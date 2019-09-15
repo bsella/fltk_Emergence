@@ -1,13 +1,11 @@
 #pragma once
 #include <core/node.h>
-#include <core/type_manager.h>
 #include <real/real_t.h>
 
 class Math_Node : public Node{
 public:
 	Math_Node(unsigned int);
 protected:
-	func_t update_func;
 	Real_t real_cache;
 	void init_cache1(Node**);
 	void init_cache2(Node**);

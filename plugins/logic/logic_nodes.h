@@ -1,36 +1,37 @@
+#pragma once
 #include <core/node.h>
 
-class Compare_Node : public Node{
+class AND_Node : public Node{
 public:
-	Compare_Node();
-	virtual ~Compare_Node();
-protected:
-	virtual void update_types()=0;
-};
-
-class GT_Node : public Compare_Node{
-public:
+	AND_Node();
+	~AND_Node()override;
 	static Node* make(void*);
 private:
 	void update_types()override;
 };
 
-class LT_Node : public Compare_Node{
+class OR_Node : public Node{
 public:
+	OR_Node();
+	~OR_Node()override;
 	static Node* make(void*);
 private:
 	void update_types()override;
 };
 
-class EQ_Node : public Compare_Node{
+class XOR_Node : public Node{
 public:
+	XOR_Node();
+	~XOR_Node()override;
 	static Node* make(void*);
 private:
 	void update_types()override;
 };
 
-class NE_Node : public Compare_Node{
+class NOT_Node : public Node{
 public:
+	NOT_Node();
+	~NOT_Node()override;
 	static Node* make(void*);
 private:
 	void update_types()override;

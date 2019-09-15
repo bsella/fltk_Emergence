@@ -1,5 +1,6 @@
 #include "math_nodes.h"
 #include <core/data_t.h>
+#include <core/type_manager.h>
 
 Math_Node::Math_Node(unsigned int n): Node(n){}
 Add_Node::Add_Node(): Math_Node(2){}
@@ -18,7 +19,7 @@ Log_Node::Log_Node(): Math_Node(1){}
 
 void Math_Node::update_cache(){
 	if(cache== &real_cache)
-		update_func(inodes.data(), &real_cache.value);
+		main_func(inodes.data(), &real_cache.value);
 }
 
 Node* Add_Node::make(void*){return new Add_Node;}
@@ -48,53 +49,53 @@ void Math_Node::init_cache2(Node** nodes){
 
 void Add_Node::update_types(){
 	init_cache2(inodes.data());
-	update_func= get_func("add", {inodes[0]->cache->id, inodes[1]->cache->id});
+	main_func= get_func("add", {inodes[0]->cache->id, inodes[1]->cache->id});
 }
 void Sub_Node::update_types(){
 	init_cache2(inodes.data());
-	update_func= get_func("sub", {inodes[0]->cache->id, inodes[1]->cache->id});
+	main_func= get_func("sub", {inodes[0]->cache->id, inodes[1]->cache->id});
 }
 void Mul_Node::update_types(){
 	init_cache2(inodes.data());
-	update_func= get_func("mul", {inodes[0]->cache->id, inodes[1]->cache->id});
+	main_func= get_func("mul", {inodes[0]->cache->id, inodes[1]->cache->id});
 }
 void Div_Node::update_types(){
 	init_cache2(inodes.data());
-	update_func= get_func("div", {inodes[0]->cache->id, inodes[1]->cache->id});
+	main_func= get_func("div", {inodes[0]->cache->id, inodes[1]->cache->id});
 }
 void Neg_Node::update_types(){
 	init_cache1(inodes.data());
-	update_func= get_func("neg", {inodes[0]->cache->id});
+	main_func= get_func("neg", {inodes[0]->cache->id});
 }
 void Sqrt_Node::update_types(){
 	init_cache1(inodes.data());
-	update_func= get_func("sqrt", {inodes[0]->cache->id});
+	main_func= get_func("sqrt", {inodes[0]->cache->id});
 }
 void Abs_Node::update_types(){
 	init_cache1(inodes.data());
-	update_func= get_func("abs", {inodes[0]->cache->id});
+	main_func= get_func("abs", {inodes[0]->cache->id});
 }
 void Sin_Node::update_types(){
 	init_cache1(inodes.data());
-	update_func= get_func("sin", {inodes[0]->cache->id});
+	main_func= get_func("sin", {inodes[0]->cache->id});
 }
 void Cos_Node::update_types(){
 	init_cache1(inodes.data());
-	update_func= get_func("cos", {inodes[0]->cache->id});
+	main_func= get_func("cos", {inodes[0]->cache->id});
 }
 void Min_Node::update_types(){
 	init_cache2(inodes.data());
-	update_func= get_func("min", {inodes[0]->cache->id, inodes[1]->cache->id});
+	main_func= get_func("min", {inodes[0]->cache->id, inodes[1]->cache->id});
 }
 void Max_Node::update_types(){
 	init_cache2(inodes.data());
-	update_func= get_func("max", {inodes[0]->cache->id, inodes[1]->cache->id});
+	main_func= get_func("max", {inodes[0]->cache->id, inodes[1]->cache->id});
 }
 void Pow_Node::update_types(){
 	init_cache2(inodes.data());
-	update_func= get_func("pow", {inodes[0]->cache->id, inodes[1]->cache->id});
+	main_func= get_func("pow", {inodes[0]->cache->id, inodes[1]->cache->id});
 }
 void Log_Node::update_types(){
 	init_cache1(inodes.data());
-	update_func= get_func("log", {inodes[0]->cache->id});
+	main_func= get_func("log", {inodes[0]->cache->id});
 }
