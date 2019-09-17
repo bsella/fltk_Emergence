@@ -37,3 +37,20 @@ bool Color_Node_Item::settle(){
 	}
 	return ret;
 }
+
+static void color_edit_value(Fl_Widget*, void* ptr){
+	Color_Node_Item* node= (Color_Node_Item*)ptr;
+	double r,g,b;
+	if(fl_color_chooser("Choose a color", r,g,b)){
+		((Color_t*)node->cache())->r= r;
+		((Color_t*)node->cache())->g= g;
+		((Color_t*)node->cache())->b= b;
+	}
+}
+void Color_Node_Item::context_menu(std::vector<Fl_Menu_Item>& menu){
+	menu.back().flags|= FL_MENU_DIVIDER;
+
+	menu.push_back({"Edit Color", 0, color_edit_value, this, 0,0,0,0,0});
+
+	Node_Item::context_menu(menu);
+}
