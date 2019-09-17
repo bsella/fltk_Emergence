@@ -129,7 +129,7 @@ void Workspace::dnd_drag_event(int x, int y){
 }
 void Workspace::dnd_drop_event(int, int){
 	if(!((Node_Item*)hover)->settle()){
-		remove_item((Node_Item*)hover);
+		items->remove(hover);
 		delete hover;
 		hover= nullptr;
 	}
@@ -137,7 +137,7 @@ void Workspace::dnd_drop_event(int, int){
 	redraw();
 }
 void Workspace::dnd_leave_event(){
-	remove_item((Node_Item*)hover);
+	items->remove(hover);
 	redraw();
 }
 void Workspace::mouse_wheel_event(int, int dy){

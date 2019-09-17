@@ -8,7 +8,6 @@ public:
 	Graphics_View(int x, int y, int w, int h);
 	virtual ~Graphics_View();
 	void add_item(Item*);
-	void remove_item(Item*);
 protected:
 	Item* hover= nullptr;
 	std::list<Item*>* items= nullptr;

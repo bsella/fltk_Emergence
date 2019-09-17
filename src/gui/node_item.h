@@ -17,6 +17,7 @@ public:
 	void disconnect(int);
 	void disconnect_all();
 	bool is_looping(Node_Item*)const;
+	inline Data_t* cache(){return core_node->cache;}
 
 protected:
 	Node* core_node;

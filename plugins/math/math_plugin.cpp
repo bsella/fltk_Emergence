@@ -6,6 +6,7 @@
 #include <FL/Fl_Menu_Bar.H>
 #include <resources.h>
 #include "math_node_items.h"
+#include "real_node_item.h"
 #include "func_def.h"
 #include <core/type_manager.h>
 
@@ -35,6 +36,7 @@ void Math_Plugin::init()const{
 }
 void Math_Plugin::init_gui(Main_Window*)const{
 	auto cat = new Toolbox_Category("Math", nullptr);
+	cat->add(new Toolbox_Node_Item("Real",        RELATIVE("plugins/math/real.png"), &Real_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Add",         &Add_Node_Item::icon,      &Add_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Subtract",    &Sub_Node_Item::icon,      &Sub_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Multiply",    &Mul_Node_Item::icon,      &Mul_Node_Item::make));

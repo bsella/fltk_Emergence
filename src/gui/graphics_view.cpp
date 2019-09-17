@@ -19,19 +19,12 @@ void Graphics_View::draw(){
 void Graphics_View::add_item(Item*i){
 	items->push_front(i);
 }
-void Graphics_View::remove_item(Item*i){
-	if(i==hover)
-		hover=nullptr;
-	items->remove(i);
-	delete i;
-}
 int Graphics_View::handle(int e){
 	static int tmp_x, tmp_y, dx, dy;
 	static bool click= false;
 	switch(e){
 	case FL_LEAVE:
 		mouse_leave_event();
-		hover=nullptr;
 		return 1;
 	case FL_ENTER:
 		Fl::belowmouse(this);
