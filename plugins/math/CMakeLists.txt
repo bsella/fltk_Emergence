@@ -16,8 +16,6 @@ add_library(math
 	real_node.cpp
 	real_node_item.h
 	real_node_item.cpp
-	func_def.h
-	func_def.cpp
 	)
 
 add_library(real_chooser

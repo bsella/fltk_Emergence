@@ -99,3 +99,44 @@ void Log_Node::update_types(){
 	init_cache1(inodes.data());
 	main_func= get_func("log", {inodes[0]->cache->id});
 }
+
+#include <cmath>
+void Add_Node::real_real(Node** nodes, void* ptr){
+	*((double*)ptr)= ((Real_t*)(nodes[0]->cache))->value + ((Real_t*)(nodes[1]->cache))->value;
+}
+void Sub_Node::real_real(Node** nodes, void* ptr){
+	*((double*)ptr)= ((Real_t*)(nodes[0]->cache))->value - ((Real_t*)(nodes[1]->cache))->value;
+}
+void Mul_Node::real_real(Node** nodes, void* ptr){
+	*((double*)ptr)= ((Real_t*)(nodes[0]->cache))->value * ((Real_t*)(nodes[1]->cache))->value;
+}
+void Div_Node::real_real(Node** nodes, void* ptr){
+	*((double*)ptr)= ((Real_t*)(nodes[0]->cache))->value / ((Real_t*)(nodes[1]->cache))->value;
+}
+void Neg_Node::real(Node** nodes, void* ptr){
+	*((double*)ptr)= -((Real_t*)(nodes[0]->cache))->value;
+}
+void Sqrt_Node::real(Node** nodes, void* ptr){
+	*((double*)ptr)= std::sqrt(((Real_t*)(nodes[0]->cache))->value);
+}
+void Abs_Node::real(Node** nodes, void* ptr){
+	*((double*)ptr)= std::abs(((Real_t*)(nodes[0]->cache))->value);
+}
+void Sin_Node::real(Node** nodes, void* ptr){
+	*((double*)ptr)= std::sin(((Real_t*)(nodes[0]->cache))->value);
+}
+void Cos_Node::real(Node** nodes, void* ptr){
+	*((double*)ptr)= std::cos(((Real_t*)(nodes[0]->cache))->value);
+}
+void Min_Node::real_real(Node** nodes, void* ptr){
+	*((double*)ptr)= std::min(((Real_t*)(nodes[0]->cache))->value,((Real_t*)(nodes[1]->cache))->value);
+}
+void Max_Node::real_real(Node** nodes, void* ptr){
+	*((double*)ptr)= std::max(((Real_t*)(nodes[0]->cache))->value,((Real_t*)(nodes[1]->cache))->value);
+}
+void Pow_Node::real_real(Node** nodes, void* ptr){
+	*((double*)ptr)= std::pow(((Real_t*)(nodes[0]->cache))->value,((Real_t*)(nodes[1]->cache))->value);
+}
+void Log_Node::real(Node** nodes, void* ptr){
+	*((double*)ptr)= std::log(((Real_t*)(nodes[0]->cache))->value);
+}

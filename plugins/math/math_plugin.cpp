@@ -7,7 +7,6 @@
 #include <resources.h>
 #include "math_node_items.h"
 #include "real_node_item.h"
-#include "func_def.h"
 #include <core/type_manager.h>
 
 class Math_Plugin : public _Plugin{
@@ -20,19 +19,19 @@ CREATE_DESTROY_C(Math_Plugin)
 
 void Math_Plugin::init()const{
 	int real_id= get_type_id("real");
-	set_func("add", &add_real, {(unsigned)real_id, (unsigned)real_id});
-	set_func("sub", &sub_real, {(unsigned)real_id, (unsigned)real_id});
-	set_func("mul", &mul_real, {(unsigned)real_id, (unsigned)real_id});
-	set_func("div", &div_real, {(unsigned)real_id, (unsigned)real_id});
-	set_func("neg", &neg_real, {(unsigned)real_id});
-	set_func("sqrt", &sqrt_real, {(unsigned)real_id});
-	set_func("abs", &abs_real, {(unsigned)real_id});
-	set_func("sin", &sin_real, {(unsigned)real_id});
-	set_func("cos", &cos_real, {(unsigned)real_id});
-	set_func("min", &min_real, {(unsigned)real_id, (unsigned)real_id});
-	set_func("max", &max_real, {(unsigned)real_id, (unsigned)real_id});
-	set_func("pow", &pow_real, {(unsigned)real_id, (unsigned)real_id});
-	set_func("log", &log_real, {(unsigned)real_id});
+	set_func("add", &Add_Node::real_real, {(unsigned)real_id, (unsigned)real_id});
+	set_func("sub", &Sub_Node::real_real, {(unsigned)real_id, (unsigned)real_id});
+	set_func("mul", &Mul_Node::real_real, {(unsigned)real_id, (unsigned)real_id});
+	set_func("div", &Div_Node::real_real, {(unsigned)real_id, (unsigned)real_id});
+	set_func("neg", &Neg_Node::real,      {(unsigned)real_id});
+	set_func("sqrt",&Sqrt_Node::real,     {(unsigned)real_id});
+	set_func("abs", &Abs_Node::real,      {(unsigned)real_id});
+	set_func("sin", &Sin_Node::real,      {(unsigned)real_id});
+	set_func("cos", &Cos_Node::real,      {(unsigned)real_id});
+	set_func("min", &Min_Node::real_real, {(unsigned)real_id, (unsigned)real_id});
+	set_func("max", &Max_Node::real_real, {(unsigned)real_id, (unsigned)real_id});
+	set_func("pow", &Pow_Node::real_real, {(unsigned)real_id, (unsigned)real_id});
+	set_func("log", &Log_Node::real,      {(unsigned)real_id});
 }
 void Math_Plugin::init_gui(Main_Window*)const{
 	auto cat = new Toolbox_Category("Math", nullptr);

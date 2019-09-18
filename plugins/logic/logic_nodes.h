@@ -6,6 +6,7 @@ public:
 	AND_Node();
 	~AND_Node()override;
 	static Node* make(void*);
+	static void func(Node**,void*);
 private:
 	void update_types()override;
 };
@@ -15,6 +16,7 @@ public:
 	OR_Node();
 	~OR_Node()override;
 	static Node* make(void*);
+	static void func(Node**,void*);
 private:
 	void update_types()override;
 };
@@ -24,6 +26,7 @@ public:
 	XOR_Node();
 	~XOR_Node()override;
 	static Node* make(void*);
+	static void func(Node**,void*);
 private:
 	void update_types()override;
 };
@@ -33,6 +36,7 @@ public:
 	NOT_Node();
 	~NOT_Node()override;
 	static Node* make(void*);
+	static void func(Node**,void*);
 private:
 	void update_types()override;
 };

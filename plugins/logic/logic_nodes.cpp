@@ -49,3 +49,16 @@ void NOT_Node::update_types(){
 	main_func= get_func("not", {inodes[0]->cache->id});
 	if(!main_func) main_func= &Bool_t::rand;
 }
+
+void AND_Node::func(Node** nodes, void* ptr){
+	((Bool_t*)ptr)->value= ((Bool_t*)nodes[0]->cache)->value && ((Bool_t*)nodes[1]->cache)->value;
+}
+void OR_Node::func(Node** nodes, void* ptr){
+	((Bool_t*)ptr)->value= ((Bool_t*)nodes[0]->cache)->value || ((Bool_t*)nodes[1]->cache)->value;
+}
+void XOR_Node::func(Node** nodes, void* ptr){
+	((Bool_t*)ptr)->value= ((Bool_t*)nodes[0]->cache)->value ^  ((Bool_t*)nodes[1]->cache)->value;
+}
+void NOT_Node::func(Node** nodes, void* ptr){
+	((Bool_t*)ptr)->value= !((Bool_t*)nodes[0]->cache)->value;
+}

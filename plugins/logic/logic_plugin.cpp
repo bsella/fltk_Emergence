@@ -6,7 +6,6 @@
 #include <FL/Fl_Menu_Bar.H>
 #include "logic_node_items.h"
 #include <resources.h>
-#include "func_def.h"
 #include <core/type_manager.h>
 
 class Compare_Plugin : public _Plugin{
@@ -19,12 +18,10 @@ CREATE_DESTROY_C(Compare_Plugin)
 
 void Compare_Plugin::init()const{
 	int bool_id= get_type_id("bool");
-	if(bool_id != -1){
-		set_func("and", &and_bool, {(unsigned)bool_id, (unsigned)bool_id});
-		set_func("or",  &or_bool, {(unsigned)bool_id, (unsigned)bool_id});
-		set_func("xor", &xor_bool, {(unsigned)bool_id, (unsigned)bool_id});
-		set_func("not", &not_bool, {(unsigned)bool_id});
-	}
+	set_func("and", &AND_Node::func, {(unsigned)bool_id, (unsigned)bool_id});
+	set_func("or",  &OR_Node::func , {(unsigned)bool_id, (unsigned)bool_id});
+	set_func("xor", &XOR_Node::func, {(unsigned)bool_id, (unsigned)bool_id});
+	set_func("not", &NOT_Node::func, {(unsigned)bool_id});
 }
 void Compare_Plugin::init_gui(Main_Window* mw)const{
 	mw->menu_bar->add("Insert/Compare");
