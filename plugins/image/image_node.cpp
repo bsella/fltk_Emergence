@@ -34,16 +34,20 @@ void Image_Node::get_pixel(Node** nodes, void* ptr){
 		case 1:
 			((Color_t*)ptr)->r=
 			((Color_t*)ptr)->g=
-			((Color_t*)ptr)->b=((unsigned char)current_image->data()[0][(x+y*current_image->w())])/3.;
+			((Color_t*)ptr)->b=(((unsigned char)current_image->data()[0][(x+y*current_image->w())])/255)/3.;
+			((Color_t*)ptr)->a= 1;
+			break;
+		case 3:
+			((Color_t*)ptr)->r=((unsigned char)current_image->data()[0][(x+y*current_image->w())*d+0])/255.0;
+			((Color_t*)ptr)->g=((unsigned char)current_image->data()[0][(x+y*current_image->w())*d+1])/255.0;
+			((Color_t*)ptr)->b=((unsigned char)current_image->data()[0][(x+y*current_image->w())*d+2])/255.0;
 			((Color_t*)ptr)->a= 1;
 			break;
 		case 4:
-			((Color_t*)ptr)->a= ((unsigned char)current_image->data()[0][(x+y*current_image->w())*4+3])/255.0;
-			//fallthrough
-		case 3:
-			((Color_t*)ptr)->r= ((unsigned char)current_image->data()[0][(x+y*current_image->w())*d+0])/255.0;
-			((Color_t*)ptr)->g= ((unsigned char)current_image->data()[0][(x+y*current_image->w())*d+1])/255.0;
-			((Color_t*)ptr)->b= ((unsigned char)current_image->data()[0][(x+y*current_image->w())*d+2])/255.0;
+			((Color_t*)ptr)->r=((unsigned char)current_image->data()[0][(x+y*current_image->w())*d+0])/255.0;
+			((Color_t*)ptr)->g=((unsigned char)current_image->data()[0][(x+y*current_image->w())*d+1])/255.0;
+			((Color_t*)ptr)->b=((unsigned char)current_image->data()[0][(x+y*current_image->w())*d+2])/255.0;
+			((Color_t*)ptr)->a=((unsigned char)current_image->data()[0][(x+y*current_image->w())*d+3])/255.0;
 			break;
 		default: break;
 	}

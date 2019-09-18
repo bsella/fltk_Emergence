@@ -1,16 +1,18 @@
 #pragma once
 #include <core/node.h>
 #include <real/real_t.h>
+#include <color/color_t.h>
 
 class Math_Node : public Node{
 public:
 	Math_Node(unsigned int);
 protected:
 	Real_t real_cache;
+	Color_t color_cache;
 	void init_cache1(Node**);
 	void init_cache2(Node**);
+	void set_random_func();
 private:
-	void update_cache()override;
 	virtual void update_types()override=0;
 };
 
@@ -19,6 +21,7 @@ public:
 	Add_Node();
 	static Node* make(void*);
 	static void real_real(Node**, void*);
+	static void color_color(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -28,6 +31,7 @@ public:
 	Sub_Node();
 	static Node* make(void*);
 	static void real_real(Node**, void*);
+	static void color_color(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -37,6 +41,8 @@ public:
 	Mul_Node();
 	static Node* make(void*);
 	static void real_real(Node**, void*);
+	static void real_color(Node**, void*);
+	static void color_real(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -46,6 +52,7 @@ public:
 	Div_Node();
 	static Node* make(void*);
 	static void real_real(Node**, void*);
+	static void color_real(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -55,6 +62,7 @@ public:
 	Neg_Node();
 	static Node* make(void*);
 	static void real(Node**, void*);
+	static void color(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -100,6 +108,7 @@ public:
 	Min_Node();
 	static Node* make(void*);
 	static void real_real(Node**, void*);
+	//static void color_color(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -109,6 +118,7 @@ public:
 	Max_Node();
 	static Node* make(void*);
 	static void real_real(Node**, void*);
+	//static void color_color(Node**, void*);
 private:
 	void update_types()override;
 };

@@ -15,7 +15,7 @@ Color_t::Color_t(float r, float g, float b, float a): Data_t(get_type_id("color"
 	this->a= a;
 }
 Color_t::Color_t(float r, float g, float b): Color_t(r,g,b,1){}
-Color_t::Color_t(): Color_t(1,1,1,1){}
+Color_t::Color_t(): Color_t(0,0,0,0){}
 
 void Color_t::rand(Node**, void* ptr){
 	Color_t* cptr= (Color_t*)ptr;
@@ -25,10 +25,15 @@ void Color_t::rand(Node**, void* ptr){
 	cptr->a= (float)::rand() / RAND_MAX;
 }
 
+#define r0 ((Color_t*)(nodes[0]->cache))->r
+#define g0 ((Color_t*)(nodes[0]->cache))->g
+#define b0 ((Color_t*)(nodes[0]->cache))->b
+#define a0 ((Color_t*)(nodes[0]->cache))->a
+
 void Color_t::to_color(Node** nodes, void* ptr){
-	const unsigned char temp_r = ((Color_t*)nodes[0]->cache)->r*255;
-	const unsigned char temp_g = ((Color_t*)nodes[0]->cache)->g*255;
-	const unsigned char temp_b = ((Color_t*)nodes[0]->cache)->b*255;
-	const unsigned char temp_a = ((Color_t*)nodes[0]->cache)->a*255;
+	const unsigned char temp_r = r0>1? 255: r0*255;
+	const unsigned char temp_g = g0>1? 255: g0*255;
+	const unsigned char temp_b = b0>1? 255: b0*255;
+	const unsigned char temp_a = a0>1? 255: a0*255;
 	*((unsigned*)ptr)= (((((temp_a << 8) | temp_b) << 8) | temp_g) << 8) | temp_r;
 }

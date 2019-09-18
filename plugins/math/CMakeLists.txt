@@ -34,4 +34,4 @@ resource(cos.png)
 resource(real.png)
 
 target_link_libraries(real_chooser real_t)
-target_link_libraries(math_plugin math real_chooser real_t)
+target_link_libraries(math_plugin math real_chooser real_t color_t)

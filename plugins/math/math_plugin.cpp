@@ -32,6 +32,13 @@ void Math_Plugin::init()const{
 	set_func("max", &Max_Node::real_real, {(unsigned)real_id, (unsigned)real_id});
 	set_func("pow", &Pow_Node::real_real, {(unsigned)real_id, (unsigned)real_id});
 	set_func("log", &Log_Node::real,      {(unsigned)real_id});
+
+	int color_id= get_type_id("color");
+	set_func("add", &Add_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
+	set_func("sub", &Sub_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
+	set_func("mul", &Mul_Node::real_color , {(unsigned)real_id,  (unsigned)color_id});
+	set_func("mul", &Mul_Node::color_real , {(unsigned)color_id, (unsigned)real_id});
+	set_func("div", &Div_Node::color_real,  {(unsigned)color_id, (unsigned)real_id});
 }
 void Math_Plugin::init_gui(Main_Window*)const{
 	auto cat = new Toolbox_Category("Math", nullptr);

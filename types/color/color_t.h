@@ -8,7 +8,7 @@ public:
 	explicit Color_t();
 	explicit Color_t(float r, float g, float b);
 	explicit Color_t(float r, float g, float b, float a);
-	float r, g, b, a;
+	double r, g, b, a;
 
 	static void rand(Node**, void*);
 	static void to_color(Node**, void*);
