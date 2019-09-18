@@ -4,7 +4,6 @@ add_definitions(-DCOMPARE_PLUGIN)
 
 add_library(compare_plugin SHARED compare_plugin.cpp)
 add_library(compare
-	func_def.cpp
 	if_node.h
 	if_node.cpp
 	if_node_item.h

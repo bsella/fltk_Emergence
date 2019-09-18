@@ -7,8 +7,6 @@
 #include "if_node_item.h"
 #include "compare_node_items.h"
 #include <resources.h>
-#include "func_def.h"
-#include <real/real_t.h>
 #include <core/type_manager.h>
 
 class Compare_Plugin : public _Plugin{
@@ -21,12 +19,27 @@ CREATE_DESTROY_C(Compare_Plugin)
 
 void Compare_Plugin::init()const{
 	int real_id= get_type_id("real");
-	if(real_id != -1){
-		set_func("gt", &gt_compare_real, {(unsigned)real_id, (unsigned)real_id});
-		set_func("lt", &lt_compare_real, {(unsigned)real_id, (unsigned)real_id});
-		set_func("eq", &eq_compare_real, {(unsigned)real_id, (unsigned)real_id});
-		set_func("ne", &ne_compare_real, {(unsigned)real_id, (unsigned)real_id});
-	}
+	int color_id= get_type_id("color");
+
+	set_func("gt", &GT_Node::real_real, {(unsigned)real_id, (unsigned)real_id});
+	set_func("lt", &LT_Node::real_real, {(unsigned)real_id, (unsigned)real_id});
+	set_func("eq", &EQ_Node::real_real, {(unsigned)real_id, (unsigned)real_id});
+	set_func("ne", &NE_Node::real_real, {(unsigned)real_id, (unsigned)real_id});
+
+	set_func("gt", &GT_Node::real_color, {(unsigned)real_id, (unsigned)color_id});
+	set_func("lt", &LT_Node::real_color, {(unsigned)real_id, (unsigned)color_id});
+	set_func("eq", &EQ_Node::real_color, {(unsigned)real_id, (unsigned)color_id});
+	set_func("ne", &NE_Node::real_color, {(unsigned)real_id, (unsigned)color_id});
+
+	set_func("gt", &GT_Node::color_real, {(unsigned)color_id, (unsigned)real_id});
+	set_func("lt", &LT_Node::color_real, {(unsigned)color_id, (unsigned)real_id});
+	set_func("eq", &EQ_Node::color_real, {(unsigned)color_id, (unsigned)real_id});
+	set_func("ne", &NE_Node::color_real, {(unsigned)color_id, (unsigned)real_id});
+
+	set_func("gt", &GT_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
+	set_func("lt", &LT_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
+	set_func("eq", &EQ_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
+	set_func("ne", &NE_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
 }
 void Compare_Plugin::init_gui(Main_Window* mw)const{
 	mw->menu_bar->add("Insert/Compare");

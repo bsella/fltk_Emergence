@@ -34,16 +34,16 @@ void Image_Node::get_pixel(Node** nodes, void* ptr){
 		case 1:
 			((Color_t*)ptr)->r=
 			((Color_t*)ptr)->g=
-			((Color_t*)ptr)->b=current_image->data()[0][(x+y*current_image->w())]/3.;
+			((Color_t*)ptr)->b=((unsigned char)current_image->data()[0][(x+y*current_image->w())])/3.;
 			((Color_t*)ptr)->a= 1;
 			break;
 		case 4:
-			((Color_t*)ptr)->a= current_image->data()[0][(x+y*current_image->w())*4+3]/255.0;
+			((Color_t*)ptr)->a= ((unsigned char)current_image->data()[0][(x+y*current_image->w())*4+3])/255.0;
 			//fallthrough
 		case 3:
-			((Color_t*)ptr)->r= current_image->data()[0][(x+y*current_image->w())*d+0]/255.0;
-			((Color_t*)ptr)->g= current_image->data()[0][(x+y*current_image->w())*d+1]/255.0;
-			((Color_t*)ptr)->b= current_image->data()[0][(x+y*current_image->w())*d+2]/255.0;
+			((Color_t*)ptr)->r= ((unsigned char)current_image->data()[0][(x+y*current_image->w())*d+0])/255.0;
+			((Color_t*)ptr)->g= ((unsigned char)current_image->data()[0][(x+y*current_image->w())*d+1])/255.0;
+			((Color_t*)ptr)->b= ((unsigned char)current_image->data()[0][(x+y*current_image->w())*d+2])/255.0;
 			break;
 		default: break;
 	}
@@ -55,4 +55,5 @@ void Image_Node::update_cache(){
 }
 void Image_Node::update_types(){
 	main_func= get_func("get_pixel", {inodes[0]->cache->id, inodes[1]->cache->id});
+	if(!main_func) main_func= &Color_t::rand;
 }
