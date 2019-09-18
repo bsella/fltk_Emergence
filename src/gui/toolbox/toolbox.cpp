@@ -1,5 +1,7 @@
 #include "toolbox.h"
 #include <FL/fl_draw.H>
+#include "toolbox_category.h"
+#include <cstring>
 
 std::list<Item*> Toolbox::toolbox_items;
 
@@ -11,6 +13,17 @@ void Toolbox::mouse_wheel_event(int, int){
 }
 void Toolbox::add(Toolbox_Item* item){
 	toolbox_items.push_back(item);
+}
+Toolbox_Category* Toolbox::add_category(const char* cat, const char* icon){
+	Toolbox_Category* category;
+	for(Item* tb_item : toolbox_items){
+		category= dynamic_cast<Toolbox_Category*>(tb_item);
+		if(category && strcmp(category->text,cat)==0)
+			return category;
+	}
+	category= new Toolbox_Category(cat, icon);
+	Toolbox::add(category);
+	return category;
 }
 void Toolbox::remove(Toolbox_Item* item){
 	toolbox_items.remove(item);

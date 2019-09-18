@@ -183,6 +183,7 @@ void remove_selected(Fl_Widget* widget, void*){
 	for(auto& n: ws->selected){
 		n->disconnect_all();
 		ws->items->remove(n);
+		if(ws->hover==n) ws->hover= nullptr;
 		delete n;
 	}
 	ws->selected.clear();
