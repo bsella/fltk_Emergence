@@ -6,16 +6,16 @@ add_library(math_plugin SHARED math_plugin.cpp)
 add_library(math
 	math_nodes.h
 	math_nodes.cpp
-	#lerp.h
-	#lerp.cpp
 	math_node_items.h
 	math_node_items.cpp
-	#lerp_node_items.h
-	#lerp_node_items.cpp
 	real_node.h
 	real_node.cpp
 	real_node_item.h
 	real_node_item.cpp
+	lerp_nodes.h
+	lerp_nodes.cpp
+	lerp_node_items.h
+	lerp_node_items.cpp
 	)
 
 add_library(real_chooser

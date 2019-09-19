@@ -1,3 +1,4 @@
+#pragma once
 #include "math_nodes.h"
 #include <gui/node_item.h>
 #include <FL/Fl_PNG_Image.H>
