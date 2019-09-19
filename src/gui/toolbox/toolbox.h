@@ -16,4 +16,7 @@ private:
 	void mouse_wheel_event(int,int)override;
 	void mouse_click_event(int,int,int)override;
 	void draw()override;
+	int scroll_y=0;
+	static int content_height;
+	static void update_content_height();
 };
