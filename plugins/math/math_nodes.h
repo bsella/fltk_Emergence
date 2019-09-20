@@ -103,26 +103,6 @@ private:
 	void update_types()override;
 };
 
-class Min_Node : public Math_Node{
-public:
-	Min_Node();
-	static Node* make(void*);
-	static void real_real(Node**, void*);
-	//static void color_color(Node**, void*);
-private:
-	void update_types()override;
-};
-
-class Max_Node : public Math_Node{
-public:
-	Max_Node();
-	static Node* make(void*);
-	static void real_real(Node**, void*);
-	//static void color_color(Node**, void*);
-private:
-	void update_types()override;
-};
-
 class Pow_Node : public Math_Node{
 public:
 	Pow_Node();
@@ -139,4 +119,33 @@ public:
 	static void real(Node**, void*);
 private:
 	void update_types()override;
+};
+
+class Min_Max_Node : public Node{
+public:
+	Min_Max_Node();
+protected:
+	static bool rand(Data_t*, Data_t*);
+	static bool gt_real(Data_t*, Data_t*);
+	static bool gt_color(Data_t*, Data_t*);
+	bool (*gt_func)(Data_t*, Data_t*)= nullptr;
+private:
+	void update_types()override;
+	virtual void update_cache()override=0;
+	void execute()override;
+	bool last_random;
+};
+
+class Min_Node : public Min_Max_Node{
+public:
+	static Node* make(void*);
+private:
+	void update_cache()override;
+};
+
+class Max_Node : public Min_Max_Node{
+public:
+	static Node* make(void*);
+private:
+	void update_cache()override;
 };

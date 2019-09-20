@@ -26,11 +26,11 @@ protected:
 	unsigned int compile_id=0;
 	static unsigned int last_compile_id;
 	void (*main_func)(Node**, void*);
+	bool valid_types= false;
 
 private:
 	std::list<Node*> onodes;
 	void update_uniform();
-	bool valid_types= false;
 	virtual void update_cache();
 
 	friend class Node_Item;

@@ -17,12 +17,16 @@ Color_t::Color_t(float r, float g, float b, float a): Data_t(get_type_id("color"
 Color_t::Color_t(float r, float g, float b): Color_t(r,g,b,1){}
 Color_t::Color_t(): Color_t(0,0,0,0){}
 
+double Color_t::to_real()const{
+	return (r + g + b)/3 * a;
+}
+
 void Color_t::rand(Node**, void* ptr){
 	Color_t* cptr= (Color_t*)ptr;
-	cptr->r= (float)::rand() / RAND_MAX;
-	cptr->g= (float)::rand() / RAND_MAX;
-	cptr->b= (float)::rand() / RAND_MAX;
-	cptr->a= (float)::rand() / RAND_MAX;
+	cptr->r= (double)::rand() / RAND_MAX;
+	cptr->g= (double)::rand() / RAND_MAX;
+	cptr->b= (double)::rand() / RAND_MAX;
+	cptr->a= (double)::rand() / RAND_MAX;
 }
 
 #define r0 ((Color_t*)(nodes[0]->cache))->r

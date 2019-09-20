@@ -12,8 +12,6 @@ Sqrt_Node::Sqrt_Node(): Math_Node(1){}
 Abs_Node::Abs_Node(): Math_Node(1){}
 Sin_Node::Sin_Node(): Math_Node(1){}
 Cos_Node::Cos_Node(): Math_Node(1){}
-Min_Node::Min_Node(): Math_Node(2){}
-Max_Node::Max_Node(): Math_Node(2){}
 Pow_Node::Pow_Node(): Math_Node(2){}
 Log_Node::Log_Node(): Math_Node(1){}
 
@@ -105,16 +103,6 @@ void Cos_Node::update_types(){
 	main_func= get_func("cos", {inodes[0]->cache->id});
 	set_random_func();
 }
-void Min_Node::update_types(){
-	init_cache2(inodes.data());
-	main_func= get_func("min", {inodes[0]->cache->id, inodes[1]->cache->id});
-	set_random_func();
-}
-void Max_Node::update_types(){
-	init_cache2(inodes.data());
-	main_func= get_func("max", {inodes[0]->cache->id, inodes[1]->cache->id});
-	set_random_func();
-}
 void Pow_Node::update_types(){
 	init_cache2(inodes.data());
 	main_func= get_func("pow", {inodes[0]->cache->id, inodes[1]->cache->id});
@@ -154,12 +142,6 @@ void Sin_Node::real(Node** nodes, void* ptr){
 void Cos_Node::real(Node** nodes, void* ptr){
 	((Real_t*)ptr)->value= std::cos(((Real_t*)(nodes[0]->cache))->value);
 }
-void Min_Node::real_real(Node** nodes, void* ptr){
-	((Real_t*)ptr)->value= std::min(((Real_t*)(nodes[0]->cache))->value,((Real_t*)(nodes[1]->cache))->value);
-}
-void Max_Node::real_real(Node** nodes, void* ptr){
-	((Real_t*)ptr)->value= std::max(((Real_t*)(nodes[0]->cache))->value,((Real_t*)(nodes[1]->cache))->value);
-}
 void Pow_Node::real_real(Node** nodes, void* ptr){
 	((Real_t*)ptr)->value= std::pow(((Real_t*)(nodes[0]->cache))->value,((Real_t*)(nodes[1]->cache))->value);
 }
@@ -167,29 +149,29 @@ void Log_Node::real(Node** nodes, void* ptr){
 	((Real_t*)ptr)->value= std::log(((Real_t*)(nodes[0]->cache))->value);
 }
 
-#define r0 ((Color_t*)(nodes[0]->cache))->r
-#define g0 ((Color_t*)(nodes[0]->cache))->g
-#define b0 ((Color_t*)(nodes[0]->cache))->b
-#define a0 ((Color_t*)(nodes[0]->cache))->a
+#define R0 ((Color_t*)(nodes[0]->cache))->r
+#define G0 ((Color_t*)(nodes[0]->cache))->g
+#define B0 ((Color_t*)(nodes[0]->cache))->b
+#define A0 ((Color_t*)(nodes[0]->cache))->a
 
-#define r1 ((Color_t*)(nodes[1]->cache))->r
-#define g1 ((Color_t*)(nodes[1]->cache))->g
-#define b1 ((Color_t*)(nodes[1]->cache))->b
-#define a1 ((Color_t*)(nodes[1]->cache))->a
+#define R1 ((Color_t*)(nodes[1]->cache))->r
+#define G1 ((Color_t*)(nodes[1]->cache))->g
+#define B1 ((Color_t*)(nodes[1]->cache))->b
+#define A1 ((Color_t*)(nodes[1]->cache))->a
 
 void Add_Node::color_color(Node** nodes, void* ptr){
 	static double diff;
-	diff= 1 - a1;
-	((Color_t*)ptr)->r= r1 + r0 * diff;
-	((Color_t*)ptr)->g= g1 + g0 * diff;
-	((Color_t*)ptr)->b= b1 + b0 * diff;
-	((Color_t*)ptr)->a= a1 + a0 * diff;
+	diff= 1 - A1;
+	((Color_t*)ptr)->r= R1 + R0 * diff;
+	((Color_t*)ptr)->g= G1 + G0 * diff;
+	((Color_t*)ptr)->b= B1 + B0 * diff;
+	((Color_t*)ptr)->a= A1 + A0 * diff;
 }
 void Sub_Node::color_color(Node** nodes, void* ptr){
-	((Color_t*)ptr)->r= r0 - r1;
-	((Color_t*)ptr)->g= g0 - g1;
-	((Color_t*)ptr)->b= b0 - b1;
-	((Color_t*)ptr)->a= a0 - a1;
+	((Color_t*)ptr)->r= R0 - R1;
+	((Color_t*)ptr)->g= G0 - G1;
+	((Color_t*)ptr)->b= B0 - B1;
+	((Color_t*)ptr)->a= A0 - A1;
 
 	((Color_t*)ptr)->r= std::max(((Color_t*)ptr)->r, 0.0);
 	((Color_t*)ptr)->g= std::max(((Color_t*)ptr)->g, 0.0);
@@ -197,20 +179,60 @@ void Sub_Node::color_color(Node** nodes, void* ptr){
 	((Color_t*)ptr)->a= std::max(((Color_t*)ptr)->a, 0.0);
 }
 void Mul_Node::color_real(Node** nodes, void* ptr){
-	((Color_t*)ptr)->r= r0 * ((Real_t*)nodes[1]->cache)->value;
-	((Color_t*)ptr)->g= g0 * ((Real_t*)nodes[1]->cache)->value;
-	((Color_t*)ptr)->b= b0 * ((Real_t*)nodes[1]->cache)->value;
-	((Color_t*)ptr)->a= a0 * ((Real_t*)nodes[1]->cache)->value;
+	((Color_t*)ptr)->r= R0 * ((Real_t*)nodes[1]->cache)->value;
+	((Color_t*)ptr)->g= G0 * ((Real_t*)nodes[1]->cache)->value;
+	((Color_t*)ptr)->b= B0 * ((Real_t*)nodes[1]->cache)->value;
+	((Color_t*)ptr)->a= A0 * ((Real_t*)nodes[1]->cache)->value;
 }
 void Mul_Node::real_color(Node** nodes, void* ptr){
-	((Color_t*)ptr)->r= ((Real_t*)nodes[0]->cache)->value * r1;
-	((Color_t*)ptr)->g= ((Real_t*)nodes[0]->cache)->value * g1;
-	((Color_t*)ptr)->b= ((Real_t*)nodes[0]->cache)->value * b1;
-	((Color_t*)ptr)->a= ((Real_t*)nodes[1]->cache)->value * a1;
+	((Color_t*)ptr)->r= ((Real_t*)nodes[0]->cache)->value * R1;
+	((Color_t*)ptr)->g= ((Real_t*)nodes[0]->cache)->value * G1;
+	((Color_t*)ptr)->b= ((Real_t*)nodes[0]->cache)->value * B1;
+	((Color_t*)ptr)->a= ((Real_t*)nodes[0]->cache)->value * A1;
 }
 void Div_Node::color_real(Node** nodes, void* ptr){
-	((Color_t*)ptr)->r= r0 / ((Real_t*)nodes[1]->cache)->value;
-	((Color_t*)ptr)->g= g0 / ((Real_t*)nodes[1]->cache)->value;
-	((Color_t*)ptr)->b= b0 / ((Real_t*)nodes[1]->cache)->value;
-	((Color_t*)ptr)->a= a0 / ((Real_t*)nodes[1]->cache)->value;
+	((Color_t*)ptr)->r= R0 / ((Real_t*)nodes[1]->cache)->value;
+	((Color_t*)ptr)->g= G0 / ((Real_t*)nodes[1]->cache)->value;
+	((Color_t*)ptr)->b= B0 / ((Real_t*)nodes[1]->cache)->value;
+	((Color_t*)ptr)->a= A0 / ((Real_t*)nodes[1]->cache)->value;
+}
+
+Min_Max_Node::Min_Max_Node():Node(2){}
+
+bool Min_Max_Node::rand(Data_t*, Data_t*){
+	return ::rand() > RAND_MAX/2;
+}
+bool Min_Max_Node::gt_real(Data_t* r1, Data_t* r2){
+	return ((Real_t*)r1)->value > ((Real_t*)r2)->value;
+}
+bool Min_Max_Node::gt_color(Data_t* c1, Data_t* c2){
+	return ((Color_t*)c1)->to_real() > ((Color_t*)c2)->to_real();
+}
+void Min_Max_Node::update_types(){
+	if(inodes[0]->cache->id == inodes[1]->cache->id){
+		if(inodes[0]->cache->id == (unsigned)get_type_id("real"))
+			gt_func= &Min_Max_Node::gt_real;
+		else
+			if(inodes[0]->cache->id == (unsigned)get_type_id("color"))
+				gt_func= &Min_Max_Node::gt_color;
+		invalidate_output_types();
+		return;
+	}
+	gt_func= &Min_Max_Node::rand;
+}
+void Min_Max_Node::execute(){
+	if(!valid_types) update_types();
+	valid_types= true;
+	if(gt_func == &Min_Max_Node::rand){
+		const bool temp= Min_Max_Node::rand(inodes[0]->cache, inodes[1]->cache);
+		cache= inodes[temp]->cache;
+		if(temp != last_random) invalidate_output_types();
+		last_random= temp;
+	}else update_cache();
+}
+void Min_Node::update_cache(){
+	cache= inodes[gt_func(inodes[0]->cache, inodes[1]->cache)]->cache;
+}
+void Max_Node::update_cache(){
+	cache= inodes[!gt_func(inodes[0]->cache, inodes[1]->cache)]->cache;
 }

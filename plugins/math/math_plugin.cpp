@@ -30,8 +30,6 @@ void Math_Plugin::init()const{
 	set_func("abs", &Abs_Node::real,      {(unsigned)real_id});
 	set_func("sin", &Sin_Node::real,      {(unsigned)real_id});
 	set_func("cos", &Cos_Node::real,      {(unsigned)real_id});
-	set_func("min", &Min_Node::real_real, {(unsigned)real_id, (unsigned)real_id});
-	set_func("max", &Max_Node::real_real, {(unsigned)real_id, (unsigned)real_id});
 	set_func("pow", &Pow_Node::real_real, {(unsigned)real_id, (unsigned)real_id});
 	set_func("log", &Log_Node::real,      {(unsigned)real_id});
 	set_func("lerp",&Lerp_Node::real,     {(unsigned)real_id, (unsigned)real_id, (unsigned)real_id});

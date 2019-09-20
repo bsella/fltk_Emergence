@@ -7,7 +7,7 @@ Bool_t::Bool_t(bool b): Data_t(get_type_id("bool")){
 }
 
 void Bool_t::rand(Node**, void* ptr){
-	((Bool_t*)ptr)->value= (float)::rand() / RAND_MAX < .5;
+	((Bool_t*)ptr)->value= ::rand() < RAND_MAX/2;
 }
 void Bool_t::to_color(Node** nodes, void* ptr){
 	*((unsigned*)ptr)= ((Bool_t*)nodes[0]->cache)->value? 0xffffffff:0xff000000;
