@@ -35,9 +35,11 @@ void Math_Plugin::init()const{
 	set_func("pow", &Pow_Node::real_real, {(unsigned)real_id, (unsigned)real_id});
 	set_func("log", &Log_Node::real,      {(unsigned)real_id});
 	set_func("lerp",&Lerp_Node::real,     {(unsigned)real_id, (unsigned)real_id, (unsigned)real_id});
+	set_func("clamp",&Clamp_Node::real,   {(unsigned)real_id, (unsigned)real_id, (unsigned)real_id});
 
 	int color_id= get_type_id("color");
 	set_func("lerp",&Lerp_Node::color,     {(unsigned)color_id, (unsigned)real_id, (unsigned)color_id});
+	set_func("clamp",&Clamp_Node::color,   {(unsigned)color_id, (unsigned)color_id, (unsigned)color_id});
 
 	set_func("add", &Add_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
 	set_func("sub", &Sub_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
@@ -62,6 +64,7 @@ void Math_Plugin::init_gui(Main_Window*)const{
 	cat->add(new Toolbox_Node_Item("Power",       &Pow_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Log",         &Log_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Linear Interpolation", &Lerp_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("Clamp",       &Clamp_Node_Item::make));
 
 	Toolbox::add(cat);
 }
