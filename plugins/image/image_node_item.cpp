@@ -17,10 +17,10 @@ Node_Item* Image_Node_Item::make(int x, int y, void* ptr){
 	return new Image_Node_Item(x,y, (const char*)ptr);
 }
 void Image_Node_Item::draw_body()const{
-	fl_color(FL_BLACK);
-	fl_rect(_x, _y, _w, _h);
 	if(image)
 		image->draw(_x+1, _y+1, _w-2, _h-2);
+	fl_color(FL_BLACK);
+	fl_rect(_x, _y, _w, _h);
 }
 void Image_Node_Item::scale(float s){
 	Item::scale(s);

@@ -13,7 +13,7 @@ void Real_Node_Item::draw_body()const{
 	fl_rectf(_x, _y, _w, _h);
 	fl_color(FL_BLACK);
 	fl_rect(_x, _y, _w, _h);
-	fl_draw(std::to_string(((Real_t*)core_node->cache)->value).c_str(), _x, _y+_h-2);
+	fl_draw(std::to_string(((Real_t*)core_node->cache)->value).c_str(), _x, _y+_h/2+6);
 }
 
 Node_Item* Real_Node_Item::make(int x, int y, void* ptr){
