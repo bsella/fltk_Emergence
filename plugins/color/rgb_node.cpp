@@ -20,7 +20,7 @@ void RGB_Node::update_types(){
 		main_func= &Color_t::rand;
 }
 
-void rgb_to_color_t(Node** nodes, void* ptr){
+void RGB_Node::rgb(Node** nodes, void* ptr){
 	Color_t* color_ptr= (Color_t*)ptr;
 	color_ptr->r= ((Real_t*)nodes[0]->cache)->value;
 	color_ptr->g= ((Real_t*)nodes[1]->cache)->value;

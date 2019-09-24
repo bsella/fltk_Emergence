@@ -12,6 +12,10 @@ add_library(color
 	rgb_node.cpp
 	rgb_node_item.h
 	rgb_node_item.cpp
+	hsv_nodes.h
+	hsv_nodes.cpp
+	hsv_node_items.h
+	hsv_node_items.cpp
 	)
 resource(color.png)
-target_link_libraries(color_plugin color color_t)
+target_link_libraries(color_plugin color color_t real_t)

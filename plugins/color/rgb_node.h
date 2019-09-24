@@ -6,8 +6,8 @@ public:
    	RGB_Node();
    	~RGB_Node();
 	static Node* make(void*);
+	static void rgb(Node**, void*);
 private:
 	void update_types()override;
 };
 
-void rgb_to_color_t(Node**, void*);
