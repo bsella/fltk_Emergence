@@ -20,4 +20,4 @@ resource(eq.png)
 resource(ne.png)
 resource(if.png)
 
-target_link_libraries(compare_plugin compare bool_t)
+target_link_libraries(compare_plugin compare bool_t color_t)

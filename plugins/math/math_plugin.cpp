@@ -44,6 +44,7 @@ void Math_Plugin::init()const{
 	set_func("mul", &Mul_Node::real_color , {(unsigned)real_id,  (unsigned)color_id});
 	set_func("mul", &Mul_Node::color_real , {(unsigned)color_id, (unsigned)real_id});
 	set_func("div", &Div_Node::color_real,  {(unsigned)color_id, (unsigned)real_id});
+	set_func("neg", &Neg_Node::color,       {(unsigned)color_id});
 }
 void Math_Plugin::init_gui(Main_Window*)const{
 	auto cat = new Toolbox_Category("Math", nullptr);

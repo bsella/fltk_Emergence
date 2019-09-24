@@ -18,7 +18,7 @@ Color_t::Color_t(float r, float g, float b): Color_t(r,g,b,1){}
 Color_t::Color_t(): Color_t(0,0,0,0){}
 
 double Color_t::to_real()const{
-	return (r + g + b)/3 * a;
+	return std::max(std::max(r, g), b);
 }
 
 void Color_t::rand(Node**, void* ptr){

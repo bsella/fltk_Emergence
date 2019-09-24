@@ -8,10 +8,10 @@ add_library(color
 	color_node.cpp
 	color_node_item.h
 	color_node_item.cpp
-	rgb_node.h
-	rgb_node.cpp
-	rgb_node_item.h
-	rgb_node_item.cpp
+	rgb_nodes.h
+	rgb_nodes.cpp
+	rgb_node_items.h
+	rgb_node_items.cpp
 	hsv_nodes.h
 	hsv_nodes.cpp
 	hsv_node_items.h

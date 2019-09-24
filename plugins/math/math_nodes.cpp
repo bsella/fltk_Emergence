@@ -196,6 +196,12 @@ void Div_Node::color_real(Node** nodes, void* ptr){
 	((Color_t*)ptr)->b= B0 / ((Real_t*)nodes[1]->cache)->value;
 	((Color_t*)ptr)->a= A0 / ((Real_t*)nodes[1]->cache)->value;
 }
+void Neg_Node::color(Node** nodes, void* ptr){
+	((Color_t*)ptr)->r= 1-R0;
+	((Color_t*)ptr)->g= 1-G0;
+	((Color_t*)ptr)->b= 1-B0;
+	((Color_t*)ptr)->a= A0;
+}
 
 Min_Max_Node::Min_Max_Node():Node(2){}
 
