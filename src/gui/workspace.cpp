@@ -92,8 +92,8 @@ void Workspace::mouse_drag_event(int dx, int dy, int button){
 			if(!n->Item::inside(Fl::event_x(), Fl::event_y())) continue;
 			if(!n->is_looping((Node_Item*)hover)){
 				if(n==hover_to) return;
-				Node_Item::socket_x= n->x()+n->w()+Node_Item::socket_size*2;
-				Node_Item::socket_y= n->y()+n->h()/2;
+				Node_Item::socket_x= n->_x+n->_w+Node_Item::socket_size*2;
+				Node_Item::socket_y= n->_y+n->_h/2;
 				hover_to= n;
 				redraw();
 				return;
@@ -103,13 +103,19 @@ void Workspace::mouse_drag_event(int dx, int dy, int button){
 		Node_Item::socket_y=Fl::event_y();
 		hover_to= nullptr;
 	}else{
-		if(button!=FL_LEFT_MOUSE)
+		if(button!=FL_LEFT_MOUSE){
+			zero_x-= dx/zoom;
+			zero_y-= dy/zoom;
 			for(auto i: *items)
 				i->move(dx, dy);
+		}
 		else
 			if(hover)
-				for(auto i: selected)
+				for(auto i: selected){
 					i->move(dx, dy);
+					i->pos_x+= dx/zoom;
+					i->pos_y+= dy/zoom;
+				}
 			else
 				update_rubberband(dx,dy);
 	}
@@ -119,12 +125,16 @@ void Workspace::dnd_enter_event(int x, int y){
 	if(make_node_item_t make = Node_Item::dnd_node_factory){
 		hover= make(x,y,nullptr);
 		add_node((Node_Item*)hover);
-		redraw();
 	}
 }
 void Workspace::dnd_drag_event(int x, int y){
-	if(hover)
+	if(hover){
+		x= x-hover->_w/2;
+		y= y-hover->_h/2;
 		hover->set_pos(x, y);
+		((Node_Item*)hover)->pos_x= zero_x + x/zoom;
+		((Node_Item*)hover)->pos_y= zero_y + y/zoom;
+	}
 	redraw();
 }
 void Workspace::dnd_drop_event(int, int){
@@ -142,19 +152,21 @@ void Workspace::dnd_leave_event(){
 }
 void Workspace::mouse_wheel_event(int, int dy){
 	static const float scale_factor=1.1;
-	static const float ratio= (scale_factor-1)/scale_factor;
-	if(dy<0)
+	if(dy<0){
 		zoom*=scale_factor;
-	else
+		zero_x+= (Fl::event_x()/zoom)*(scale_factor-1);
+		zero_y+= (Fl::event_y()/zoom)*(scale_factor-1);
+	}
+	else{
+		zero_x-= (Fl::event_x()/zoom)*(scale_factor-1);
+		zero_y-= (Fl::event_y()/zoom)*(scale_factor-1);
 		zoom/=scale_factor;
+	}
 	for(auto i: *items){
-		const float X = float(Fl::event_x()-i->x())/i->w();
-		const float Y = float(Fl::event_y()-i->y())/i->h();
-		if(dy<0)
-			i->move(-X*(scale_factor-1)*i->w(), -Y*(scale_factor-1)*i->h());
-		else
-			i->move(X*(i->w()*ratio), Y*(i->h()*ratio));
-		i->scale(zoom);
+		Node_Item* ni = ((Node_Item*)i);
+		i->_x= (ni->pos_x-zero_x)*zoom;
+		i->_y= (ni->pos_y-zero_y)*zoom;
+		ni->scale(zoom);
 	}
 	redraw();
 }
@@ -163,7 +175,7 @@ void Workspace::select(Node_Item* node){
 		selected.push_back(node);
 	node->selected=true;
 }
-void select_all(Fl_Widget* widget, void*){
+void Workspace::select_all(Fl_Widget* widget, void*){
 	Workspace* ws = (Workspace*)widget;
 	ws->selected.clear();
 	for(auto& n: *ws->items)
@@ -178,7 +190,7 @@ void Workspace::deselect_all(){
 		n->selected= false;
 	selected.clear();
 }
-void remove_selected(Fl_Widget* widget, void*){
+void Workspace::remove_selected(Fl_Widget* widget, void*){
 	Workspace* ws = (Workspace*)widget;
 	for(auto& n: ws->selected){
 		n->disconnect_all();
@@ -188,7 +200,6 @@ void remove_selected(Fl_Widget* widget, void*){
 	}
 	ws->selected.clear();
 }
-void copy(Fl_Widget*, void*){}
 void Workspace::mouse_click_event(int x, int y, int button){
 	if(button== FL_RIGHT_MOUSE){
 		std::vector<Fl_Menu_Item> menu;

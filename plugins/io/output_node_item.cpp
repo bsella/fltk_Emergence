@@ -34,4 +34,4 @@ void Output_Node_Item::update_image(){
 		}
 	}
 }
-void Output_Node_Item::scale(float){}
+void Output_Node_Item::scale(double){}

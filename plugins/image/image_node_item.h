@@ -11,7 +11,7 @@ public:
 private:
 	Fl_Image* image= nullptr;
 	void draw_body()const override;
-	void scale(float s)override;
+	void scale(double)override;
 	bool settle()override;
 	void context_menu(std::vector<Fl_Menu_Item>& menu);
 };

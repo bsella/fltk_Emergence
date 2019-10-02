@@ -8,12 +8,12 @@ public:
 	~Toolbox_Category();
 	void add(Toolbox_Item*);
 	void remove(Toolbox_Item*);
-	int h()const override;
 private:
 	static constexpr int category_height = 30;
 	bool open=true;
 	std::vector<Toolbox_Item*> sub_items;
 	void draw()const override;
+	void toggle_open();
 
 	void mouse_enter_event(int,int)override;
 	void mouse_leave_event()override;

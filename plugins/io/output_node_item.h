@@ -10,5 +10,5 @@ private:
 	void draw_body()const override;
 	unsigned int* draw_buffer;
 	void update_image();
-	void scale(float)override;
+	void scale(double)override;
 };

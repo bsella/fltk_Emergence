@@ -2,14 +2,14 @@
 #include <FL/fl_draw.H>
 
 Toolbox_Item::Toolbox_Item(int h, const char* text)
-	:Item(0, 0, 0, h), text(text), own_icon(false){
+	:Item(0, h), text(text), own_icon(false){
 	}
 Toolbox_Item::Toolbox_Item(int h, const char* text, Fl_PNG_Image* icn)
-	:Item(0, 0, 0, h), text(text), own_icon(false){
+	:Item(0, h), text(text), own_icon(false){
 	icon= icn;
 	}
 Toolbox_Item::Toolbox_Item(int h, const char* text, const char* icon_path)
-	:Item(0, 0, 0, h), text(text), own_icon(true){
+	:Item(0, h), text(text), own_icon(true){
 	icon= new Fl_PNG_Image(icon_path);
 }
 Toolbox_Item::~Toolbox_Item(){

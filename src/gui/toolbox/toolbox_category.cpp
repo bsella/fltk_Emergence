@@ -18,38 +18,39 @@ Fl_PNG_Image Toolbox_Category::closed_icon(RELATIVE("../src/gui/toolbox/closed.p
 
 void Toolbox_Category::add(Toolbox_Item* item){
 	sub_items.push_back(item);
+	if(open) _h+=item->_h;
 }
 
 void Toolbox_Category::remove(Toolbox_Item* item){
 	sub_items.erase(std::find(sub_items.begin(), sub_items.end(), item));
 }
 
-int Toolbox_Category::h()const{
-	if(!open) return _h;
-	int ret=_h;
-	for(const auto item : sub_items)
-		ret+=item->h();
-	return ret;
-}
-
 void Toolbox_Category::draw()const{	
-	fl_draw_box(FL_UP_BOX, _x, _y, _w, _h, 0x008000ff);
+	fl_draw_box(FL_UP_BOX, _x, _y, _w, category_height, 0x008000ff);
 	fl_color(FL_WHITE);
-	fl_draw(text, _x+36, _y+_h/2+4);
+	fl_draw(text, _x+36, _y+category_height/2+4);
 	if(!open)
-		closed_icon.draw(_x+4, _y+_h/2- closed_icon.h()/2);
+		closed_icon.draw(_x+4, _y+category_height/2- closed_icon.h()/2);
 	else{
-		open_icon.draw(_x+4, _y+_h/2- open_icon.h()/2);
-		int temp_y = _y+_h;
+		open_icon.draw(_x+4, _y+category_height/2- open_icon.h()/2);
+		int temp_y = _y+category_height;
 		for(const auto item : sub_items){
-			item->_w =w();
-			item->_x =x();
+			item->_w =_w;
+			item->_x =_x;
 			item->_y =temp_y;
 			item->draw();
 
-			temp_y+= item->h();
+			temp_y+= item->_h;
 		}
 	}
+}
+void Toolbox_Category::toggle_open(){
+	_h= category_height;
+	if(!open){
+		for(const auto item : sub_items)
+			_h+=item->_h;
+	}
+	open= !open;
 }
 Toolbox_Item* hover= nullptr;
 void Toolbox_Category::mouse_enter_event(int x, int y){
@@ -98,7 +99,7 @@ void Toolbox_Category::mouse_drag_event(int dx, int dy){
 }
 void Toolbox_Category::mouse_click_event(int x, int y, int button){
 	if(y-_y<=category_height)
-		open= !open;
+		toggle_open();
 	else
 		if(hover) hover->mouse_click_event(x,y, button);
 	draw();

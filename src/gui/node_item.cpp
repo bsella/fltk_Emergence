@@ -11,7 +11,7 @@ Fl_Color Node_Item::color()const{
 	return FL_GRAY;
 }
 Node_Item::Node_Item(int x, int y, int w, int h, Node* n)
-	:Item(x,y,w,h), core_node(n){
+	:Item(x,y,w,h), core_node(n), width(w), height(h){
 	for(unsigned int i=0; i<n->inodes.size(); i++)
 		inodes.push_back(nullptr);
 }
@@ -83,7 +83,7 @@ void Node_Item::draw()const{
 				fl_circle(_x-socket_size-head_size,Y, head_size);
 		}else{
 			const Node_Item* n= inodes[i-1];
-			fl_line(_x-socket_size,Y, n->x()+n->w()+socket_size, n->y()+n->h()/2);
+			fl_line(_x-socket_size,Y, n->_x+n->_w+socket_size, n->_y+n->_h/2);
 		}
 	}
 	if(hasOutput()) fl_line(_x+_w, _y+_h/2, _x+_w+socket_size, _y+_h/2);
@@ -166,3 +166,17 @@ void Node_Item::context_menu(std::vector<Fl_Menu_Item>& menu){
 	menu.push_back({});
 }
 bool Node_Item::settle(){return true;}
+void Node_Item::scale(double s){
+	_w= s*width;
+	_h= s*height;
+}
+//void Node_Item::set_pos(int x, int y){
+//	Item::set_pos(x,y);
+//	pos_x=Workspace::current->zero_x + Workspace::current->zoom*x;
+//	pos_y=Workspace::current->zero_y + Workspace::current->zoom*y;
+//}
+//void Node_Item::move(int dx, int dy){
+//	Item::move(dx, dy);
+//	pos_x+=Workspace::current->zoom*dx;
+//	pos_y+=Workspace::current->zoom*dy;
+//}

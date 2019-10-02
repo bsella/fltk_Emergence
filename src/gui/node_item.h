@@ -11,13 +11,14 @@ public:
 	Node_Item(int x, int y, int w, int h, Node* n);
 	virtual ~Node_Item();
 
-	void draw()const;
+	void draw()const override;
 	static make_node_item_t dnd_node_factory;
 	void connect(int, Node_Item*);
 	void disconnect(int);
 	void disconnect_all();
 	bool is_looping(Node_Item*)const;
 	inline Data_t* cache(){return core_node->cache;}
+	virtual void scale(double);
 
 protected:
 	Node* core_node;
@@ -26,6 +27,8 @@ protected:
 	virtual void draw_body()const;
 
 private:
+	double pos_x, pos_y;
+	const double width, height;
 	bool hover=false, selected=false;
 	inline int input_size()const{return core_node->inodes.size();}
 	inline bool hasOutput()const{return core_node->hasOutput;}

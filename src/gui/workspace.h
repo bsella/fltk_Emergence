@@ -9,7 +9,8 @@ public:
 	void add_node(Node_Item*);
 private:
 	std::list<Node_Item*> selected;
-	float zoom;
+	double zoom;
+	double zero_x, zero_y;
 	void draw()override;
 	void update_rubberband(int, int);
 	void reset_rubberband();
@@ -28,10 +29,6 @@ private:
 	void deselect(Node_Item*);
 	void deselect_all();
 
-	friend void remove_selected(Fl_Widget*, void*);
-	friend void select_all(Fl_Widget*, void*);
+	static void remove_selected(Fl_Widget*, void*);
+	static void select_all(Fl_Widget*, void*);
 };
-
-void select_all(Fl_Widget*, void*);
-void remove_selected(Fl_Widget*, void*);
-void copy(Fl_Widget*, void*);

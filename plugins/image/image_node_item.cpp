@@ -22,8 +22,8 @@ void Image_Node_Item::draw_body()const{
 	fl_color(FL_BLACK);
 	fl_rect(_x, _y, _w, _h);
 }
-void Image_Node_Item::scale(float s){
-	Item::scale(s);
+void Image_Node_Item::scale(double s){
+	Node_Item::scale(s);
 	if(((Image_Node*)core_node)->image){
 		delete image;
 		image= ((Image_Node*)core_node)->image->copy(_w-2, _h-2);

@@ -28,7 +28,7 @@ void Toolbox::mouse_wheel_event(int, int dy){
 void Toolbox::update_content_height(){
 	content_height= 0;
 	for(auto* item : toolbox_items)
-		content_height+= item->h();
+		content_height+= item->_h;
 }
 void Toolbox::add(Toolbox_Item* item){
 	toolbox_items.push_back(item);
@@ -56,7 +56,7 @@ void Toolbox::draw(){
 		i->_w= w()-4;
 		i->_x= x()+2;
 		i->_y= y_offset+2 - scroll_y;
-		y_offset+= i->h();
+		y_offset+= i->_h;
 		((Toolbox_Item*)i)->draw();
 	}
 }
