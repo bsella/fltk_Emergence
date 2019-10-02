@@ -153,11 +153,13 @@ void Workspace::dnd_leave_event(){
 void Workspace::mouse_wheel_event(int, int dy){
 	static const float scale_factor=1.1;
 	if(dy<0){
+		if(zoom>5) return;
 		zoom*=scale_factor;
 		zero_x+= (Fl::event_x()/zoom)*(scale_factor-1);
 		zero_y+= (Fl::event_y()/zoom)*(scale_factor-1);
 	}
 	else{
+		if(zoom<.1) return;
 		zero_x-= (Fl::event_x()/zoom)*(scale_factor-1);
 		zero_y-= (Fl::event_y()/zoom)*(scale_factor-1);
 		zoom/=scale_factor;
