@@ -13,7 +13,7 @@ public:
 	Data_t* cache= nullptr;
 	bool valid;
 	void compile(std::vector<Node*>& program);
-	virtual void compile_recursive(std::vector<Node*>& program);
+	virtual void compile_recursive(std::vector<Node*>& program, bool check_uniform= true);
 	virtual void execute();
 
 protected:

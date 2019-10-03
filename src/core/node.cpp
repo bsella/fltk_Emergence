@@ -52,12 +52,18 @@ bool Node::is_looping(Node* source)const{
 	return false;
 }
 unsigned int Node::last_compile_id= 0;
-void Node::compile_recursive(std::vector<Node*>& program){
+void Node::compile_recursive(std::vector<Node*>& program, bool check_uniform){
 	if(compile_id!=last_compile_id){
-		if(!uniform)
+		if(check_uniform && uniform){
+			std::vector<Node*> uniform_program;
+			compile_recursive(uniform_program, false);
+			for(auto n : uniform_program)
+				n->execute();
+		}else{
 			for(auto n : inodes)
-				n->compile_recursive(program);
-		program.push_back(this);
+				n->compile_recursive(program, check_uniform);
+			program.push_back(this);
+		}
 		compile_id= last_compile_id;
 	}
 }

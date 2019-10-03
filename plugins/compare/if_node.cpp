@@ -23,17 +23,23 @@ void If_Node::update_cache(){
 		invalidate_output_types();
 	last_res= res;
 }
-void If_Node::compile_recursive(std::vector<Node*>& program){
+void If_Node::compile_recursive(std::vector<Node*>& program, bool check_uniform){
 	if(compile_id != last_compile_id){
-		inodes[1]->compile_recursive(program);
-		program.push_back(this);
+		if(check_uniform && uniform){
+			std::vector<Node*> uniform_program;
+			compile_recursive(uniform_program, false);
+			for(auto n : uniform_program)
+				n->execute();
+		}else{
+			inodes[1]->compile_recursive(program, check_uniform);
+			program.push_back(this);
 	
-		then_program.clear();
-		inodes[0]->compile_recursive(then_program);
+			then_program.clear();
+			inodes[0]->compile_recursive(then_program, check_uniform);
 	
-		else_program.clear();
-		inodes[2]->compile_recursive(else_program);
-		
+			else_program.clear();
+			inodes[2]->compile_recursive(else_program, check_uniform);
+		}
 		compile_id= last_compile_id;
 	}
 }
