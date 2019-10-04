@@ -11,8 +11,8 @@ public:
    	X_Node();
 	static Node* make(void*);
 private:
-	void update_cache()override;
-	void compile_recursive(std::vector<Node*>&, bool) override;
+	void execute()override;
+	void compile_specific(std::vector<Node*>&, bool) override;
 };
 
 class Y_Node : public Node{
@@ -20,8 +20,8 @@ public:
    	Y_Node();
 	static Node* make(void*);
 private:
-	void update_cache()override;
-	void compile_recursive(std::vector<Node*>&, bool) override;
+	void execute()override;
+	void compile_specific(std::vector<Node*>&, bool) override;
 };
 
 class Ratio_Node : public Node{
@@ -29,6 +29,6 @@ public:
    	Ratio_Node();
 	static Node* make(void*);
 private:
-	void update_cache()override;
-	void compile_recursive(std::vector<Node*>&, bool) override;
+	void execute()override;
+	void compile_specific(std::vector<Node*>&, bool) override;
 };

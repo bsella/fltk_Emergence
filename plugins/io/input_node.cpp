@@ -15,10 +15,10 @@ Ratio_Node::Ratio_Node(): Node(0){
 	uniform= true;
 }
 
-void X_Node::update_cache(){}
-void Y_Node::update_cache(){}
-void Ratio_Node::update_cache(){}
+void X_Node::execute(){}
+void Y_Node::execute(){}
+void Ratio_Node::execute(){}
 
-void X_Node::compile_recursive(std::vector<Node*>&, bool){}
-void Y_Node::compile_recursive(std::vector<Node*>&, bool){}
-void Ratio_Node::compile_recursive(std::vector<Node*>&, bool){}
+void X_Node::compile_specific(std::vector<Node*>&, bool){}
+void Y_Node::compile_specific(std::vector<Node*>&, bool){}
+void Ratio_Node::compile_specific(std::vector<Node*>&, bool){}

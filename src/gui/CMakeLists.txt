@@ -39,6 +39,8 @@ add_library(toolbox
 	toolbox/toolbox_node_item.cpp
 	toolbox/toolbox_node_item.h
 )
+resource(toolbox/open.png)
+resource(toolbox/closed.png)
 target_link_libraries(toolbox graphics_view)
 
 target_link_libraries(gui -Wl,--whole-archive workspace toolbox -Wl,--no-whole-archive ${FLTK_LIBRARIES})

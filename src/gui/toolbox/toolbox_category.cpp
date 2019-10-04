@@ -13,8 +13,8 @@ Toolbox_Category::~Toolbox_Category(){
 		delete item;
 }
 
-Fl_PNG_Image Toolbox_Category::open_icon(RELATIVE("../src/gui/toolbox/open.png"));
-Fl_PNG_Image Toolbox_Category::closed_icon(RELATIVE("../src/gui/toolbox/closed.png"));
+Fl_PNG_Image Toolbox_Category::open_icon(RELATIVE("src/gui/toolbox/open.png"));
+Fl_PNG_Image Toolbox_Category::closed_icon(RELATIVE("src/gui/toolbox/closed.png"));
 
 void Toolbox_Category::add(Toolbox_Item* item){
 	sub_items.push_back(item);
