@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <FL/fl_draw.H>
 #include <FL/Fl_Menu_Item.H>
+#include <gui/main_window.h>
 
 Workspace::Workspace(int x, int y, int w, int h): Graphics_View(x,y,w,h){
 	items = new std::list<Item*>;
@@ -45,6 +46,8 @@ void Workspace::draw(){
 void Workspace::add_node(Node_Item*n){
 	add_item(n);
 	n->scale(zoom);
+	n->pos_x= zero_x + n->_x/zoom;
+	n->pos_y= zero_y + n->_y/zoom;
 }
 static Node_Item* hover_to= nullptr;
 void Workspace::mouse_press_event(int x, int y, int button){
@@ -177,11 +180,12 @@ void Workspace::select(Node_Item* node){
 		selected.push_back(node);
 	node->selected=true;
 }
-void Workspace::select_all(Fl_Widget* widget, void*){
-	Workspace* ws = (Workspace*)widget;
+void Workspace::select_all(Fl_Widget*, void* ptr){
+	Workspace* ws = (Workspace*)ptr;
 	ws->selected.clear();
 	for(auto& n: *ws->items)
 		ws->select((Node_Item*)n);
+	ws->redraw();
 }
 void Workspace::deselect(Node_Item* node){
 	selected.remove(node);
@@ -192,8 +196,8 @@ void Workspace::deselect_all(){
 		n->selected= false;
 	selected.clear();
 }
-void Workspace::remove_selected(Fl_Widget* widget, void*){
-	Workspace* ws = (Workspace*)widget;
+void Workspace::remove_selected(Fl_Widget*, void* ptr){
+	Workspace* ws = (Workspace*)ptr;
 	for(auto& n: ws->selected){
 		n->disconnect_all();
 		ws->items->remove(n);
@@ -201,6 +205,7 @@ void Workspace::remove_selected(Fl_Widget* widget, void*){
 		delete n;
 	}
 	ws->selected.clear();
+	ws->redraw();
 }
 void Workspace::mouse_click_event(int x, int y, int button){
 	if(button== FL_RIGHT_MOUSE){
@@ -218,4 +223,16 @@ void Workspace::mouse_click_event(int x, int y, int button){
 		if(m && m->callback() && m->user_data())
 			m->do_callback(this,m->user_data());
 	}
+}
+void Workspace::insert(Fl_Widget*, void* ptr){
+	auto make= (Node_Item* (*)(int,int,void*))ptr;
+	Node_Item* ni= make(workspace->x()+workspace->w()/2, workspace->y()+workspace->h()/2, nullptr);
+	ni->_x-= ni->_w/2;
+	ni->_y-= ni->_h/2;
+	workspace->add_node(ni);
+	if(!ni->settle()){
+		workspace->items->remove(ni);
+		delete ni;
+	}
+	workspace->redraw();
 }

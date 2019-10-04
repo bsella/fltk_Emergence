@@ -1,12 +1,11 @@
 #pragma once
-class Main_Window;
 
 class _Plugin {
 public:
 	virtual ~_Plugin(){}
 protected:
 	virtual void init()const{}
-	virtual void init_gui(Main_Window*)const{}
+	virtual void init_gui()const{}
 
 	friend class Plugin;
 };

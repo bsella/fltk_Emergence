@@ -6,52 +6,42 @@
 #include "gui/toolbox/toolbox.h"
 #include "resources.h"
 
-const unsigned int Main_Window::menu_bar_height = 30;
-Main_Window::Main_Window(int _w, int _h):Fl_Double_Window(_w, _h, "Emergence"){
-	init_gui();
-	end();
-    resizable(*this);
-}
-Main_Window::~Main_Window(){
-	delete toolbox;
-	delete menu_bar;
-    delete workspace;
-}
-int Main_Window::run(){
-	return Fl::run();
-}
-void Main_Window::resize(int X, int Y, int W, int H){
-	Fl_Double_Window::resize(X,Y,W,H);
-	menu_bar->size(W,menu_bar_height);
-	static const int toolbox_min_width = 100;
-	static const int toolbox_max_width = 140;
-	toolbox->resize(0,menu_bar_height, std::min(std::max(toolbox->w(),toolbox_min_width),toolbox_max_width), H-menu_bar_height);
-	workspace->resize(toolbox->w(), menu_bar_height, W-toolbox->w(), H-menu_bar_height);
-}
-void Main_Window::init_gui(){
-	toolbox = new Toolbox(0,menu_bar_height, w()/5, h()-menu_bar_height);
+Fl_Double_Window* main_window;
+Toolbox* toolbox;
+Workspace* workspace;
+Fl_Menu_Bar* menu_bar;
 
-	menu_bar = new Fl_Menu_Bar(0,0,w(), menu_bar_height);
+void init_gui(){
+	main_window= new Fl_Double_Window(500,550, "Emergence");
+	static const unsigned int menu_bar_height = 30;
+	toolbox = new Toolbox(0,menu_bar_height, main_window->w()/4, main_window->h()-menu_bar_height);
+
+	workspace = new Workspace(main_window->w()/4, menu_bar_height, 4*main_window->w()/5, main_window->h()-menu_bar_height);
+
+	menu_bar = new Fl_Menu_Bar(0,0, main_window->w(), menu_bar_height);
 	menu_bar->add("File/New", "^n", nullptr);
 	menu_bar->add("File/Open", "^o", nullptr);
 	menu_bar->add("File/Save", "^s", nullptr);
 	menu_bar->add("File/_Save as...", "^S", nullptr);
-	menu_bar->add("File/Quit", "^q", quit, this);
+	menu_bar->add("File/Quit", "^q", quit);
 
 	menu_bar->add("Edit/Undo", "^z", nullptr);
 	menu_bar->add("Edit/_Redo", "^Z", nullptr);
 	menu_bar->add("Edit/Cut", "^x", nullptr);
 	menu_bar->add("Edit/Copy", "^c", nullptr);
 	menu_bar->add("Edit/Paste", "^v", nullptr);
-	menu_bar->add("Edit/_Delete", FL_Delete, nullptr);
-	menu_bar->add("Edit/Select all", "^a", nullptr);
+	menu_bar->add("Edit/_Delete", FL_Delete, &Workspace::remove_selected, workspace);
+	menu_bar->add("Edit/Select all", "^a", &Workspace::select_all, workspace);
 
-	workspace = new Workspace(w()/5, menu_bar_height, 4*w()/5, h()-menu_bar_height);
-	
-	add(menu_bar);
-	add_resizable(*toolbox);
-	add_resizable(*workspace);
+	main_window->end();
+	main_window->resizable(workspace);
 }
-void Main_Window::quit(Fl_Widget*, void* w){
-	((Main_Window*)w)->hide();
+
+int run_gui(){
+	main_window->show();
+	return Fl::run();
+}
+
+void quit(Fl_Widget*, void*){
+	main_window->hide();
 }

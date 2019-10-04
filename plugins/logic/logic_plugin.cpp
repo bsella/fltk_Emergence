@@ -7,24 +7,28 @@
 #include "logic_node_items.h"
 #include <resources.h>
 #include <core/type_manager.h>
+#include <gui/workspace.h>
 
-class Compare_Plugin : public _Plugin{
+class Logic_Plugin : public _Plugin{
 public:
 	void init()const override;
-	void init_gui(Main_Window*)const override;
+	void init_gui()const override;
 };
 
-CREATE_DESTROY_C(Compare_Plugin)
+CREATE_DESTROY_C(Logic_Plugin)
 
-void Compare_Plugin::init()const{
+void Logic_Plugin::init()const{
 	int bool_id= get_type_id("bool");
 	set_func("and", &AND_Node::func, {(unsigned)bool_id, (unsigned)bool_id});
 	set_func("or",  &OR_Node::func , {(unsigned)bool_id, (unsigned)bool_id});
 	set_func("xor", &XOR_Node::func, {(unsigned)bool_id, (unsigned)bool_id});
 	set_func("not", &NOT_Node::func, {(unsigned)bool_id});
 }
-void Compare_Plugin::init_gui(Main_Window* mw)const{
-	mw->menu_bar->add("Insert/Compare");
+void Logic_Plugin::init_gui()const{
+	menu_bar->add("Insert/Logic/AND", 0, &Workspace::insert, (void*)&AND_Node_Item::make);
+	menu_bar->add("Insert/Logic/OR",  0, &Workspace::insert, (void*)&OR_Node_Item::make);
+	menu_bar->add("Insert/Logic/XOR", 0, &Workspace::insert, (void*)&XOR_Node_Item::make);
+	menu_bar->add("Insert/Logic/NOT", 0, &Workspace::insert, (void*)&NOT_Node_Item::make);
 
 	auto cat = new Toolbox_Category("Logic", nullptr);
 	cat->add(new Toolbox_Node_Item("And", RELATIVE("plugins/logic/and.png"), &AND_Node_Item::make));

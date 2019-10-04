@@ -8,11 +8,12 @@
 #include "image_node_item.h"
 #include <resources.h>
 #include <core/type_manager.h>
+#include <gui/workspace.h>
 
 class Image_Plugin : public _Plugin{
 public:
 	void init()const override;
-	void init_gui(Main_Window*)const override;
+	void init_gui()const override;
 };
 
 CREATE_DESTROY_C(Image_Plugin)
@@ -21,7 +22,9 @@ void Image_Plugin::init()const{
 	int real_id= get_type_id("real");
 	set_func("get_pixel", &Image_Node::get_pixel, {(unsigned)real_id, (unsigned)real_id});
 }
-void Image_Plugin::init_gui(Main_Window*)const{
+void Image_Plugin::init_gui()const{
+	menu_bar->add("Insert/Other/Image", 0, &Workspace::insert, (void*)&Image_Node_Item::make);
+
 	Toolbox_Category* cat= Toolbox::add_category("Other");
 	cat->add(new Toolbox_Node_Item("Image",RELATIVE("plugins/image/image.png"),&Image_Node_Item::make));
 }

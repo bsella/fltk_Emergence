@@ -1,20 +1,15 @@
 #pragma once
-#include <FL/Fl_Double_Window.H>
+class Fl_Double_Window;
 class Toolbox;
 class Workspace;
 class Fl_Menu_Bar;
+class Fl_Widget;
 
-class Main_Window : public Fl_Double_Window{
-public:
-	Main_Window(int,int);
-	~Main_Window();
-	static int run();
-	Toolbox* toolbox=nullptr;
-	Fl_Menu_Bar* menu_bar=nullptr;
-private:
-	Workspace* workspace=nullptr;
-	static const unsigned int menu_bar_height;
-	void resize(int, int, int, int)override;
-	void init_gui();
-	static void quit(Fl_Widget*,void*);
-};
+extern Fl_Double_Window* main_window;
+extern Toolbox* toolbox;
+extern Workspace* workspace;
+extern Fl_Menu_Bar* menu_bar;
+
+void init_gui();
+int run_gui();
+void quit(Fl_Widget*,void*);

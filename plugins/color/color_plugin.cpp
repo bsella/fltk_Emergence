@@ -11,11 +11,12 @@
 #include "hsv_nodes.h"
 #include <resources.h>
 #include <core/type_manager.h>
+#include <gui/workspace.h>
 
 class Color_Plugin : public _Plugin{
 public:
 	void init()const override;
-	void init_gui(Main_Window*)const override;
+	void init_gui()const override;
 };
 
 CREATE_DESTROY_C(Color_Plugin)
@@ -35,8 +36,17 @@ void Color_Plugin::init()const{
 	set_func("saturation", &Saturation_Node::saturation, {(unsigned)color_id});
 	set_func("value", &Value_Node::value, {(unsigned)color_id});
 }
-void Color_Plugin::init_gui(Main_Window* mw)const{
-	mw->menu_bar->add("Insert/Color");
+void Color_Plugin::init_gui()const{
+	menu_bar->add("Insert/Color/_Color", 0, &Workspace::insert, (void*)&Color_Node_Item::make);
+	menu_bar->add("Insert/Color/RGB",    0, &Workspace::insert, (void*)&RGB_Node_Item::make);
+	menu_bar->add("Insert/Color/Red",    0, &Workspace::insert, (void*)&Red_Node_Item::make);
+	menu_bar->add("Insert/Color/Green",  0, &Workspace::insert, (void*)&Green_Node_Item::make);
+	menu_bar->add("Insert/Color/Blue",   0, &Workspace::insert, (void*)&Blue_Node_Item::make);
+	menu_bar->add("Insert/Color/_Alpha", 0, &Workspace::insert, (void*)&Alpha_Node_Item::make);
+	menu_bar->add("Insert/Color/HSV",    0, &Workspace::insert, (void*)&HSV_Node_Item::make);
+	menu_bar->add("Insert/Color/Hue",    0, &Workspace::insert, (void*)&Hue_Node_Item::make);
+	menu_bar->add("Insert/Color/Saturation", 0, &Workspace::insert, (void*)&Saturation_Node_Item::make);
+	menu_bar->add("Insert/Color/Value",  0, &Workspace::insert, (void*)&Value_Node_Item::make);
 
 	auto cat = new Toolbox_Category("Color", nullptr);
 	cat->add(new Toolbox_Node_Item("Color", RELATIVE("plugins/color/color.png"), &Color_Node_Item::make));
@@ -52,4 +62,3 @@ void Color_Plugin::init_gui(Main_Window* mw)const{
 
 	Toolbox::add(cat);
 }
-

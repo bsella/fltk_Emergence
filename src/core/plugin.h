@@ -7,7 +7,7 @@ public:
 	Plugin(const std::string&);
 	~Plugin();
 	void init();
-	void init_gui(Main_Window*);
+	void init_gui();
 
 private:
 	void (*destroy_function)(_Plugin*);
@@ -53,6 +53,6 @@ Plugin::~Plugin(){
 void Plugin::init(){
 	plugin->init();
 }
-void Plugin::init_gui(Main_Window* mw){
-	plugin->init_gui(mw);
+void Plugin::init_gui(){
+	plugin->init_gui();
 }

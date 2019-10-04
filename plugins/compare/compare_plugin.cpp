@@ -8,11 +8,12 @@
 #include "compare_node_items.h"
 #include <resources.h>
 #include <core/type_manager.h>
+#include <gui/workspace.h>
 
 class Compare_Plugin : public _Plugin{
 public:
 	void init()const override;
-	void init_gui(Main_Window*)const override;
+	void init_gui()const override;
 };
 
 CREATE_DESTROY_C(Compare_Plugin)
@@ -41,8 +42,12 @@ void Compare_Plugin::init()const{
 	set_func("eq", &EQ_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
 	set_func("ne", &NE_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
 }
-void Compare_Plugin::init_gui(Main_Window* mw)const{
-	mw->menu_bar->add("Insert/Compare");
+void Compare_Plugin::init_gui()const{
+	menu_bar->add("Insert/Compare/Greater Than", 0, &Workspace::insert, (void*)&GT_Node_Item::make);
+	menu_bar->add("Insert/Compare/Less Than",    0, &Workspace::insert, (void*)&LT_Node_Item::make);
+	menu_bar->add("Insert/Compare/Equal",        0, &Workspace::insert, (void*)&EQ_Node_Item::make);
+	menu_bar->add("Insert/Compare/_Not Equal",   0, &Workspace::insert, (void*)&NE_Node_Item::make);
+	menu_bar->add("Insert/Compare/Condition",    0, &Workspace::insert, (void*)&If_Node_Item::make);
 
 	auto cat = new Toolbox_Category("Compare", nullptr);
 	cat->add(new Toolbox_Node_Item("Greater Than", RELATIVE("plugins/compare/gt.png"), &GT_Node_Item::make));

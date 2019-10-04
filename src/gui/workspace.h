@@ -7,6 +7,11 @@ public:
 	Workspace(int x, int y, int w, int h);
 	~Workspace();
 	void add_node(Node_Item*);
+
+	static void insert(Fl_Widget*, void*);
+	static void select_all(Fl_Widget*, void*);
+	static void remove_selected(Fl_Widget*, void*);
+
 private:
 	std::list<Node_Item*> selected;
 	double zoom;
@@ -28,7 +33,4 @@ private:
 	void select(Node_Item*);
 	void deselect(Node_Item*);
 	void deselect_all();
-
-	static void remove_selected(Fl_Widget*, void*);
-	static void select_all(Fl_Widget*, void*);
 };

@@ -7,11 +7,11 @@
 #include <core/type_manager.h>
 
 std::string relative_path;
-int main(int argc, char **argv){
+int main(int, char **argv){
 	relative_path= argv[0];
 	relative_path= relative_path.substr(0,relative_path.find_last_of("/\\")) +'/';
-	Main_Window win(500, 550);
-	win.show(argc,argv);
+
+	init_gui();
 
 	DIR* plugin_dir;
 	struct dirent *ent;
@@ -33,12 +33,12 @@ int main(int argc, char **argv){
 			if(ent->d_name[0]!='.'){
 				Plugin* p= new Plugin(std::string(RELATIVE("lib")) + '/' + std::string(ent->d_name));
 				p->init();
-				p->init_gui(&win);
+				p->init_gui();
 				plugins.push_back(p);
 			}
 		closedir(plugin_dir);
 	}
-	int ret = Main_Window::run();
+	int ret= run_gui();
 	for(auto p : plugins)
 		delete p;
 	return ret;
