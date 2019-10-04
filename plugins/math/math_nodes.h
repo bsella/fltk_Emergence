@@ -14,6 +14,7 @@ protected:
 	void set_random_func();
 private:
 	virtual void update_types()override=0;
+	void compile_specific(std::vector<Node*>&, bool)override;
 };
 
 class Add_Node : public Math_Node{
@@ -21,6 +22,8 @@ public:
 	Add_Node();
 	static Node* make(void*);
 	static void real_real(Node**, void*);
+	static void real_color(Node**, void*);
+	static void color_real(Node**, void*);
 	static void color_color(Node**, void*);
 private:
 	void update_types()override;
@@ -31,6 +34,8 @@ public:
 	Sub_Node();
 	static Node* make(void*);
 	static void real_real(Node**, void*);
+	static void real_color(Node**, void*);
+	static void color_real(Node**, void*);
 	static void color_color(Node**, void*);
 private:
 	void update_types()override;
@@ -43,6 +48,7 @@ public:
 	static void real_real(Node**, void*);
 	static void real_color(Node**, void*);
 	static void color_real(Node**, void*);
+	static void color_color(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -52,7 +58,9 @@ public:
 	Div_Node();
 	static Node* make(void*);
 	static void real_real(Node**, void*);
+	static void real_color(Node**, void*);
 	static void color_real(Node**, void*);
+	static void color_color(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -72,6 +80,7 @@ public:
 	Sqrt_Node();
 	static Node* make(void*);
 	static void real(Node**, void*);
+	static void color(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -81,6 +90,7 @@ public:
 	Abs_Node();
 	static Node* make(void*);
 	static void real(Node**, void*);
+	static void color(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -90,6 +100,7 @@ public:
 	Sin_Node();
 	static Node* make(void*);
 	static void real(Node**, void*);
+	static void color(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -99,6 +110,7 @@ public:
 	Cos_Node();
 	static Node* make(void*);
 	static void real(Node**, void*);
+	static void color(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -108,6 +120,9 @@ public:
 	Pow_Node();
 	static Node* make(void*);
 	static void real_real(Node**, void*);
+	static void real_color(Node**, void*);
+	static void color_real(Node**, void*);
+	static void color_color(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -117,6 +132,7 @@ public:
 	Log_Node();
 	static Node* make(void*);
 	static void real(Node**, void*);
+	static void color(Node**, void*);
 private:
 	void update_types()override;
 };

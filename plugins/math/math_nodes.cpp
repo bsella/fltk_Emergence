@@ -29,6 +29,12 @@ Node* Max_Node::make(void*){return new Max_Node;}
 Node* Pow_Node::make(void*){return new Pow_Node;}
 Node* Log_Node::make(void*){return new Log_Node;}
 
+void Math_Node::compile_specific(std::vector<Node*>& program, bool check_uniform){
+	Node::compile_specific(program, check_uniform);
+	if(inodes.size()==1) init_cache1(inodes.data());
+	else init_cache2(inodes.data());
+}
+
 void Math_Node::init_cache1(Node** nodes){
 	if(nodes[0]->cache->id == (unsigned)get_type_id("real"))
 		cache= &real_cache;
@@ -159,24 +165,49 @@ void Log_Node::real(Node** nodes, void* ptr){
 #define B1 ((Color_t*)(nodes[1]->cache))->b
 #define A1 ((Color_t*)(nodes[1]->cache))->a
 
+void Add_Node::real_color(Node** nodes, void* ptr){
+	((Color_t*)ptr)->r= ((Real_t*)nodes[0]->cache)->value + R1;
+	((Color_t*)ptr)->g= ((Real_t*)nodes[0]->cache)->value + G1;
+	((Color_t*)ptr)->b= ((Real_t*)nodes[0]->cache)->value + B1;
+	((Color_t*)ptr)->a= ((Real_t*)nodes[0]->cache)->value + A1;
+}
+void Add_Node::color_real(Node** nodes, void* ptr){
+	((Color_t*)ptr)->r= R0 + ((Real_t*)nodes[1]->cache)->value;
+	((Color_t*)ptr)->g= G0 + ((Real_t*)nodes[1]->cache)->value;
+	((Color_t*)ptr)->b= B0 + ((Real_t*)nodes[1]->cache)->value;
+	((Color_t*)ptr)->a= A0 + ((Real_t*)nodes[1]->cache)->value;
+}
 void Add_Node::color_color(Node** nodes, void* ptr){
-	static double diff;
-	diff= 1 - A1;
-	((Color_t*)ptr)->r= R1 + R0 * diff;
-	((Color_t*)ptr)->g= G1 + G0 * diff;
-	((Color_t*)ptr)->b= B1 + B0 * diff;
-	((Color_t*)ptr)->a= A1 + A0 * diff;
+	((Color_t*)ptr)->r= R0 + R1;
+	((Color_t*)ptr)->g= G0 + G1;
+	((Color_t*)ptr)->b= B0 + B1;
+	((Color_t*)ptr)->a= A0 + A1;
+}
+
+void Sub_Node::real_color(Node** nodes, void* ptr){
+	((Color_t*)ptr)->r= ((Real_t*)nodes[0]->cache)->value - R1;
+	((Color_t*)ptr)->g= ((Real_t*)nodes[0]->cache)->value - G1;
+	((Color_t*)ptr)->b= ((Real_t*)nodes[0]->cache)->value - B1;
+	((Color_t*)ptr)->a= ((Real_t*)nodes[0]->cache)->value - A1;
+}
+void Sub_Node::color_real(Node** nodes, void* ptr){
+	((Color_t*)ptr)->r= R0 - ((Real_t*)nodes[1]->cache)->value;
+	((Color_t*)ptr)->g= G0 - ((Real_t*)nodes[1]->cache)->value;
+	((Color_t*)ptr)->b= B0 - ((Real_t*)nodes[1]->cache)->value;
+	((Color_t*)ptr)->a= A0 - ((Real_t*)nodes[1]->cache)->value;
 }
 void Sub_Node::color_color(Node** nodes, void* ptr){
 	((Color_t*)ptr)->r= R0 - R1;
 	((Color_t*)ptr)->g= G0 - G1;
 	((Color_t*)ptr)->b= B0 - B1;
 	((Color_t*)ptr)->a= A0 - A1;
+}
 
-	((Color_t*)ptr)->r= std::max(((Color_t*)ptr)->r, 0.0);
-	((Color_t*)ptr)->g= std::max(((Color_t*)ptr)->g, 0.0);
-	((Color_t*)ptr)->b= std::max(((Color_t*)ptr)->b, 0.0);
-	((Color_t*)ptr)->a= std::max(((Color_t*)ptr)->a, 0.0);
+void Mul_Node::real_color(Node** nodes, void* ptr){
+	((Color_t*)ptr)->r= ((Real_t*)nodes[0]->cache)->value * R1;
+	((Color_t*)ptr)->g= ((Real_t*)nodes[0]->cache)->value * G1;
+	((Color_t*)ptr)->b= ((Real_t*)nodes[0]->cache)->value * B1;
+	((Color_t*)ptr)->a= ((Real_t*)nodes[0]->cache)->value * A1;
 }
 void Mul_Node::color_real(Node** nodes, void* ptr){
 	((Color_t*)ptr)->r= R0 * ((Real_t*)nodes[1]->cache)->value;
@@ -184,11 +215,18 @@ void Mul_Node::color_real(Node** nodes, void* ptr){
 	((Color_t*)ptr)->b= B0 * ((Real_t*)nodes[1]->cache)->value;
 	((Color_t*)ptr)->a= A0 * ((Real_t*)nodes[1]->cache)->value;
 }
-void Mul_Node::real_color(Node** nodes, void* ptr){
-	((Color_t*)ptr)->r= ((Real_t*)nodes[0]->cache)->value * R1;
-	((Color_t*)ptr)->g= ((Real_t*)nodes[0]->cache)->value * G1;
-	((Color_t*)ptr)->b= ((Real_t*)nodes[0]->cache)->value * B1;
-	((Color_t*)ptr)->a= ((Real_t*)nodes[0]->cache)->value * A1;
+void Mul_Node::color_color(Node** nodes, void* ptr){
+	((Color_t*)ptr)->r= R0 * R1;
+	((Color_t*)ptr)->g= G0 * G1;
+	((Color_t*)ptr)->b= B0 * B1;
+	((Color_t*)ptr)->a= A0 * A1;
+}
+
+void Div_Node::real_color(Node** nodes, void* ptr){
+	((Color_t*)ptr)->r= ((Real_t*)nodes[0]->cache)->value / R1;
+	((Color_t*)ptr)->g= ((Real_t*)nodes[0]->cache)->value / G1;
+	((Color_t*)ptr)->b= ((Real_t*)nodes[0]->cache)->value / B1;
+	((Color_t*)ptr)->a= ((Real_t*)nodes[0]->cache)->value / A1;
 }
 void Div_Node::color_real(Node** nodes, void* ptr){
 	((Color_t*)ptr)->r= R0 / ((Real_t*)nodes[1]->cache)->value;
@@ -196,11 +234,65 @@ void Div_Node::color_real(Node** nodes, void* ptr){
 	((Color_t*)ptr)->b= B0 / ((Real_t*)nodes[1]->cache)->value;
 	((Color_t*)ptr)->a= A0 / ((Real_t*)nodes[1]->cache)->value;
 }
+void Div_Node::color_color(Node** nodes, void* ptr){
+	((Color_t*)ptr)->r= R0 / R1;
+	((Color_t*)ptr)->g= G0 / G1;
+	((Color_t*)ptr)->b= B0 / B1;
+	((Color_t*)ptr)->a= A0 / A1;
+}
+
 void Neg_Node::color(Node** nodes, void* ptr){
-	((Color_t*)ptr)->r= 1-R0;
-	((Color_t*)ptr)->g= 1-G0;
-	((Color_t*)ptr)->b= 1-B0;
-	((Color_t*)ptr)->a= A0;
+	((Color_t*)ptr)->r= -R0;
+	((Color_t*)ptr)->g= -G0;
+	((Color_t*)ptr)->b= -B0;
+	((Color_t*)ptr)->a= -A0;
+}
+
+void Abs_Node::color(Node** nodes, void* ptr){
+	((Color_t*)ptr)->r= std::abs(R0);
+	((Color_t*)ptr)->g= std::abs(G0);
+	((Color_t*)ptr)->b= std::abs(B0);
+	((Color_t*)ptr)->a= std::abs(A0);
+}
+
+void Sin_Node::color(Node** nodes, void* ptr){
+	((Color_t*)ptr)->r= std::sin(R0);
+	((Color_t*)ptr)->g= std::sin(G0);
+	((Color_t*)ptr)->b= std::sin(B0);
+	((Color_t*)ptr)->a= std::sin(A0);
+}
+
+void Cos_Node::color(Node** nodes, void* ptr){
+	((Color_t*)ptr)->r= std::cos(R0);
+	((Color_t*)ptr)->g= std::cos(G0);
+	((Color_t*)ptr)->b= std::cos(B0);
+	((Color_t*)ptr)->a= std::cos(A0);
+}
+
+void Pow_Node::real_color(Node** nodes, void* ptr){
+	((Color_t*)ptr)->r= std::pow(((Real_t*)nodes[0]->cache)->value, R1);
+	((Color_t*)ptr)->g= std::pow(((Real_t*)nodes[0]->cache)->value, G1);
+	((Color_t*)ptr)->b= std::pow(((Real_t*)nodes[0]->cache)->value, B1);
+	((Color_t*)ptr)->a= std::pow(((Real_t*)nodes[0]->cache)->value, A1);
+}
+void Pow_Node::color_real(Node** nodes, void* ptr){
+	((Color_t*)ptr)->r= std::pow(R0, ((Real_t*)nodes[1]->cache)->value);
+	((Color_t*)ptr)->g= std::pow(G0, ((Real_t*)nodes[1]->cache)->value);
+	((Color_t*)ptr)->b= std::pow(B0, ((Real_t*)nodes[1]->cache)->value);
+	((Color_t*)ptr)->a= std::pow(A0, ((Real_t*)nodes[1]->cache)->value);
+}
+void Pow_Node::color_color(Node** nodes, void* ptr){
+	((Color_t*)ptr)->r= std::pow(R0, R1);
+	((Color_t*)ptr)->g= std::pow(G0, G1);
+	((Color_t*)ptr)->b= std::pow(B0, B1);
+	((Color_t*)ptr)->a= std::pow(A0, A1);
+}
+
+void Log_Node::color(Node** nodes, void* ptr){
+	((Color_t*)ptr)->r= std::log(R0);
+	((Color_t*)ptr)->g= std::log(G0);
+	((Color_t*)ptr)->b= std::log(B0);
+	((Color_t*)ptr)->a= std::log(A0);
 }
 
 Min_Max_Node::Min_Max_Node():Node(2){}

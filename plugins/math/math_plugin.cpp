@@ -39,12 +39,26 @@ void Math_Plugin::init()const{
 	set_func("lerp",&Lerp_Node::color,     {(unsigned)color_id, (unsigned)real_id, (unsigned)color_id});
 	set_func("clamp",&Clamp_Node::color,   {(unsigned)color_id, (unsigned)color_id, (unsigned)color_id});
 
+	set_func("add", &Add_Node::real_color, {(unsigned)real_id, (unsigned)color_id});
+	set_func("add", &Add_Node::color_real, {(unsigned)color_id, (unsigned)real_id});
 	set_func("add", &Add_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
+	set_func("sub", &Sub_Node::real_color, {(unsigned)real_id, (unsigned)color_id});
+	set_func("sub", &Sub_Node::color_real, {(unsigned)color_id, (unsigned)real_id});
 	set_func("sub", &Sub_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
 	set_func("mul", &Mul_Node::real_color , {(unsigned)real_id,  (unsigned)color_id});
 	set_func("mul", &Mul_Node::color_real , {(unsigned)color_id, (unsigned)real_id});
-	set_func("div", &Div_Node::color_real,  {(unsigned)color_id, (unsigned)real_id});
+	set_func("mul", &Mul_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
+	set_func("div", &Div_Node::real_color , {(unsigned)real_id,  (unsigned)color_id});
+	set_func("div", &Div_Node::color_real , {(unsigned)color_id, (unsigned)real_id});
+	set_func("div", &Div_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
 	set_func("neg", &Neg_Node::color,       {(unsigned)color_id});
+	set_func("abs", &Abs_Node::color,       {(unsigned)color_id});
+	set_func("sin", &Sin_Node::color,       {(unsigned)color_id});
+	set_func("cos", &Cos_Node::color,       {(unsigned)color_id});
+	set_func("pow", &Pow_Node::real_color , {(unsigned)real_id,  (unsigned)color_id});
+	set_func("pow", &Pow_Node::color_real , {(unsigned)color_id, (unsigned)real_id});
+	set_func("pow", &Pow_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
+	set_func("log", &Log_Node::color,       {(unsigned)color_id});
 }
 void Math_Plugin::init_gui(Main_Window*)const{
 	auto cat = new Toolbox_Category("Math", nullptr);
