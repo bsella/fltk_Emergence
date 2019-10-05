@@ -6,9 +6,10 @@ public:
 	Output_Node();
 	static Node* make(void*);
 	std::vector<Node*> program;
-	unsigned int pixel_cache;
+	void render(int, int, unsigned int*);
 private:
 	void update_cache()override;
 	void update_types()override;
 	void update_valid()override;
+	unsigned int* current_pixel;
 };

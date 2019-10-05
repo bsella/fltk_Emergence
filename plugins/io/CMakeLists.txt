@@ -12,6 +12,7 @@ add_library(io
 	output_node.cpp
 	output_node_item.h
 	output_node_item.cpp
+	export_output.cpp
 	)
 
 resource(x.png)

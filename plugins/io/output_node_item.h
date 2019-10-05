@@ -1,4 +1,5 @@
 #include <gui/node_item.h>
+class Fl_Widget;
 
 class Output_Node_Item : public Node_Item{
 public:
@@ -11,4 +12,6 @@ private:
 	unsigned int* draw_buffer;
 	void update_image();
 	void scale(double)override;
+	void context_menu(std::vector<Fl_Menu_Item>&)override;
+	static void export_output(Fl_Widget*, void*);
 };
