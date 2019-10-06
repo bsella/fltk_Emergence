@@ -2,7 +2,7 @@
 #include "image_node.h"
 #include <FL/fl_draw.H>
 #include <FL/Fl_Shared_Image.H>
-#include <FL/Fl_File_Chooser.H>
+#include <FL/Fl_Native_File_Chooser.H>
 #include <resources.h>
 
 Image_Node_Item::Image_Node_Item(int x, int y, const char* ptr): Node_Item(x,y,70,70, new Image_Node(ptr)){
@@ -29,21 +29,27 @@ void Image_Node_Item::scale(double s){
 		image= ((Image_Node*)core_node)->image->copy(_w-2, _h-2);
 	}
 }
-static void change_image(Fl_Widget*, void* ptr){
-	char* file= fl_file_chooser("Choose an image","*.bmp", RELATIVE("."), 0);
-	((Image_Node_Item*)ptr)->set_image(file);
+static bool ok=false;
+void Image_Node_Item::change_image(Fl_Widget*, void* ptr){
+	Fl_Native_File_Chooser fnfc;
+	fnfc.title("Pick an image");
+	fnfc.type(Fl_Native_File_Chooser::BROWSE_FILE);
+	fnfc.filter("Image\t*.bmp");
+	fnfc.directory(".");
+	int temp= fnfc.show();
+	if(temp==1 || temp==-1){
+		ok=false;
+		return;
+	}
+	Image_Node_Item* ini= (Image_Node_Item*)ptr;
+	delete ini->image;
+	((Image_Node*)ini->core_node)->set_image(fnfc.filename());
+	ini->image= ((Image_Node*)ini->core_node)->image->copy(ini->_w-2, ini->_h-2);
+	ok= true;
 }
 bool Image_Node_Item::settle(){
-	char* file= fl_file_chooser("Choose an image","*.bmp", RELATIVE("."), 0);
-	set_image(file);
-	return file;
-}
-void Image_Node_Item::set_image(const char* file){
-	if(file){
-		delete image;
-		((Image_Node*)core_node)->set_image(file);
-		image= ((Image_Node*)core_node)->image->copy(_w-2, _h-2);
-	}
+	change_image(nullptr, this);
+	return ok;
 }
 void Image_Node_Item::context_menu(std::vector<Fl_Menu_Item>& menu){
 	menu.back().flags|= FL_MENU_DIVIDER;

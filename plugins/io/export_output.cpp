@@ -25,9 +25,9 @@ static void cancel_cb(Fl_Widget* w, void* ptr){
 }
 void Output_Node_Item::export_output(Fl_Widget*, void* ptr){
 	Fl_Native_File_Chooser fnfc;
-	fnfc.title("Pick a file");
+	fnfc.title("Choose output image path");
 	fnfc.type(Fl_Native_File_Chooser::BROWSE_SAVE_FILE);
-	fnfc.filter("Image\t*.bmp");
+	fnfc.filter("Image\t*.{bmp,jpg,jpeg,png}");
 	fnfc.directory(".");
 	fnfc.options(Fl_Native_File_Chooser::Option::SAVEAS_CONFIRM);
 	int temp= fnfc.show();
