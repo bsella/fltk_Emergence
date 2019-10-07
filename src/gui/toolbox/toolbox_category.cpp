@@ -1,4 +1,5 @@
 #include "toolbox_category.h"
+#include "toolbox.h"
 #include <FL/Fl.H>
 #include <FL/fl_draw.H>
 #include <algorithm>
@@ -19,10 +20,13 @@ Fl_PNG_Image Toolbox_Category::closed_icon(RELATIVE("src/gui/toolbox/closed.png"
 void Toolbox_Category::add(Toolbox_Item* item){
 	sub_items.push_back(item);
 	if(open) _h+=item->_h;
+	Toolbox::update_content_height();
 }
 
 void Toolbox_Category::remove(Toolbox_Item* item){
 	sub_items.erase(std::find(sub_items.begin(), sub_items.end(), item));
+	if(open) _h-=item->_h;
+	Toolbox::update_content_height();
 }
 
 void Toolbox_Category::draw()const{	

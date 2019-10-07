@@ -48,7 +48,7 @@ void Color_Plugin::init_gui()const{
 	menu_bar->add("Insert/Color/Saturation", 0, &Workspace::insert, (void*)&Saturation_Node_Item::make);
 	menu_bar->add("Insert/Color/Value",  0, &Workspace::insert, (void*)&Value_Node_Item::make);
 
-	auto cat = new Toolbox_Category("Color", nullptr);
+	auto cat = Toolbox::add_category("Color", nullptr);
 	cat->add(new Toolbox_Node_Item("Color", RELATIVE("plugins/color/color.png"), &Color_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("RGB",  &RGB_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Red",  &Red_Node_Item::make));
@@ -59,6 +59,4 @@ void Color_Plugin::init_gui()const{
 	cat->add(new Toolbox_Node_Item("Hue",  &Hue_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Saturation",  &Saturation_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Value",  &Value_Node_Item::make));
-
-	Toolbox::add(cat);
 }

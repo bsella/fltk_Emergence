@@ -94,6 +94,7 @@ bool Node_Item::inside(int x, int y)const{
 		return true;
 	if(x<_x && x<=_x-socket_size && x>=_x-socket_size-head_size*2){
 		const int Y= y-_y+head_size, H=_h/(inodes.size()+1);
+        if(!H)return false;
 		if(Y%H < head_size*2){
 			const int tmp= Y/H;
 			if(tmp>0 && tmp<=(int)inodes.size())
