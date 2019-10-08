@@ -9,6 +9,8 @@
 #include "real_node_item.h"
 #include "lerp_nodes.h"
 #include "lerp_node_items.h"
+#include "complex_node_item.h"
+#include "complex_node.h"
 #include <core/type_manager.h>
 #include <gui/workspace.h>
 
@@ -60,9 +62,11 @@ void Math_Plugin::init()const{
 	set_func("pow", &Pow_Node::color_real , {(unsigned)color_id, (unsigned)real_id});
 	set_func("pow", &Pow_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
 	set_func("log", &Log_Node::color,       {(unsigned)color_id});
+	set_func("complex", &Complex_Node::cplx,{(unsigned)real_id, (unsigned)real_id});
 }
 void Math_Plugin::init_gui()const{
-	menu_bar->add("Insert/Math/_Real",                0, &Workspace::insert, (void*)&Real_Node_Item::make);
+	menu_bar->add("Insert/Math/Real",                 0, &Workspace::insert, (void*)&Real_Node_Item::make);
+	menu_bar->add("Insert/Math/_Complex",             0, &Workspace::insert, (void*)&Complex_Node_Item::make);
 	menu_bar->add("Insert/Math/Add",                  0, &Workspace::insert, (void*)&Add_Node_Item::make);
 	menu_bar->add("Insert/Math/Subtract",             0, &Workspace::insert, (void*)&Sub_Node_Item::make);
 	menu_bar->add("Insert/Math/Multiply",             0, &Workspace::insert, (void*)&Mul_Node_Item::make);
@@ -81,6 +85,7 @@ void Math_Plugin::init_gui()const{
 
 	auto cat = new Toolbox_Category("Math", nullptr);
 	cat->add(new Toolbox_Node_Item("Real",        RELATIVE("plugins/math/real.png"), &Real_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("Complex",     &Complex_Node_Item::icon,  &Complex_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Add",         &Add_Node_Item::icon,      &Add_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Subtract",    &Sub_Node_Item::icon,      &Sub_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Multiply",    &Mul_Node_Item::icon,      &Mul_Node_Item::make));

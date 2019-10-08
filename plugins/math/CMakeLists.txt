@@ -16,6 +16,10 @@ add_library(math
 	lerp_nodes.cpp
 	lerp_node_items.h
 	lerp_node_items.cpp
+	complex_node.h
+	complex_node.cpp
+	complex_node_item.h
+	complex_node_item.cpp
 	)
 
 add_library(real_chooser
@@ -32,6 +36,7 @@ resource(sqrt.png)
 resource(sin.png)
 resource(cos.png)
 resource(real.png)
+resource(complex.png)
 
 target_link_libraries(real_chooser real_t)
-target_link_libraries(math_plugin math real_chooser real_t color_t)
+target_link_libraries(math_plugin math real_chooser real_t color_t complex_t)
