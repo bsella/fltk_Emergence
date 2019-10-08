@@ -41,19 +41,26 @@ void Math_Node::init_cache1(Node** nodes){
 	else
 		if(nodes[0]->cache->id == (unsigned)get_type_id("color"))
 			cache= &color_cache;
+	else
+		if(nodes[0]->cache->id == (unsigned)get_type_id("complex"))
+			cache= &complex_cache;
 
 }
 void Math_Node::init_cache2(Node** nodes){
-	if(nodes[0]->cache->id == nodes[1]->cache->id){
-		if(nodes[0]->cache->id == (unsigned)get_type_id("real"))
-			cache= &real_cache;
-		else if(nodes[0]->cache->id == (unsigned)get_type_id("color"))
+	if(nodes[0]->cache->id == (unsigned)get_type_id("real"))
+		init_cache1(nodes+1);
+	else
+		if(nodes[0]->cache->id == (unsigned)get_type_id("color"))
 			cache= &color_cache;
-	}else{
-		if(nodes[0]->cache->id == (unsigned)get_type_id("color") || nodes[0]->cache->id == (unsigned)get_type_id("real"))
-			cache= &color_cache;
-		else cache= &real_cache;
-	}
+		else
+			if(nodes[0]->cache->id == (unsigned)get_type_id("complex")){
+				if(nodes[1]->cache->id == (unsigned)get_type_id("real") || nodes[1]->cache->id == (unsigned)get_type_id("complex"))
+					cache= &complex_cache;
+				else
+					if(nodes[1]->cache->id == (unsigned)get_type_id("color"))
+						cache= &color_cache;
+			}
+
 }
 void Math_Node::set_random_func(){
 	if(!main_func){
@@ -96,6 +103,7 @@ void Sqrt_Node::update_types(){
 }
 void Abs_Node::update_types(){
 	init_cache1(inodes.data());
+	if(cache==&complex_cache) cache= &real_cache;
 	main_func= get_func("abs", {inodes[0]->cache->id});
 	set_random_func();
 }
@@ -295,6 +303,76 @@ void Log_Node::color(Node** nodes, void* ptr){
 	((Color_t*)ptr)->a= std::log(A0);
 }
 
+void Add_Node::real_complex(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= ((Real_t*)nodes[0]->cache)->value + ((Complex_t*)nodes[1]->cache)->value;
+}
+void Add_Node::complex_real(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= ((Complex_t*)nodes[0]->cache)->value + ((Real_t*)nodes[1]->cache)->value;
+}
+void Add_Node::complex_complex(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= ((Complex_t*)nodes[0]->cache)->value + ((Complex_t*)nodes[1]->cache)->value;
+}
+
+void Sub_Node::real_complex(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= ((Real_t*)nodes[0]->cache)->value - ((Complex_t*)nodes[1]->cache)->value;
+}
+void Sub_Node::complex_real(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= ((Complex_t*)nodes[0]->cache)->value - ((Real_t*)nodes[1]->cache)->value;
+}
+void Sub_Node::complex_complex(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= ((Complex_t*)nodes[0]->cache)->value - ((Complex_t*)nodes[1]->cache)->value;
+}
+
+void Mul_Node::real_complex(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= ((Real_t*)nodes[0]->cache)->value * ((Complex_t*)nodes[1]->cache)->value;
+}
+void Mul_Node::complex_real(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= ((Complex_t*)nodes[0]->cache)->value * ((Real_t*)nodes[1]->cache)->value;
+}
+void Mul_Node::complex_complex(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= ((Complex_t*)nodes[0]->cache)->value * ((Complex_t*)nodes[1]->cache)->value;
+}
+
+void Div_Node::real_complex(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= ((Real_t*)nodes[0]->cache)->value / ((Complex_t*)nodes[1]->cache)->value;
+}
+void Div_Node::complex_real(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= ((Complex_t*)nodes[0]->cache)->value / ((Real_t*)nodes[1]->cache)->value;
+}
+void Div_Node::complex_complex(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= ((Complex_t*)nodes[0]->cache)->value / ((Complex_t*)nodes[1]->cache)->value;
+}
+
+void Neg_Node::cplx(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= -((Complex_t*)nodes[0]->cache)->value;
+}
+
+void Abs_Node::cplx(Node** nodes, void* ptr){
+	((Real_t*)ptr)->value= ((Complex_t*)nodes[0]->cache)->abs();
+}
+
+void Sin_Node::cplx(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= std::sin(((Complex_t*)nodes[0]->cache)->value);
+}
+
+void Cos_Node::cplx(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= std::cos(((Complex_t*)nodes[0]->cache)->value);
+}
+
+void Pow_Node::real_complex(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= std::pow(((Real_t*)nodes[0]->cache)->value, ((Complex_t*)nodes[1]->cache)->value);
+}
+void Pow_Node::complex_real(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= std::pow(((Complex_t*)nodes[0]->cache)->value, ((Real_t*)nodes[1]->cache)->value);
+}
+void Pow_Node::complex_complex(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= std::pow(((Complex_t*)nodes[0]->cache)->value, ((Complex_t*)nodes[1]->cache)->value);
+}
+
+void Log_Node::cplx(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= std::log(((Complex_t*)nodes[0]->cache)->value);
+}
+
 Min_Max_Node::Min_Max_Node():Node(2){}
 
 bool Min_Max_Node::rand(Data_t*, Data_t*){
@@ -305,6 +383,9 @@ bool Min_Max_Node::gt_real(Data_t* r1, Data_t* r2){
 }
 bool Min_Max_Node::gt_color(Data_t* c1, Data_t* c2){
 	return ((Color_t*)c1)->to_real() > ((Color_t*)c2)->to_real();
+}
+bool Min_Max_Node::gt_complex(Data_t* c1, Data_t* c2){
+	return ((Complex_t*)c1)->abs() > ((Complex_t*)c2)->abs();
 }
 void Min_Max_Node::update_types(){
 	if(inodes[0]->cache->id == inodes[1]->cache->id){

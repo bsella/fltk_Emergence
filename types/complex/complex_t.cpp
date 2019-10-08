@@ -15,7 +15,7 @@ void Complex_t::to_color(Node** nodes, void* ptr){
 	static double _V, p2, p3, H, f;
 	static unsigned char temp_r, temp_g, temp_b;
 
-	_V= std::abs(((Complex_t*)(nodes[0]->cache))->value);
+	_V= std::min(std::abs(((Complex_t*)(nodes[0]->cache))->value), 1.0);
 	H= 6*(std::arg(((Complex_t*)(nodes[0]->cache))->value)+M_PI)/(M_PI*2);
 	f= H-int(H);
 	p2 = _V*(1.0-f);

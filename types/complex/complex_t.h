@@ -10,4 +10,7 @@ public:
 
 	static void rand(Node**, void*);
 	static void to_color(Node**, void*);
+
+	inline double abs(){return std::abs(value);}
+	inline double arg(){return std::arg(value);}
 };

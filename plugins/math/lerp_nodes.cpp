@@ -8,8 +8,13 @@ void Lerp_Base_Node::init_cache(){
 		if(!main_func) main_func= &Color_t::rand;
 		cache= &color_cache;
 	}else{
-		if(!main_func) main_func= &Real_t::rand;
-		cache= &real_cache;
+		if(inodes[0]->cache->id == (unsigned)get_type_id("complex")){
+			if(!main_func) main_func= &Complex_t::rand;
+			cache= &complex_cache;
+		}else{
+			if(!main_func) main_func= &Real_t::rand;
+			cache= &real_cache;
+		}
 	}
 }
 
@@ -37,6 +42,10 @@ void Lerp_Node::color(Node** nodes, void* ptr){
 	((Color_t*)ptr)->b= (1-alpha)*((Color_t*)nodes[2]->cache)->b + alpha*((Color_t*)nodes[0]->cache)->b;
 	((Color_t*)ptr)->a= (1-alpha)*((Color_t*)nodes[2]->cache)->a + alpha*((Color_t*)nodes[0]->cache)->a;
 }
+void Lerp_Node::cplx(Node** nodes, void* ptr){
+	alpha= ((Real_t*)nodes[1]->cache)->value;
+	((Complex_t*)ptr)->value= (1-alpha)*((Complex_t*)nodes[2]->cache)->value + alpha*((Complex_t*)nodes[0]->cache)->value;
+}
 
 void Clamp_Node::real(Node** nodes, void* ptr){
 	((Real_t*)ptr)->value= (((Real_t*)nodes[1]->cache)->value - ((Real_t*)nodes[2]->cache)->value) / (((Real_t*)nodes[0]->cache)->value - ((Real_t*)nodes[2]->cache)->value);
@@ -46,4 +55,7 @@ void Clamp_Node::color(Node** nodes, void* ptr){
 	((Color_t*)ptr)->g= (((Color_t*)nodes[1]->cache)->g - ((Color_t*)nodes[2]->cache)->g) / (((Color_t*)nodes[0]->cache)->g - ((Color_t*)nodes[2]->cache)->g);
 	((Color_t*)ptr)->b= (((Color_t*)nodes[1]->cache)->b - ((Color_t*)nodes[2]->cache)->b) / (((Color_t*)nodes[0]->cache)->b - ((Color_t*)nodes[2]->cache)->b);
 	((Color_t*)ptr)->a= (((Color_t*)nodes[1]->cache)->a - ((Color_t*)nodes[2]->cache)->a) / (((Color_t*)nodes[0]->cache)->a - ((Color_t*)nodes[2]->cache)->a);
+}
+void Clamp_Node::cplx(Node** nodes, void* ptr){
+	((Complex_t*)ptr)->value= (((Complex_t*)nodes[1]->cache)->value - ((Complex_t*)nodes[2]->cache)->value) / (((Complex_t*)nodes[0]->cache)->value - ((Complex_t*)nodes[2]->cache)->value);
 }

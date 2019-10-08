@@ -37,16 +37,17 @@ void Math_Plugin::init()const{
 	set_func("log", &Log_Node::real,      {(unsigned)real_id});
 	set_func("lerp",&Lerp_Node::real,     {(unsigned)real_id, (unsigned)real_id, (unsigned)real_id});
 	set_func("clamp",&Clamp_Node::real,   {(unsigned)real_id, (unsigned)real_id, (unsigned)real_id});
+	set_func("complex", &Complex_Node::cplx,{(unsigned)real_id, (unsigned)real_id});
 
 	int color_id= get_type_id("color");
 	set_func("lerp",&Lerp_Node::color,     {(unsigned)color_id, (unsigned)real_id, (unsigned)color_id});
 	set_func("clamp",&Clamp_Node::color,   {(unsigned)color_id, (unsigned)color_id, (unsigned)color_id});
 
-	set_func("add", &Add_Node::real_color, {(unsigned)real_id, (unsigned)color_id});
-	set_func("add", &Add_Node::color_real, {(unsigned)color_id, (unsigned)real_id});
+	set_func("add", &Add_Node::real_color,  {(unsigned)real_id, (unsigned)color_id});
+	set_func("add", &Add_Node::color_real,  {(unsigned)color_id, (unsigned)real_id});
 	set_func("add", &Add_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
-	set_func("sub", &Sub_Node::real_color, {(unsigned)real_id, (unsigned)color_id});
-	set_func("sub", &Sub_Node::color_real, {(unsigned)color_id, (unsigned)real_id});
+	set_func("sub", &Sub_Node::real_color,  {(unsigned)real_id, (unsigned)color_id});
+	set_func("sub", &Sub_Node::color_real,  {(unsigned)color_id, (unsigned)real_id});
 	set_func("sub", &Sub_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
 	set_func("mul", &Mul_Node::real_color , {(unsigned)real_id,  (unsigned)color_id});
 	set_func("mul", &Mul_Node::color_real , {(unsigned)color_id, (unsigned)real_id});
@@ -62,7 +63,31 @@ void Math_Plugin::init()const{
 	set_func("pow", &Pow_Node::color_real , {(unsigned)color_id, (unsigned)real_id});
 	set_func("pow", &Pow_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
 	set_func("log", &Log_Node::color,       {(unsigned)color_id});
-	set_func("complex", &Complex_Node::cplx,{(unsigned)real_id, (unsigned)real_id});
+
+	int complex_id= get_type_id("complex");
+	set_func("add", &Add_Node::real_complex,    {(unsigned)real_id, (unsigned)complex_id});
+	set_func("add", &Add_Node::complex_real,    {(unsigned)complex_id, (unsigned)real_id});
+	set_func("add", &Add_Node::complex_complex, {(unsigned)complex_id, (unsigned)complex_id});
+	set_func("sub", &Sub_Node::real_complex,    {(unsigned)real_id, (unsigned)complex_id});
+	set_func("sub", &Sub_Node::complex_real,    {(unsigned)complex_id, (unsigned)real_id});
+	set_func("sub", &Sub_Node::complex_complex, {(unsigned)complex_id, (unsigned)complex_id});
+	set_func("mul", &Mul_Node::real_complex,    {(unsigned)real_id,  (unsigned)complex_id});
+	set_func("mul", &Mul_Node::complex_real,    {(unsigned)complex_id, (unsigned)real_id});
+	set_func("mul", &Mul_Node::complex_complex, {(unsigned)complex_id, (unsigned)complex_id});
+	set_func("div", &Div_Node::real_complex,    {(unsigned)real_id,  (unsigned)complex_id});
+	set_func("div", &Div_Node::complex_real,    {(unsigned)complex_id, (unsigned)real_id});
+	set_func("div", &Div_Node::complex_complex, {(unsigned)complex_id, (unsigned)complex_id});
+	set_func("neg", &Neg_Node::cplx,            {(unsigned)complex_id});
+	set_func("abs", &Abs_Node::cplx,            {(unsigned)complex_id});
+	set_func("sin", &Sin_Node::cplx,            {(unsigned)complex_id});
+	set_func("cos", &Cos_Node::cplx,            {(unsigned)complex_id});
+	set_func("pow", &Pow_Node::real_complex,    {(unsigned)real_id,  (unsigned)complex_id});
+	set_func("pow", &Pow_Node::complex_real,    {(unsigned)complex_id, (unsigned)real_id});
+	set_func("pow", &Pow_Node::complex_complex, {(unsigned)complex_id, (unsigned)complex_id});
+	set_func("log", &Log_Node::cplx,            {(unsigned)complex_id});
+
+	set_func("lerp",&Lerp_Node::cplx,     {(unsigned)complex_id, (unsigned)real_id, (unsigned)complex_id});
+	set_func("clamp",&Clamp_Node::cplx,   {(unsigned)complex_id, (unsigned)complex_id, (unsigned)complex_id});
 }
 void Math_Plugin::init_gui()const{
 	menu_bar->add("Insert/Math/Real",                 0, &Workspace::insert, (void*)&Real_Node_Item::make);

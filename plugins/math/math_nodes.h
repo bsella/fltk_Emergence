@@ -2,6 +2,7 @@
 #include <core/node.h>
 #include <real/real_t.h>
 #include <color/color_t.h>
+#include <complex/complex_t.h>
 
 class Math_Node : public Node{
 public:
@@ -9,6 +10,7 @@ public:
 protected:
 	Real_t real_cache;
 	Color_t color_cache;
+	Complex_t complex_cache;
 	void init_cache1(Node**);
 	void init_cache2(Node**);
 	void set_random_func();
@@ -25,6 +27,9 @@ public:
 	static void real_color(Node**, void*);
 	static void color_real(Node**, void*);
 	static void color_color(Node**, void*);
+	static void complex_complex(Node**, void*);
+	static void complex_real(Node**, void*);
+	static void real_complex(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -37,6 +42,9 @@ public:
 	static void real_color(Node**, void*);
 	static void color_real(Node**, void*);
 	static void color_color(Node**, void*);
+	static void complex_complex(Node**, void*);
+	static void complex_real(Node**, void*);
+	static void real_complex(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -49,6 +57,9 @@ public:
 	static void real_color(Node**, void*);
 	static void color_real(Node**, void*);
 	static void color_color(Node**, void*);
+	static void complex_complex(Node**, void*);
+	static void complex_real(Node**, void*);
+	static void real_complex(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -61,6 +72,9 @@ public:
 	static void real_color(Node**, void*);
 	static void color_real(Node**, void*);
 	static void color_color(Node**, void*);
+	static void complex_complex(Node**, void*);
+	static void complex_real(Node**, void*);
+	static void real_complex(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -71,6 +85,7 @@ public:
 	static Node* make(void*);
 	static void real(Node**, void*);
 	static void color(Node**, void*);
+	static void cplx(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -81,6 +96,7 @@ public:
 	static Node* make(void*);
 	static void real(Node**, void*);
 	static void color(Node**, void*);
+	static void cplx(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -91,6 +107,7 @@ public:
 	static Node* make(void*);
 	static void real(Node**, void*);
 	static void color(Node**, void*);
+	static void cplx(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -101,6 +118,7 @@ public:
 	static Node* make(void*);
 	static void real(Node**, void*);
 	static void color(Node**, void*);
+	static void cplx(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -111,6 +129,7 @@ public:
 	static Node* make(void*);
 	static void real(Node**, void*);
 	static void color(Node**, void*);
+	static void cplx(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -123,6 +142,9 @@ public:
 	static void real_color(Node**, void*);
 	static void color_real(Node**, void*);
 	static void color_color(Node**, void*);
+	static void complex_complex(Node**, void*);
+	static void complex_real(Node**, void*);
+	static void real_complex(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -133,6 +155,7 @@ public:
 	static Node* make(void*);
 	static void real(Node**, void*);
 	static void color(Node**, void*);
+	static void cplx(Node**, void*);
 private:
 	void update_types()override;
 };
@@ -144,6 +167,7 @@ protected:
 	static bool rand(Data_t*, Data_t*);
 	static bool gt_real(Data_t*, Data_t*);
 	static bool gt_color(Data_t*, Data_t*);
+	static bool gt_complex(Data_t*, Data_t*);
 	bool (*gt_func)(Data_t*, Data_t*)= nullptr;
 private:
 	void update_types()override;
