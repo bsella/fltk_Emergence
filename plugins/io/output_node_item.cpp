@@ -2,11 +2,14 @@
 #include "output_node.h"
 #include <FL/fl_draw.H>
 #include <FL/Fl_Menu_Item.H>
+#include <FL/Fl_RGB_Image.H>
 
 Output_Node_Item::Output_Node_Item(int x, int y): Node_Item(x,y,50,50, new Output_Node){
 	draw_buffer= new unsigned int[_w*_h];
+	output_image= new Fl_RGB_Image((const unsigned char*)draw_buffer, _w, _h, 4);
 }
 Output_Node_Item::~Output_Node_Item(){
+	delete output_image;
 	delete[] draw_buffer;
 }
 
@@ -15,11 +18,14 @@ Node_Item* Output_Node_Item::make(int x, int y, void*){
 }
 void Output_Node_Item::draw_body()const{
 	if(core_node->valid){
-		if(!image_valid) ((Output_Node*)core_node)->render(_w,_h, draw_buffer);
-		fl_draw_image((const unsigned char*)draw_buffer, _x, _y, _w, _h, 4);
+		if(!image_valid){
+			output_image->uncache();
+			((Output_Node*)core_node)->render(_w,_h, draw_buffer);
+		}
+		output_image->draw(_x+1, _y+1);
 	}
 	fl_color(FL_GREEN);
-	fl_rect(_x-1, _y-1, _w+2, _h+2);
+	fl_rect(_x, _y, _w+2, _h+2);
 	((Output_Node_Item*)this)->image_valid= core_node->valid;
 }
 void Output_Node_Item::scale(double){}

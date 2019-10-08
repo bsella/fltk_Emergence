@@ -33,12 +33,11 @@ void Output_Node_Item::export_output(Fl_Widget*, void* ptr){
 	int temp= fnfc.show();
 	if(temp==1 || temp==-1) return;
 	bool ok;
-	Fl_Window window(230,120);
+	Fl_Window window(230,120, "Output Size");
 	window.callback(cancel_cb, &ok);
 	Output_Node_Item* oni= (Output_Node_Item*)ptr;
-	Fl_RGB_Image output_image((const unsigned char*)oni->draw_buffer, oni->_w, oni->_h, 4);
 	Fl_Box image_label(10,10, oni->_w, oni->_h);
-	image_label.image(&output_image);
+	image_label.image(oni->output_image);
 	Fl_Box width_label(70, 10, 40, 20, "Width:");
 	Fl_Box height_label(70, 40, 40, 20, "Height:");
 	Fl_Value_Input input_w(120, 10, 100, 20);
