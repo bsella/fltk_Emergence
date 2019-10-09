@@ -11,5 +11,5 @@ private:
 	void update_cache()override;
 	void compile_specific(std::vector<Node*>&, bool)override;
 	void update_types()override;
-	bool last_res;
+    bool last_res;
 };

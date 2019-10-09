@@ -13,7 +13,7 @@ Complex_Node::~Complex_Node(){
 Node* Complex_Node::make(void*){return new Complex_Node;}
 
 void Complex_Node::cplx(Node** nodes, void* ptr){
-	((Complex_t*)ptr)->value= std::complex<double>(((Real_t*)nodes[0]->cache)->value, ((Real_t*)nodes[1]->cache)->value);
+	static_cast<Complex_t*>(ptr)->value= std::complex<double>(static_cast<Real_t*>(nodes[0]->cache)->value, static_cast<Real_t*>(nodes[1]->cache)->value);
 }
 
 void Complex_Node::update_types(){

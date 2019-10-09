@@ -13,7 +13,7 @@ void Real_Node_Item::draw_body()const{
 	fl_rectf(_x, _y, _w, _h);
 	fl_color(FL_BLACK);
 	fl_rect(_x, _y, _w, _h);
-	fl_draw(std::to_string(((Real_t*)core_node->cache)->value).c_str(), _x, _y+_h/2+6);
+	fl_draw(std::to_string(static_cast<Real_t*>(core_node->cache)->value).c_str(), _x, _y+_h/2+6);
 }
 
 Node_Item* Real_Node_Item::make(int x, int y, void* ptr){
@@ -25,10 +25,10 @@ bool Real_Node_Item::settle(){
 }
 
 static void real_edit_value(Fl_Widget*, void* ptr){
-	Real_Node_Item* node= (Real_Node_Item*)ptr;
-	double temp= ((Real_t*)node->cache())->value;
+    Real_Node_Item* node= static_cast<Real_Node_Item*>(ptr);
+    double temp= static_cast<Real_t*>(node->cache())->value;
 	if(!real_chooser(node))
-	((Real_t*)node->cache())->value= temp;
+	static_cast<Real_t*>(node->cache())->value= temp;
 }
 void Real_Node_Item::context_menu(std::vector<Fl_Menu_Item>& menu){
 	menu.back().flags|= FL_MENU_DIVIDER;

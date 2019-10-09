@@ -13,11 +13,11 @@ extern "C"{
 #include <string>
 
 static void ok_cb(Fl_Widget* w, void* ptr){
-	*((bool*)ptr)= true;
+    *static_cast<bool*>(ptr)= true;
 	w->window()->hide();
 }
 static void cancel_cb(Fl_Widget* w, void* ptr){
-	*((bool*)ptr)= false;
+    *static_cast<bool*>(ptr)= false;
 	if(w->window())
 		w->window()->hide();
 	else
@@ -35,7 +35,7 @@ void Output_Node_Item::export_output(Fl_Widget*, void* ptr){
 	bool ok;
 	Fl_Window window(230,120, "Output Size");
 	window.callback(cancel_cb, &ok);
-	Output_Node_Item* oni= (Output_Node_Item*)ptr;
+    Output_Node_Item* oni= static_cast<Output_Node_Item*>(ptr);
 	Fl_Box image_label(10,10, oni->_w, oni->_h);
 	image_label.image(oni->output_image);
 	Fl_Box width_label(70, 10, 40, 20, "Width:");
@@ -58,7 +58,7 @@ void Output_Node_Item::export_output(Fl_Widget*, void* ptr){
 	while (window.shown()) Fl::wait();
 	if(ok && input_h.value()>0 && input_w.value()>0){
 		std::vector<unsigned int> draw_buffer(input_h.value()*input_w.value());
-		((Output_Node*)oni->core_node)->render(input_w.value(), input_h.value(), draw_buffer.data());
+        static_cast<Output_Node*>(oni->core_node)->render(input_w.value(), input_h.value(), draw_buffer.data());
 		std::string filename(fnfc.filename());
 		std::string extension= filename.substr(filename.find_last_of('.')+1, filename.size());
 		if(extension=="bmp")

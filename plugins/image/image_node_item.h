@@ -13,7 +13,7 @@ private:
 	void draw_body()const override;
 	void scale(double)override;
 	bool settle()override;
-	void context_menu(std::vector<Fl_Menu_Item>& menu);
+    void context_menu(std::vector<Fl_Menu_Item>& menu)override;
 	
 	static void change_image(Fl_Widget*,void*);
 };

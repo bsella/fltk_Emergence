@@ -12,8 +12,7 @@ Gradient_Node_Item::~Gradient_Node_Item(){}
 Node_Item* Gradient_Node_Item::make(int x, int y, void*){return new Gradient_Node_Item(x,y);}
 
 void Gradient_Node_Item::draw_body()const{
-	if(((Gradient_Node*)core_node)->gradient)
-		fl_draw_image((const unsigned char*)draw_buffer.data(), _x+1, _y+1, _w-2, _h-2, 4);
+    if(static_cast<Gradient_Node*>(core_node)->gradient) fl_draw_image(reinterpret_cast<const unsigned char*>(draw_buffer.data()), _x+1, _y+1, _w-2, _h-2, 4);
 	fl_color(FL_BLACK);
 	fl_rect(_x, _y, _w, _h);
 }
@@ -29,7 +28,7 @@ void Gradient_Node_Item::update_draw_buffer(){
 	if((_w-2)*(_h-2)<=0) return;
 	draw_buffer.reserve((_w-2)*(_h-2));
 	for(int x=0; x<_w-2; x++){
-		((Gradient_Node*)core_node)->gradient->get_color(double(x)/(_w-2), &temp_color);
+        (static_cast<Gradient_Node*>(core_node))->gradient->get_color(double(x)/(_w-2), &temp_color);
 		temp_r = temp_color.r*255;
 		temp_g = temp_color.g*255;
 		temp_b = temp_color.b*255;

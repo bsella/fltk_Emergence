@@ -3,7 +3,7 @@
 
 Real_Node::Real_Node(void* ptr): Node(0){
 	if(!ptr) cache= new Real_t;
-	else cache= new Real_t(*((double*)ptr));
+    else cache= new Real_t(*static_cast<double*>(ptr));
 	uniform= true;
 }
 

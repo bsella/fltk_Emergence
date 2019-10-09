@@ -18,11 +18,11 @@ Gradient_Node::~Gradient_Node(){
 	delete gradient;
 }
 
-Node* Gradient_Node::make(void* ptr){return new Gradient_Node((Gradient*)ptr);}
+Node* Gradient_Node::make(void* ptr){return new Gradient_Node(static_cast<Gradient*>(ptr));}
 
 void Gradient_Node::get_color(Node** nodes, void* ptr){
-	Gradient_Node* _this= (Gradient_Node*)nodes[0];
-	_this->gradient->get_color(((Real_t*)_this->inodes[0]->cache)->value, ((Color_t*)ptr));
+    Gradient_Node* _this= static_cast<Gradient_Node*>(nodes[0]);
+    _this->gradient->get_color(static_cast<Real_t*>(_this->inodes[0]->cache)->value, (static_cast<Color_t*>(ptr)));
 }
 
 void Gradient_Node::update_types(){

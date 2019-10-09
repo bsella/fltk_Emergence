@@ -29,8 +29,8 @@ void Io_Plugin::init_gui()const{
 	menu_bar->add("Insert/IO/Output", 0, &Workspace::insert, (void*)&Output_Node_Item::make);
 
 	auto cat = new Toolbox_Category("I/O", nullptr);
-	cat->add(new Toolbox_Node_Item("X",      RELATIVE("plugins/io/x.png"),      &X_Node_Item::make));
-	cat->add(new Toolbox_Node_Item("Y",      RELATIVE("plugins/io/y.png"),      &Y_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("X",      &X_Node_Item::icon,      &X_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("Y",      &Y_Node_Item::icon,      &Y_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Ratio",                                     &Ratio_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Output", RELATIVE("plugins/io/output.png"), &Output_Node_Item::make));
 

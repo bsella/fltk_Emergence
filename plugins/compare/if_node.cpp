@@ -9,7 +9,7 @@ Node* If_Node::make(void*){return new If_Node;}
 void If_Node::update_cache(){
 	bool res;
 	if(main_func) main_func(inodes.data()+1, &res);
-	else res= (float)::rand() / RAND_MAX < .5;
+    else res= double(::rand()) / RAND_MAX < .5;
 	if(res){
 		for(unsigned i=0; i<then_program.size(); i++)
 			then_program[i]->execute();

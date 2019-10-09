@@ -5,8 +5,8 @@ Color_Node::Color_Node(void* ptr): Node(0){
 	if(!ptr)
 		cache= new Color_t;
 	else{
-		float* f= (float*)ptr;
-		cache= new Color_t(f[0],f[1],f[2],f[3]);
+        double* d= static_cast<double*>(ptr);
+        cache= new Color_t(d[0],d[1],d[2],d[3]);
 	}
 	uniform= true;
 }

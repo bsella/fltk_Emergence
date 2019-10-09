@@ -5,7 +5,7 @@ class Gradient;
 class Gradient_Node : public Node{
 public:
 	Gradient_Node(Gradient* grad= nullptr);
-	~Gradient_Node();
+    ~Gradient_Node()override;
 	static Node* make(void*);
 	static void get_color(Node**, void*);
 	Gradient* gradient;

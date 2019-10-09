@@ -51,55 +51,55 @@ void Value_Node::update_types(){
 	if(!main_func) main_func= &Real_t::rand;
 }
 
-#define _R ((Color_t*)ptr)->r
-#define _G ((Color_t*)ptr)->g
-#define _B ((Color_t*)ptr)->b
-#define _H (((Real_t*)nodes[0]->cache)->value*6)
-#define _S ((Real_t*)nodes[1]->cache)->value
-#define _V ((Real_t*)nodes[2]->cache)->value
+#define R static_cast<Color_t*>(ptr)->r
+#define G static_cast<Color_t*>(ptr)->g
+#define B static_cast<Color_t*>(ptr)->b
+#define H (static_cast<Real_t*>(nodes[0]->cache)->value*6)
+#define S static_cast<Real_t*>(nodes[1]->cache)->value
+#define V static_cast<Real_t*>(nodes[2]->cache)->value
 void HSV_Node::hsv(Node** nodes, void* ptr){
 	static double f, p1, p2, p3;
 	static int i;
-	if (_S < 5.0e-6)
-		_R = _G = _B = _V;
+    if (S < 5.0e-6)
+        R = G = B = V;
 	else{
-		i = (int)_H;  
-		f = _H - (float)i;
-		p1 = _V*(1.0-_S);
-		p2 = _V*(1.0-_S*f);
-		p3 = _V*(1.0-_S*(1.0-f));
+        i = int(H);
+        f = H - double(i);
+        p1 = V*(1.0-S);
+        p2 = V*(1.0-S*f);
+        p3 = V*(1.0-S*(1.0-f));
 		switch (i) {
-		case 0: _R = _V;  _G = p3;  _B = p1;  break;
-		case 1: _R = p2;  _G = _V;  _B = p1;  break;
-		case 2: _R = p1;  _G = _V;  _B = p3;  break;
-		case 3: _R = p1;  _G = p2;  _B = _V;  break;
-		case 4: _R = p3;  _G = p1;  _B = _V;  break;
-		case 5: _R = _V;  _G = p1;  _B = p2;  break;
+        case 0: R =  V;  G = p3;  B = p1;  break;
+        case 1: R = p2;  G =  V;  B = p1;  break;
+        case 2: R = p1;  G =  V;  B = p3;  break;
+        case 3: R = p1;  G = p2;  B =  V;  break;
+        case 4: R = p3;  G = p1;  B =  V;  break;
+        case 5: R =  V;  G = p1;  B = p2;  break;
 		}
 	}
 }
 
-#define R ((Color_t*)nodes[0]->cache)->r
-#define G ((Color_t*)nodes[0]->cache)->g
-#define B ((Color_t*)nodes[0]->cache)->b
+#define RR static_cast<Color_t*>(nodes[0]->cache)->r
+#define GG static_cast<Color_t*>(nodes[0]->cache)->g
+#define BB static_cast<Color_t*>(nodes[0]->cache)->b
 static double maxx, minn;
 void Hue_Node::hue(Node** nodes, void* ptr){
-	maxx= std::max(std::max(R, G), B);
-	minn= std::min(std::min(R, G), B);
-	if(maxx == R){
-		((Real_t*)ptr)->value= (G-B)/(maxx-minn);
-		if(((Real_t*)ptr)->value<0)
-			((Real_t*)ptr)->value += 6;
-	}else if(maxx == G)
-		((Real_t*)ptr)->value= 2+(B-R)/(maxx-minn);
+    maxx= std::max(std::max(RR, GG), BB);
+    minn= std::min(std::min(RR, GG), BB);
+    if(maxx == RR){
+        static_cast<Real_t*>(ptr)->value= (GG-BB)/(maxx-minn);
+		if(static_cast<Real_t*>(ptr)->value<0)
+			static_cast<Real_t*>(ptr)->value += 6;
+    }else if(maxx == GG)
+        static_cast<Real_t*>(ptr)->value= 2+(BB-RR)/(maxx-minn);
 	else
-		((Real_t*)ptr)->value= 4+(R-G)/(maxx-minn);
-	((Real_t*)ptr)->value/= 6;
+        static_cast<Real_t*>(ptr)->value= 4+(RR-GG)/(maxx-minn);
+	static_cast<Real_t*>(ptr)->value/= 6;
 }
 void Saturation_Node::saturation(Node** nodes, void* ptr){
-	maxx= std::max(std::max(R, G), B);
-	((Real_t*)ptr)->value= 1 - std::min(std::min(R, G), B)/maxx;
+    maxx= std::max(std::max(RR, GG), BB);
+    static_cast<Real_t*>(ptr)->value= 1 - std::min(std::min(RR, GG), BB)/maxx;
 }
 void Value_Node::value(Node** nodes, void* ptr){
-	((Real_t*)ptr)->value= std::max(std::max(R, G), B);
+    static_cast<Real_t*>(ptr)->value= std::max(std::max(RR, GG), BB);
 }

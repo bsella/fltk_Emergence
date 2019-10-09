@@ -51,14 +51,14 @@ void NOT_Node::update_types(){
 }
 
 void AND_Node::func(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Bool_t*)nodes[0]->cache)->value && ((Bool_t*)nodes[1]->cache)->value;
+	static_cast<Bool_t*>(ptr)->value= static_cast<Bool_t*>(nodes[0]->cache)->value && static_cast<Bool_t*>(nodes[1]->cache)->value;
 }
 void OR_Node::func(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Bool_t*)nodes[0]->cache)->value || ((Bool_t*)nodes[1]->cache)->value;
+	static_cast<Bool_t*>(ptr)->value= static_cast<Bool_t*>(nodes[0]->cache)->value || static_cast<Bool_t*>(nodes[1]->cache)->value;
 }
 void XOR_Node::func(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Bool_t*)nodes[0]->cache)->value ^  ((Bool_t*)nodes[1]->cache)->value;
+	static_cast<Bool_t*>(ptr)->value= static_cast<Bool_t*>(nodes[0]->cache)->value ^  static_cast<Bool_t*>(nodes[1]->cache)->value;
 }
 void NOT_Node::func(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= !((Bool_t*)nodes[0]->cache)->value;
+	static_cast<Bool_t*>(ptr)->value= !static_cast<Bool_t*>(nodes[0]->cache)->value;
 }

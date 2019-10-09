@@ -16,8 +16,8 @@ int main(int, char **argv){
 	DIR* plugin_dir;
 	struct dirent *ent;
 	std::vector<Plugin*> plugins;
-	if((plugin_dir= opendir(RELATIVE("lib_t"))) != NULL){
-		while((ent= readdir(plugin_dir)) != NULL)
+    if((plugin_dir= opendir(RELATIVE("lib_t"))) != nullptr){
+        while((ent= readdir(plugin_dir)) != nullptr)
 			if(ent->d_name[0]!='.'){
 				plugins.push_back(new Plugin(std::string(RELATIVE("lib_t")) + '/' + std::string(ent->d_name)));
 				std::string type(ent->d_name);
@@ -28,8 +28,8 @@ int main(int, char **argv){
 		for(Plugin* p: plugins)
 			p->init();
 	}
-	if((plugin_dir= opendir(RELATIVE("lib"))) != NULL){
-		while((ent= readdir(plugin_dir)) != NULL)
+    if((plugin_dir= opendir(RELATIVE("lib"))) != nullptr){
+        while((ent= readdir(plugin_dir)) != nullptr)
 			if(ent->d_name[0]!='.'){
 				Plugin* p= new Plugin(std::string(RELATIVE("lib")) + '/' + std::string(ent->d_name));
 				p->init();

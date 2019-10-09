@@ -8,8 +8,8 @@ public:
 	Node(int, bool hasOutput=true);
     virtual ~Node();
 	const bool hasOutput;
-    void connect(int,Node*);
-	void disconnect(int);
+    void connect(unsigned int,Node*);
+    void disconnect(unsigned int);
 	Data_t* cache= nullptr;
 	bool valid;
 	void compile(std::vector<Node*>& program);

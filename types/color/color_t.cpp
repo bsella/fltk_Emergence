@@ -8,13 +8,13 @@ Color_t::Color_t(unsigned color): Data_t(get_type_id("color")){
 	b= (color>>8  & 0xff) /255.0f;
 	a= (color>>0  & 0xff) /255.0f;
 }
-Color_t::Color_t(float r, float g, float b, float a): Data_t(get_type_id("color")){
+Color_t::Color_t(double r, double g, double b, double a): Data_t(get_type_id("color")){
 	this->r= r;
 	this->g= g;
 	this->b= b;
 	this->a= a;
 }
-Color_t::Color_t(float r, float g, float b): Color_t(r,g,b,1){}
+Color_t::Color_t(double r, double g, double b): Color_t(r,g,b,1){}
 Color_t::Color_t(): Color_t(0,0,0,0){}
 
 double Color_t::to_real()const{

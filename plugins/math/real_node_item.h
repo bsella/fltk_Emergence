@@ -10,4 +10,3 @@ private:
 	bool settle()override;
 	void context_menu(std::vector<Fl_Menu_Item>&)override;
 };
-

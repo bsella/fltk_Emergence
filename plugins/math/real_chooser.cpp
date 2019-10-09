@@ -7,16 +7,16 @@
 #include <FL/Fl.H>
 
 static void input_cb(Fl_Widget* w, void* ptr){
-	((Real_t*)((Real_Node_Item*)ptr)->cache())->value= ((Fl_Value_Input*)w)->value();
+    (static_cast<Real_t*>(static_cast<Real_Node_Item*>(ptr)->cache()))->value= static_cast<Fl_Value_Input*>(w)->value();
 	//((Real_Node_Item*)ptr)->draw();
 }
 
 static void ok_cb(Fl_Widget* w, void* ptr){
-	*((bool*)ptr)= true;
+    *static_cast<bool*>(ptr)= true;
 	w->window()->hide();
 }
 static void cancel_cb(Fl_Widget* w, void* ptr){
-	*((bool*)ptr)= false;
+    *static_cast<bool*>(ptr)= false;
 	if(w->window())
 		w->window()->hide();
 	else

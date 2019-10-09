@@ -3,10 +3,10 @@
 #include <list>
 
 /// Map every function name to its corresponding multimethod tree
-std::map<const std::string, func_map_tree> multimethods;
+static std::map<const std::string, func_map_tree> multimethods;
 
 /// All defined type names
-std::list<std::string> typenames;
+static std::list<std::string> typenames;
 
 void add_type(const std::string& type){
 	typenames.push_back(type);

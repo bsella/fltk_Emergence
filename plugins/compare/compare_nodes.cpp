@@ -35,53 +35,53 @@ void NE_Node::update_types(){
 #include <color/color_t.h>
 
 void GT_Node::real_real(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Real_t*)nodes[0]->cache)->value > ((Real_t*)nodes[1]->cache)->value;
+	static_cast<Bool_t*>(ptr)->value= static_cast<Real_t*>(nodes[0]->cache)->value > static_cast<Real_t*>(nodes[1]->cache)->value;
 }
 void LT_Node::real_real(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Real_t*)nodes[0]->cache)->value < ((Real_t*)nodes[1]->cache)->value;
+	static_cast<Bool_t*>(ptr)->value= static_cast<Real_t*>(nodes[0]->cache)->value < static_cast<Real_t*>(nodes[1]->cache)->value;
 }
 void EQ_Node::real_real(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Real_t*)nodes[0]->cache)->value == ((Real_t*)nodes[1]->cache)->value;
+	static_cast<Bool_t*>(ptr)->value= static_cast<Real_t*>(nodes[0]->cache)->value == static_cast<Real_t*>(nodes[1]->cache)->value;
 }
 void NE_Node::real_real(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Real_t*)nodes[0]->cache)->value != ((Real_t*)nodes[1]->cache)->value;
+	static_cast<Bool_t*>(ptr)->value= static_cast<Real_t*>(nodes[0]->cache)->value != static_cast<Real_t*>(nodes[1]->cache)->value;
 }
 
 void GT_Node::real_color(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Real_t*)nodes[0]->cache)->value > ((Color_t*)nodes[1]->cache)->to_real();
+	static_cast<Bool_t*>(ptr)->value= static_cast<Real_t*>(nodes[0]->cache)->value > static_cast<Color_t*>(nodes[1]->cache)->to_real();
 }
 void LT_Node::real_color(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Real_t*)nodes[0]->cache)->value < ((Color_t*)nodes[1]->cache)->to_real();
+	static_cast<Bool_t*>(ptr)->value= static_cast<Real_t*>(nodes[0]->cache)->value < static_cast<Color_t*>(nodes[1]->cache)->to_real();
 }
 void EQ_Node::real_color(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Real_t*)nodes[0]->cache)->value == ((Color_t*)nodes[1]->cache)->to_real();
+	static_cast<Bool_t*>(ptr)->value= static_cast<Real_t*>(nodes[0]->cache)->value == static_cast<Color_t*>(nodes[1]->cache)->to_real();
 }
 void NE_Node::real_color(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Real_t*)nodes[0]->cache)->value != ((Color_t*)nodes[1]->cache)->to_real();
+	static_cast<Bool_t*>(ptr)->value= static_cast<Real_t*>(nodes[0]->cache)->value != static_cast<Color_t*>(nodes[1]->cache)->to_real();
 }
 
 void GT_Node::color_real(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Color_t*)nodes[0]->cache)->to_real() > ((Real_t*)nodes[1]->cache)->value;
+	static_cast<Bool_t*>(ptr)->value= static_cast<Color_t*>(nodes[0]->cache)->to_real() > static_cast<Real_t*>(nodes[1]->cache)->value;
 }
 void LT_Node::color_real(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Color_t*)nodes[0]->cache)->to_real() < ((Real_t*)nodes[1]->cache)->value;
+	static_cast<Bool_t*>(ptr)->value= static_cast<Color_t*>(nodes[0]->cache)->to_real() < static_cast<Real_t*>(nodes[1]->cache)->value;
 }
 void EQ_Node::color_real(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Color_t*)nodes[0]->cache)->to_real() == ((Real_t*)nodes[1]->cache)->value;
+	static_cast<Bool_t*>(ptr)->value= static_cast<Color_t*>(nodes[0]->cache)->to_real() == static_cast<Real_t*>(nodes[1]->cache)->value;
 }
 void NE_Node::color_real(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Color_t*)nodes[0]->cache)->to_real() != ((Real_t*)nodes[1]->cache)->value;
+	static_cast<Bool_t*>(ptr)->value= static_cast<Color_t*>(nodes[0]->cache)->to_real() != static_cast<Real_t*>(nodes[1]->cache)->value;
 }
 
 void GT_Node::color_color(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Color_t*)nodes[0]->cache)->to_real() > ((Color_t*)nodes[1]->cache)->to_real();
+	static_cast<Bool_t*>(ptr)->value= static_cast<Color_t*>(nodes[0]->cache)->to_real()> static_cast<Color_t*>(nodes[1]->cache)->to_real();
 }
 void LT_Node::color_color(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Color_t*)nodes[0]->cache)->to_real() < ((Color_t*)nodes[1]->cache)->to_real();
+	static_cast<Bool_t*>(ptr)->value= static_cast<Color_t*>(nodes[0]->cache)->to_real()< static_cast<Color_t*>(nodes[1]->cache)->to_real();
 }
 void EQ_Node::color_color(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Color_t*)nodes[0]->cache)->to_real() == ((Color_t*)nodes[1]->cache)->to_real();
+	static_cast<Bool_t*>(ptr)->value= static_cast<Color_t*>(nodes[0]->cache)->to_real()== static_cast<Color_t*>(nodes[1]->cache)->to_real();
 }
 void NE_Node::color_color(Node** nodes, void* ptr){
-	((Bool_t*)ptr)->value= ((Color_t*)nodes[0]->cache)->to_real() != ((Color_t*)nodes[1]->cache)->to_real();
+	static_cast<Bool_t*>(ptr)->value= static_cast<Color_t*>(nodes[0]->cache)->to_real()!= static_cast<Color_t*>(nodes[1]->cache)->to_real();
 }

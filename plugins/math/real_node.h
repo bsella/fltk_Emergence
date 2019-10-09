@@ -4,7 +4,7 @@
 class Real_Node : public Node{
 public:
    	Real_Node(void*);
-   	~Real_Node();
+    ~Real_Node()override;
 	static Node* make(void*);
 private:
 	void update_cache()override;

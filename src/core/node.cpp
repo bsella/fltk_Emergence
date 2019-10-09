@@ -7,13 +7,13 @@ Node::Node(int n, bool hasOutput):hasOutput(hasOutput){
         inodes.push_back(nullptr);
 }
 Node::~Node(){}
-void Node::connect(int input, Node* to){
+void Node::connect(unsigned int input, Node* to){
 	inodes[input]=to;
 	to->onodes.push_back(this);
 	update_valid();
 	update_uniform();
 }
-void Node::disconnect(int input){
+void Node::disconnect(unsigned int input){
 	inodes[input]->onodes.remove(this);
 	inodes[input]= nullptr;
 	uniform= false;

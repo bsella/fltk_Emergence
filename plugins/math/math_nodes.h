@@ -6,7 +6,7 @@
 
 class Math_Node : public Node{
 public:
-	Math_Node(unsigned int);
+    Math_Node(int);
 protected:
 	Real_t real_cache;
 	Color_t color_cache;

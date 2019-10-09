@@ -5,7 +5,7 @@ class Fl_Shared_Image;
 class Image_Node : public Node{
 public:
 	Image_Node(const char*);
-	virtual ~Image_Node();
+    ~Image_Node()override;
 	void set_image(const char*);
 	static Node* make(void*);
 	static void get_pixel(Node**, void*);

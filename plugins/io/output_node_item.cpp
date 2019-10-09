@@ -6,7 +6,7 @@
 
 Output_Node_Item::Output_Node_Item(int x, int y): Node_Item(x,y,50,50, new Output_Node){
 	draw_buffer= new unsigned int[_w*_h];
-	output_image= new Fl_RGB_Image((const unsigned char*)draw_buffer, _w, _h, 4);
+    output_image= new Fl_RGB_Image(reinterpret_cast<const unsigned char*>(draw_buffer), _w, _h, 4);
 }
 Output_Node_Item::~Output_Node_Item(){
 	delete output_image;
@@ -20,13 +20,13 @@ void Output_Node_Item::draw_body()const{
 	if(core_node->valid){
 		if(!image_valid){
 			output_image->uncache();
-			((Output_Node*)core_node)->render(_w,_h, draw_buffer);
+            static_cast<Output_Node*>(core_node)->render(_w,_h, draw_buffer);
 		}
 		output_image->draw(_x+1, _y+1);
 	}
 	fl_color(FL_GREEN);
 	fl_rect(_x, _y, _w+2, _h+2);
-	((Output_Node_Item*)this)->image_valid= core_node->valid;
+    ((Output_Node_Item*)this)->image_valid= core_node->valid;
 }
 void Output_Node_Item::scale(double){}
 

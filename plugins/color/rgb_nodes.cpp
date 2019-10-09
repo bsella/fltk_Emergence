@@ -64,20 +64,20 @@ void Alpha_Node::update_types(){
 }
 
 void RGB_Node::rgb(Node** nodes, void* ptr){
-	Color_t* color_ptr= (Color_t*)ptr;
-	color_ptr->r= ((Real_t*)nodes[0]->cache)->value;
-	color_ptr->g= ((Real_t*)nodes[1]->cache)->value;
-	color_ptr->b= ((Real_t*)nodes[2]->cache)->value;
+    Color_t* color_ptr= static_cast<Color_t*>(ptr);
+	color_ptr->r= static_cast<Real_t*>(nodes[0]->cache)->value;
+	color_ptr->g= static_cast<Real_t*>(nodes[1]->cache)->value;
+	color_ptr->b= static_cast<Real_t*>(nodes[2]->cache)->value;
 }
 void Red_Node::red(Node** nodes, void* ptr){
-	((Real_t*)ptr)->value= ((Color_t*)nodes[0]->cache)->r;
+	static_cast<Real_t*>(ptr)->value= static_cast<Color_t*>(nodes[0]->cache)->r;
 }
 void Green_Node::green(Node** nodes, void* ptr){
-	((Real_t*)ptr)->value= ((Color_t*)nodes[0]->cache)->g;
+	static_cast<Real_t*>(ptr)->value= static_cast<Color_t*>(nodes[0]->cache)->g;
 }
 void Blue_Node::blue(Node** nodes, void* ptr){
-	((Real_t*)ptr)->value= ((Color_t*)nodes[0]->cache)->b;
+	static_cast<Real_t*>(ptr)->value= static_cast<Color_t*>(nodes[0]->cache)->b;
 }
 void Alpha_Node::alpha(Node** nodes, void* ptr){
-	((Real_t*)ptr)->value= ((Color_t*)nodes[0]->cache)->a;
+	static_cast<Real_t*>(ptr)->value= static_cast<Color_t*>(nodes[0]->cache)->a;
 }

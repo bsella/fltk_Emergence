@@ -8,9 +8,9 @@ Color_Node_Item::Color_Node_Item(int x, int y, void* ptr): Node_Item(x, y, 16, 1
 
 unsigned int Color_Node_Item::color()const{
 	if(core_node->cache){
-		const unsigned char temp_r = ((Color_t*)core_node->cache)->r*255;
-		const unsigned char temp_g = ((Color_t*)core_node->cache)->g*255;
-		const unsigned char temp_b = ((Color_t*)core_node->cache)->b*255;
+        const unsigned char temp_r = static_cast<Color_t*>(core_node->cache)->r*255;
+        const unsigned char temp_g = static_cast<Color_t*>(core_node->cache)->g*255;
+        const unsigned char temp_b = static_cast<Color_t*>(core_node->cache)->b*255;
 		return ((((temp_r<<8) | temp_g) << 8) | temp_b) << 8;
 	}
 	return 0;
@@ -30,21 +30,21 @@ bool Color_Node_Item::settle(){
 	double r,g,b;
 	int ret= fl_color_chooser("Choose a color", r,g,b);
 	if(ret){
-		((Color_t*)core_node->cache)->r= r;
-		((Color_t*)core_node->cache)->g= g;
-		((Color_t*)core_node->cache)->b= b;
-		((Color_t*)core_node->cache)->a= 1;
+		static_cast<Color_t*>(core_node->cache)->r= r;
+		static_cast<Color_t*>(core_node->cache)->g= g;
+		static_cast<Color_t*>(core_node->cache)->b= b;
+		static_cast<Color_t*>(core_node->cache)->a= 1;
 	}
 	return ret;
 }
 
 static void color_edit_value(Fl_Widget*, void* ptr){
-	Color_Node_Item* node= (Color_Node_Item*)ptr;
+    Color_Node_Item* node= static_cast<Color_Node_Item*>(ptr);
 	double r,g,b;
 	if(fl_color_chooser("Choose a color", r,g,b)){
-		((Color_t*)node->cache())->r= r;
-		((Color_t*)node->cache())->g= g;
-		((Color_t*)node->cache())->b= b;
+		static_cast<Color_t*>(node->cache())->r= r;
+		static_cast<Color_t*>(node->cache())->g= g;
+		static_cast<Color_t*>(node->cache())->b= b;
 	}
 }
 void Color_Node_Item::context_menu(std::vector<Fl_Menu_Item>& menu){

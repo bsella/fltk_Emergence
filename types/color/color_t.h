@@ -6,8 +6,8 @@ class Color_t : public Data_t{
 public:
 	explicit Color_t(unsigned color);
 	explicit Color_t();
-	explicit Color_t(float r, float g, float b);
-	explicit Color_t(float r, float g, float b, float a);
+	explicit Color_t(double r, double g, double b);
+	explicit Color_t(double r, double g, double b, double a);
 	double r, g, b, a;
 	double to_real()const;
 
