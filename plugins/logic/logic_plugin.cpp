@@ -31,9 +31,9 @@ void Logic_Plugin::init_gui()const{
 	menu_bar->add("Insert/Logic/NOT", 0, &Workspace::insert, (void*)&NOT_Node_Item::make);
 
 	auto cat = new Toolbox_Category("Logic", nullptr);
-	cat->add(new Toolbox_Node_Item("And", RELATIVE("plugins/logic/and.png"), &AND_Node_Item::make));
-	cat->add(new Toolbox_Node_Item("Or",  RELATIVE("plugins/logic/or.png"),  &OR_Node_Item::make));
-	cat->add(new Toolbox_Node_Item("Xor", RELATIVE("plugins/logic/xor.png"), &XOR_Node_Item::make));
-	cat->add(new Toolbox_Node_Item("Not", RELATIVE("plugins/logic/not.png"), &NOT_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("And", &AND_Node_Item::icon, &AND_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("Or",  &OR_Node_Item::icon,  &OR_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("Xor", &XOR_Node_Item::icon, &XOR_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("Not", &NOT_Node_Item::icon, &NOT_Node_Item::make));
 	Toolbox::add(cat);
 }

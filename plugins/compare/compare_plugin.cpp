@@ -50,10 +50,10 @@ void Compare_Plugin::init_gui()const{
 	menu_bar->add("Insert/Compare/Condition",    0, &Workspace::insert, (void*)&If_Node_Item::make);
 
 	auto cat = new Toolbox_Category("Compare", nullptr);
-	cat->add(new Toolbox_Node_Item("Greater Than", RELATIVE("plugins/compare/gt.png"), &GT_Node_Item::make));
-	cat->add(new Toolbox_Node_Item("Less Than",    RELATIVE("plugins/compare/lt.png"), &LT_Node_Item::make));
-	cat->add(new Toolbox_Node_Item("Equal",        RELATIVE("plugins/compare/eq.png"), &EQ_Node_Item::make));
-	cat->add(new Toolbox_Node_Item("Not Equal",    RELATIVE("plugins/compare/ne.png"), &NE_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("Greater Than", &GT_Node_Item::icon, &GT_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("Less Than",    &LT_Node_Item::icon, &LT_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("Equal",        &EQ_Node_Item::icon, &EQ_Node_Item::make));
+	cat->add(new Toolbox_Node_Item("Not Equal",    &NE_Node_Item::icon, &NE_Node_Item::make));
 	cat->add(new Toolbox_Node_Item("Condition",    RELATIVE("plugins/compare/if.png"), &If_Node_Item::make));
 	Toolbox::add(cat);
 }

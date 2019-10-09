@@ -15,7 +15,6 @@ class GT_Node_Item : public Compare_Node_Item{
 public:
 	GT_Node_Item(int,int);
 	static Node_Item* make(int,int,void*);
-private:
 	static Fl_PNG_Image icon;
 };
 
@@ -23,7 +22,6 @@ class LT_Node_Item : public Compare_Node_Item{
 public:
 	LT_Node_Item(int,int);
 	static Node_Item* make(int,int,void*);
-private:
 	static Fl_PNG_Image icon;
 };
 
@@ -31,7 +29,6 @@ class EQ_Node_Item : public Compare_Node_Item{
 public:
 	EQ_Node_Item(int,int);
 	static Node_Item* make(int,int,void*);
-private:
 	static Fl_PNG_Image icon;
 };
 
@@ -39,6 +36,5 @@ class NE_Node_Item : public Compare_Node_Item{
 public:
 	NE_Node_Item(int,int);
 	static Node_Item* make(int,int,void*);
-private:
 	static Fl_PNG_Image icon;
 };
