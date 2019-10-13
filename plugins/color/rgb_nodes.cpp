@@ -36,11 +36,17 @@ Alpha_Node::~Alpha_Node(){
 	delete cache;
 }
 
-Node* RGB_Node::make(void*){return new RGB_Node;}
-Node* Red_Node::make(void*){return new Red_Node;}
-Node* Green_Node::make(void*){return new Green_Node;}
-Node* Blue_Node::make(void*){return new Blue_Node;}
-Node* Alpha_Node::make(void*){return new Alpha_Node;}
+const char* RGB_Node::id()const{return "rgb";}
+const char* Red_Node::id()const{return "red";}
+const char* Green_Node::id()const{return "green";}
+const char* Blue_Node::id()const{return "blue";}
+const char* Alpha_Node::id()const{return "alpha";}
+
+Node* RGB_Node::make(std::istream*){return new RGB_Node;}
+Node* Red_Node::make(std::istream*){return new Red_Node;}
+Node* Green_Node::make(std::istream*){return new Green_Node;}
+Node* Blue_Node::make(std::istream*){return new Blue_Node;}
+Node* Alpha_Node::make(std::istream*){return new Alpha_Node;}
 
 void RGB_Node::update_types(){
 	main_func= get_func("rgb", {inodes[0]->cache->id,inodes[1]->cache->id,inodes[2]->cache->id});

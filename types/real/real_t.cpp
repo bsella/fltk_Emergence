@@ -1,7 +1,12 @@
 #include "real_t.h"
 #include <core/type_manager.h>
 #include <core/node.h>
+#include <istream>
 
+Real_t::Real_t(std::istream* str): Real_t(0.0){
+	if(str)
+	static_cast<std::istream*>(str)->read(reinterpret_cast<char*>(&value), sizeof(double));
+}
 Real_t::Real_t(double d): Data_t(get_type_id("real")){
 	value= d;
 }
@@ -24,4 +29,8 @@ void Real_t::to_color(Node** nodes, void* ptr){
 }
 void Real_t::to_bool(Node** nodes, void* ptr){
 	*((bool*)ptr)=((Real_t*)nodes[0]->cache)->value != 0;
+}
+
+void Real_t::save(std::ostream& os)const{
+	os.write(reinterpret_cast<const char*>(&value), sizeof(value));
 }

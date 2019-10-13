@@ -1,15 +1,9 @@
 #include <core/node.h>
 
-class Compare_Node : public Node{
+class GT_Node : public Node{
 public:
-	Compare_Node();
-	virtual ~Compare_Node();
-protected:
-	virtual void update_types()=0;
-};
-
-class GT_Node : public Compare_Node{
-public:
+	GT_Node();
+	~GT_Node()override;
 	static Node* make(void*);
 
 	static void real_real(Node**, void*);
@@ -19,10 +13,13 @@ public:
 
 private:
 	void update_types()override;
+	inline const char* id()const override;
 };
 
-class LT_Node : public Compare_Node{
+class LT_Node : public Node{
 public:
+	LT_Node();
+	~LT_Node()override;
 	static Node* make(void*);
 
 	static void real_real(Node**, void*);
@@ -32,10 +29,13 @@ public:
 
 private:
 	void update_types()override;
+	inline const char* id()const override;
 };
 
-class EQ_Node : public Compare_Node{
+class EQ_Node : public Node{
 public:
+	EQ_Node();
+	~EQ_Node()override;
 	static Node* make(void*);
 
 	static void real_real(Node**, void*);
@@ -45,10 +45,13 @@ public:
 
 private:
 	void update_types()override;
+	inline const char* id()const override;
 };
 
-class NE_Node : public Compare_Node{
+class NE_Node : public Node{
 public:
+	NE_Node();
+	~NE_Node()override;
 	static Node* make(void*);
 
 	static void real_real(Node**, void*);
@@ -58,4 +61,5 @@ public:
 
 private:
 	void update_types()override;
+	inline const char* id()const override;
 };

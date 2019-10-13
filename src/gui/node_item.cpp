@@ -6,12 +6,11 @@
 
 const int Node_Item::socket_size=5;
 const int Node_Item::head_size=8;
-make_node_item_t Node_Item::dnd_node_factory;
 Fl_Color Node_Item::color()const{
 	return FL_GRAY;
 }
-Node_Item::Node_Item(int x, int y, int w, int h, Node* n)
-	:Item(x,y,w,h), core_node(n), width(w), height(h){
+Node_Item::Node_Item(double w, double h, Node* n)
+	:Item(w,h), core_node(n), width(w), height(h){
 	for(unsigned int i=0; i<n->inodes.size(); i++)
 		inodes.push_back(nullptr);
 }
@@ -171,13 +170,9 @@ void Node_Item::scale(double s){
 	_w= s*width;
 	_h= s*height;
 }
-//void Node_Item::set_pos(int x, int y){
-//	Item::set_pos(x,y);
-//	pos_x=Workspace::current->zero_x + Workspace::current->zoom*x;
-//	pos_y=Workspace::current->zero_y + Workspace::current->zoom*y;
-//}
-//void Node_Item::move(int dx, int dy){
-//	Item::move(dx, dy);
-//	pos_x+=Workspace::current->zoom*dx;
-//	pos_y+=Workspace::current->zoom*dy;
-//}
+
+void Node_Item::save(std::ostream& os)const{
+	core_node->save(os);
+	os.write(reinterpret_cast<const char*>(&pos_x), sizeof(pos_x));
+	os.write(reinterpret_cast<const char*>(&pos_y), sizeof(pos_y));
+}

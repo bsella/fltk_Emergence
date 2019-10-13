@@ -5,9 +5,9 @@ class Fl_Widget;
 
 class Image_Node_Item : public Node_Item{
 public:
-	Image_Node_Item(int,int, const char*);
+	Image_Node_Item(std::istream*);
 	~Image_Node_Item()override;
-	static Node_Item* make(int,int,void*);
+	static Node_Item* make(std::istream*);
 private:
 	Fl_Image* image= nullptr;
 	void draw_body()const override;

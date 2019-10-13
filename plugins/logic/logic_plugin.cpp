@@ -8,6 +8,7 @@
 #include <resources.h>
 #include <core/type_manager.h>
 #include <gui/workspace.h>
+#include <gui/binary_save.h>
 
 class Logic_Plugin : public _Plugin{
 public:
@@ -25,6 +26,11 @@ void Logic_Plugin::init()const{
 	set_func("not", &NOT_Node::func, {(unsigned)bool_id});
 }
 void Logic_Plugin::init_gui()const{
+	map_id_to_node_item("and", &AND_Node_Item::make);
+	map_id_to_node_item("or",  &OR_Node_Item::make);
+	map_id_to_node_item("xor", &XOR_Node_Item::make);
+	map_id_to_node_item("not", &NOT_Node_Item::make);
+
 	menu_bar->add("Insert/Logic/AND", 0, &Workspace::insert, (void*)&AND_Node_Item::make);
 	menu_bar->add("Insert/Logic/OR",  0, &Workspace::insert, (void*)&OR_Node_Item::make);
 	menu_bar->add("Insert/Logic/XOR", 0, &Workspace::insert, (void*)&XOR_Node_Item::make);

@@ -1,12 +1,12 @@
 #include "lerp_node_items.h"
 #include "lerp_nodes.h"
 
-Lerp_Base_Node_Item::Lerp_Base_Node_Item(int x, int y, Lerp_Base_Node* n): Node_Item(x,y, 50, 100, n){}
-Lerp_Node_Item::Lerp_Node_Item(int x, int y): Lerp_Base_Node_Item(x,y, new Lerp_Node){}
-Clamp_Node_Item::Clamp_Node_Item(int x, int y): Lerp_Base_Node_Item(x,y, new Clamp_Node){}
+Lerp_Base_Node_Item::Lerp_Base_Node_Item(Lerp_Base_Node* n): Node_Item(50, 100, n){}
+Lerp_Node_Item::Lerp_Node_Item(): Lerp_Base_Node_Item(new Lerp_Node){}
+Clamp_Node_Item::Clamp_Node_Item(): Lerp_Base_Node_Item(new Clamp_Node){}
 
-Node_Item* Lerp_Node_Item::make(int x, int y, void*){return new Lerp_Node_Item(x,y);}
-Node_Item* Clamp_Node_Item::make(int x, int y, void*){return new Clamp_Node_Item(x,y);}
+Node_Item* Lerp_Node_Item::make(std::istream*){return new Lerp_Node_Item;}
+Node_Item* Clamp_Node_Item::make(std::istream*){return new Clamp_Node_Item;}
 
 Fl_Color Lerp_Base_Node_Item::color()const{
 	return 0xb4ffb4ff;

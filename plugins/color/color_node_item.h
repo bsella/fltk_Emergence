@@ -3,8 +3,8 @@
 
 class Color_Node_Item : public Node_Item{
 public:
-	Color_Node_Item(int, int, void*);
-	static Node_Item* make(int,int,void*);
+	Color_Node_Item(std::istream*);
+	static Node_Item* make(std::istream*);
 private:
 	unsigned int color()const override;
 	void draw_body()const override;

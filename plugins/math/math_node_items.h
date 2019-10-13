@@ -5,7 +5,7 @@
 
 class Math_Node_Item : public Node_Item{
 public:
-	Math_Node_Item(int, int, Fl_PNG_Image*, Node*);
+	Math_Node_Item(Fl_PNG_Image*, Node*);
 protected:
 	Fl_PNG_Image* icon;
 	Fl_Color color()const override;
@@ -14,98 +14,98 @@ protected:
 
 class Add_Node_Item : public Math_Node_Item{
 public:
-	Add_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	Add_Node_Item();
+	static Node_Item* make(std::istream*);
 	static Fl_PNG_Image icon;
 };
 
 class Sub_Node_Item : public Math_Node_Item{
 public:
-	Sub_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	Sub_Node_Item();
+	static Node_Item* make(std::istream*);
 	static Fl_PNG_Image icon;
 };
 
 class Mul_Node_Item : public Math_Node_Item{
 public:
-	Mul_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	Mul_Node_Item();
+	static Node_Item* make(std::istream*);
 	static Fl_PNG_Image icon;
 };
 
 class Div_Node_Item : public Math_Node_Item{
 public:
-	Div_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	Div_Node_Item();
+	static Node_Item* make(std::istream*);
 	static Fl_PNG_Image icon;
 };
 
 class Neg_Node_Item : public Math_Node_Item{
 public:
-	Neg_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	Neg_Node_Item();
+	static Node_Item* make(std::istream*);
 	static Fl_PNG_Image icon;
 };
 
 class Sqrt_Node_Item : public Math_Node_Item{
 public:
-	Sqrt_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	Sqrt_Node_Item();
+	static Node_Item* make(std::istream*);
 	static Fl_PNG_Image icon;
 };
 
 class Abs_Node_Item : public Math_Node_Item{
 public:
-	Abs_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	Abs_Node_Item();
+	static Node_Item* make(std::istream*);
 private:
 	void draw_body()const override;
 };
 
 class Sin_Node_Item : public Math_Node_Item{
 public:
-	Sin_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	Sin_Node_Item();
+	static Node_Item* make(std::istream*);
 private:
 	void draw_body()const override;
 };
 
 class Cos_Node_Item : public Math_Node_Item{
 public:
-	Cos_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	Cos_Node_Item();
+	static Node_Item* make(std::istream*);
 private:
 	void draw_body()const override;
 };
 
 class Min_Node_Item : public Math_Node_Item{
 public:
-	Min_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	Min_Node_Item();
+	static Node_Item* make(std::istream*);
 private:
 	void draw_body()const override;
 };
 
 class Max_Node_Item : public Math_Node_Item{
 public:
-	Max_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	Max_Node_Item();
+	static Node_Item* make(std::istream*);
 private:
 	void draw_body()const override;
 };
 
 class Pow_Node_Item : public Math_Node_Item{
 public:
-	Pow_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	Pow_Node_Item();
+	static Node_Item* make(std::istream*);
 private:
 	void draw_body()const override;
 };
 
 class Log_Node_Item : public Math_Node_Item{
 public:
-	Log_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	Log_Node_Item();
+	static Node_Item* make(std::istream*);
 private:
 	void draw_body()const override;
 };

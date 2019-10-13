@@ -19,14 +19,16 @@ void Output_Node::update_valid(){
 	}
 }
 void Output_Node::render(int w, int h, unsigned int* draw_buffer){
-    *input_ratio= double(w)/h;
+    input_ratio->value= double(w)/h;
 	for(int x=0; x<w; x++){
-        *input_x= double(x)/w;
+        input_x->value= double(x)/w;
 		for(int y=0; y<h; y++){
-            *input_y= double(y)/h;
+            input_y->value= double(y)/h;
 			current_pixel= &draw_buffer[x+w*y];
 			for(unsigned i=0; i<program.size(); i++)
 				program[i]->execute();
 		}
 	}
 }
+
+const char* Output_Node::id()const{return "output";}

@@ -4,7 +4,7 @@
 class Output_Node : public Node{
 public:
 	Output_Node();
-	static Node* make(void*);
+	static Node* make(std::istream*);
 	std::vector<Node*> program;
 	void render(int, int, unsigned int*);
 private:
@@ -12,4 +12,5 @@ private:
 	void update_types()override;
 	void update_valid()override;
 	unsigned int* current_pixel;
+	inline const char* id()const override;
 };

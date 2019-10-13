@@ -5,6 +5,8 @@
 #include <FL/fl_draw.H>
 #include <FL/Fl_Menu_Item.H>
 #include <gui/main_window.h>
+#include <gui/toolbox/toolbox_node_item.h>
+#include <gui/binary_save.h>
 
 Workspace::Workspace(int x, int y, int w, int h): Graphics_View(x,y,w,h){
 	items = new std::list<Item*>;
@@ -43,11 +45,13 @@ void Workspace::draw(){
 		fl_line_style(0);
 	}
 }
-void Workspace::add_node(Node_Item*n){
+void Workspace::add_node(Node_Item* n){
 	add_item(n);
 	n->scale(zoom);
-	n->pos_x= zero_x + n->_x/zoom;
-	n->pos_y= zero_y + n->_y/zoom;
+	n->_x= (n->pos_x - zero_x)*zoom;
+	n->_y= (n->pos_y - zero_y)*zoom;
+	//n->pos_x= zero_x + n->_x/zoom;
+	//n->pos_y= zero_y + n->_y/zoom;
 }
 static Node_Item* hover_to= nullptr;
 void Workspace::mouse_press_event(int x, int y, int button){
@@ -125,9 +129,15 @@ void Workspace::mouse_drag_event(int dx, int dy, int button){
 	redraw();
 }
 void Workspace::dnd_enter_event(int x, int y){
-	if(make_node_item_t make = Node_Item::dnd_node_factory){
-		hover= make(x,y,nullptr);
-		add_node((Node_Item*)hover);
+	if(auto make = Toolbox_Node_Item::dnd_node_factory){
+		hover= make(nullptr);
+		add_node(static_cast<Node_Item*>(hover));
+		x= x-hover->_w/2;
+		y= y-hover->_h/2;
+		hover->set_pos(x, y);
+		static_cast<Node_Item*>(hover)->pos_x= zero_x + x/zoom;
+		static_cast<Node_Item*>(hover)->pos_y= zero_y + y/zoom;
+		redraw();
 	}
 }
 void Workspace::dnd_drag_event(int x, int y){
@@ -135,18 +145,18 @@ void Workspace::dnd_drag_event(int x, int y){
 		x= x-hover->_w/2;
 		y= y-hover->_h/2;
 		hover->set_pos(x, y);
-		((Node_Item*)hover)->pos_x= zero_x + x/zoom;
-		((Node_Item*)hover)->pos_y= zero_y + y/zoom;
+		static_cast<Node_Item*>(hover)->pos_x= zero_x + x/zoom;
+		static_cast<Node_Item*>(hover)->pos_y= zero_y + y/zoom;
+		redraw();
 	}
-	redraw();
 }
 void Workspace::dnd_drop_event(int, int){
-	if(!((Node_Item*)hover)->settle()){
+	if(!static_cast<Node_Item*>(hover)->settle()){
 		items->remove(hover);
 		delete hover;
 		hover= nullptr;
 	}
-	Node_Item::dnd_node_factory= nullptr;
+	Toolbox_Node_Item::dnd_node_factory= nullptr;
 	redraw();
 }
 void Workspace::dnd_leave_event(){
@@ -211,9 +221,9 @@ void Workspace::mouse_click_event(int x, int y, int button){
 	if(button== FL_RIGHT_MOUSE){
 		std::vector<Fl_Menu_Item> menu;
 		int flags = selected.size()? 0:FL_MENU_INACTIVE;
-		menu.push_back(Fl_Menu_Item{"Copy",0,0,0,flags,0,0,0,0});
+		menu.push_back(Fl_Menu_Item{"Copy",0,&copy_selected,this,flags,0,0,0,0});
 		menu.push_back(Fl_Menu_Item{"Cut",0,0,0,flags,0,0,0,0});
-		menu.push_back(Fl_Menu_Item{"Paste",0,0,0,FL_MENU_DIVIDER,0,0,0,0});
+		menu.push_back(Fl_Menu_Item{"Paste",0,&paste,this,FL_MENU_DIVIDER | clipboard.str().empty(),0,0,0,0});
 		menu.push_back(Fl_Menu_Item{"Delete",0,&remove_selected,this, flags,0,0,0,0});
 		menu.push_back(Fl_Menu_Item{"Select All",0,&select_all,this,0,0,0,0,0});
 		if(hover)
@@ -225,14 +235,46 @@ void Workspace::mouse_click_event(int x, int y, int button){
 	}
 }
 void Workspace::insert(Fl_Widget*, void* ptr){
-	auto make= (Node_Item* (*)(int,int,void*))ptr;
-	Node_Item* ni= make(workspace->x()+workspace->w()/2, workspace->y()+workspace->h()/2, nullptr);
-	ni->_x-= ni->_w/2;
-	ni->_y-= ni->_h/2;
+	auto make= (Node_Item* (*)(std::istream*))ptr;
+	Node_Item* ni= make(nullptr);
+	ni->pos_x= (workspace->x() + workspace->w()/2 - ni->_w/2)/ workspace->zoom + workspace->zero_x;
+	ni->pos_y= (workspace->y() + workspace->h()/2 - ni->_h/2)/ workspace->zoom + workspace->zero_y;
 	workspace->add_node(ni);
 	if(!ni->settle()){
 		workspace->items->remove(ni);
 		delete ni;
 	}
 	workspace->redraw();
+}
+
+std::stringstream Workspace::clipboard(std::ios::binary | std::ios::in | std::ios::out);
+void Workspace::copy_selected(Fl_Widget*, void* ptr){
+	clipboard.str("");
+	clipboard.seekg(0, std::ios::beg);
+	Workspace* ws = (Workspace*)ptr;
+	for(const auto n: ws->selected)
+		n->save(clipboard);
+	size_t end=0;
+	clipboard.write(reinterpret_cast<char*>(&end), sizeof(size_t));
+}
+void Workspace::paste(Fl_Widget*, void*ptr){
+	size_t len;
+	char* id;
+	double x,y;
+	clipboard.seekg(0, std::ios::beg);
+	clipboard.read(reinterpret_cast<char*>(&len), sizeof(size_t));
+	while(len){
+		id= new char[len];
+		clipboard.read(id, len);
+		auto makefunc= get_node_item(id);
+		delete[] id;
+		Node_Item* new_node= makefunc(&clipboard);
+		clipboard.read(reinterpret_cast<char*>(&x), sizeof(double));
+		clipboard.read(reinterpret_cast<char*>(&y), sizeof(double));
+		new_node->pos_x= x;
+		new_node->pos_y= y;
+		static_cast<Workspace*>(ptr)->add_node(new_node);
+		clipboard.read(reinterpret_cast<char*>(&len), sizeof(size_t));
+	}
+	static_cast<Workspace*>(ptr)->redraw();
 }

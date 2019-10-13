@@ -1,7 +1,18 @@
 #include "color_t.h"
 #include <core/type_manager.h>
 #include <stdlib.h>
+#include <istream>
 
+Color_t::Color_t(std::istream* str):Color_t(0,0,0,0){
+	if(str){
+		double d[4];
+		static_cast<std::istream*>(str)->read(reinterpret_cast<char*>(d), 4*sizeof(double));
+		r= d[0];
+		g= d[1];
+		b= d[2];
+		a= d[3];
+	}
+}
 Color_t::Color_t(unsigned color): Data_t(get_type_id("color")){
 	r= (color>>24 & 0xff) /255.0f;
 	g= (color>>16 & 0xff) /255.0f;
@@ -15,7 +26,6 @@ Color_t::Color_t(double r, double g, double b, double a): Data_t(get_type_id("co
 	this->a= a;
 }
 Color_t::Color_t(double r, double g, double b): Color_t(r,g,b,1){}
-Color_t::Color_t(): Color_t(0,0,0,0){}
 
 double Color_t::to_real()const{
 	return std::max(std::max(r, g), b);
@@ -40,4 +50,11 @@ void Color_t::to_color(Node** nodes, void* ptr){
 	const unsigned char temp_b = b0>1? 255: b0*255;
 	const unsigned char temp_a = a0>1? 255: a0*255;
 	*((unsigned*)ptr)= (((((temp_a << 8) | temp_b) << 8) | temp_g) << 8) | temp_r;
+}
+
+void Color_t::save(std::ostream& os)const{
+	os.write(reinterpret_cast<const char*>(&r), sizeof(r));
+	os.write(reinterpret_cast<const char*>(&g), sizeof(g));
+	os.write(reinterpret_cast<const char*>(&b), sizeof(b));
+	os.write(reinterpret_cast<const char*>(&a), sizeof(a));
 }

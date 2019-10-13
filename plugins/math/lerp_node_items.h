@@ -5,7 +5,7 @@ class Lerp_Base_Node;
 
 class Lerp_Base_Node_Item : public Node_Item{
 public:
-	Lerp_Base_Node_Item(int, int, Lerp_Base_Node*);
+	Lerp_Base_Node_Item(Lerp_Base_Node*);
 protected:
 	virtual void draw_body()const override;
 private:
@@ -14,16 +14,16 @@ private:
 
 class Lerp_Node_Item : public Lerp_Base_Node_Item{
 public:
-	Lerp_Node_Item(int, int);
-	static Node_Item* make(int, int, void*);
+	Lerp_Node_Item();
+	static Node_Item* make(std::istream*);
 private:
 	void draw_body()const override;
 };
 
 class Clamp_Node_Item : public Lerp_Base_Node_Item{
 public:
-	Clamp_Node_Item(int, int);
-	static Node_Item* make(int, int, void*);
+	Clamp_Node_Item();
+	static Node_Item* make(std::istream*);
 private:
 	void draw_body()const override;
 };

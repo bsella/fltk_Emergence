@@ -29,10 +29,15 @@ Value_Node::~Value_Node(){
 	delete cache;
 }
 
-Node* HSV_Node::make(void*){return new HSV_Node;}
-Node* Hue_Node::make(void*){return new Hue_Node;}
-Node* Saturation_Node::make(void*){return new Saturation_Node;}
-Node* Value_Node::make(void*){return new Value_Node;}
+const char* HSV_Node::id()const{return "hsv";}
+const char* Hue_Node::id()const{return "hue";}
+const char* Saturation_Node::id()const{return "saturation";}
+const char* Value_Node::id()const{return "value";}
+
+Node* HSV_Node::make(std::istream*){return new HSV_Node;}
+Node* Hue_Node::make(std::istream*){return new Hue_Node;}
+Node* Saturation_Node::make(std::istream*){return new Saturation_Node;}
+Node* Value_Node::make(std::istream*){return new Value_Node;}
 
 void HSV_Node::update_types(){
 	main_func= get_func("hsv", {inodes[0]->cache->id, inodes[1]->cache->id, inodes[2]->cache->id});

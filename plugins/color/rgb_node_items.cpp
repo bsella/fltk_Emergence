@@ -3,11 +3,11 @@
 #include <color/color_t.h>
 #include <FL/fl_draw.H>
 
-RGB_Node_Item::RGB_Node_Item(int x, int y): Node_Item(x, y, 50, 100, new RGB_Node){}
-Red_Node_Item::Red_Node_Item(int x, int y): Node_Item(x, y, 50, 50, new Red_Node){}
-Green_Node_Item::Green_Node_Item(int x, int y): Node_Item(x, y, 50, 50, new Green_Node){}
-Blue_Node_Item::Blue_Node_Item(int x, int y): Node_Item(x, y, 50, 50, new Blue_Node){}
-Alpha_Node_Item::Alpha_Node_Item(int x, int y): Node_Item(x, y, 50, 50, new Alpha_Node){}
+RGB_Node_Item::RGB_Node_Item(): Node_Item(50, 100, new RGB_Node){}
+Red_Node_Item::Red_Node_Item(): Node_Item(50, 50, new Red_Node){}
+Green_Node_Item::Green_Node_Item(): Node_Item(50, 50, new Green_Node){}
+Blue_Node_Item::Blue_Node_Item(): Node_Item(50, 50, new Blue_Node){}
+Alpha_Node_Item::Alpha_Node_Item(): Node_Item(50, 50, new Alpha_Node){}
 
 unsigned int RGB_Node_Item::color()const{
 	return 0xffffffff;
@@ -42,8 +42,8 @@ void Alpha_Node_Item::draw_body()const{
 	fl_draw("A", _x+_w/2-4,  _y+_h/2+4);
 }
 
-Node_Item* RGB_Node_Item::make(int x, int y, void*){return new RGB_Node_Item(x,y);}
-Node_Item* Red_Node_Item::make(int x, int y, void*){return new Red_Node_Item(x,y);}
-Node_Item* Green_Node_Item::make(int x, int y, void*){return new Green_Node_Item(x,y);}
-Node_Item* Blue_Node_Item::make(int x, int y, void*){return new Blue_Node_Item(x,y);}
-Node_Item* Alpha_Node_Item::make(int x, int y, void*){return new Alpha_Node_Item(x,y);}
+Node_Item* RGB_Node_Item::make(std::istream*){return new RGB_Node_Item;}
+Node_Item* Red_Node_Item::make(std::istream*){return new Red_Node_Item;}
+Node_Item* Green_Node_Item::make(std::istream*){return new Green_Node_Item;}
+Node_Item* Blue_Node_Item::make(std::istream*){return new Blue_Node_Item;}
+Node_Item* Alpha_Node_Item::make(std::istream*){return new Alpha_Node_Item;}

@@ -16,20 +16,22 @@ protected:
 
 class Lerp_Node : public Lerp_Base_Node{
 public:
-	static Node* make(void*);
+	static Node* make(std::istream*);
 	static void real(Node**, void*);
 	static void color(Node**, void*);
 	static void cplx(Node**, void*);
 private:
 	void update_types()override;
+	inline const char* id()const override;
 };
 
 class Clamp_Node : public Lerp_Base_Node{
 public:
-	static Node* make(void*);
+	static Node* make(std::istream*);
 	static void real(Node**, void*);
 	static void color(Node**, void*);
 	static void cplx(Node**, void*);
 private:
 	void update_types()override;
+	inline const char* id()const override;
 };

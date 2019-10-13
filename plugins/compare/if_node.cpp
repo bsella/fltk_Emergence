@@ -4,7 +4,7 @@
 
 If_Node::If_Node():Node(3){}
 
-Node* If_Node::make(void*){return new If_Node;}
+Node* If_Node::make(std::istream*){return new If_Node;}
 
 void If_Node::update_cache(){
 	bool res;
@@ -36,3 +36,5 @@ void If_Node::compile_specific(std::vector<Node*>& program, bool check_uniform){
 void If_Node::update_types(){
 	main_func= get_func("to_bool", {inodes[1]->cache->id});
 }
+
+const char* If_Node::id()const{return "if";}

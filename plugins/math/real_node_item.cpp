@@ -6,7 +6,7 @@
 #include "real_chooser.h"
 #include <FL/Fl_Menu_Item.H>
 
-Real_Node_Item::Real_Node_Item(int x, int y, void* ptr): Node_Item(x, y, 70, 16, new Real_Node(ptr)){}
+Real_Node_Item::Real_Node_Item(std::istream* ptr): Node_Item(70, 16, new Real_Node(ptr)){}
 
 void Real_Node_Item::draw_body()const{
 	fl_color(FL_WHITE);
@@ -16,8 +16,8 @@ void Real_Node_Item::draw_body()const{
 	fl_draw(std::to_string(static_cast<Real_t*>(core_node->cache)->value).c_str(), _x, _y+_h/2+6);
 }
 
-Node_Item* Real_Node_Item::make(int x, int y, void* ptr){
-	return new Real_Node_Item(x,y, ptr);
+Node_Item* Real_Node_Item::make(std::istream* ptr){
+	return new Real_Node_Item(ptr);
 }
 
 bool Real_Node_Item::settle(){

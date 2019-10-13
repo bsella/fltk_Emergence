@@ -1,5 +1,6 @@
 #pragma once
 #include "graphics_view.h"
+#include <sstream>
 class Node_Item;
 
 class Workspace : public Graphics_View{
@@ -11,6 +12,8 @@ public:
 	static void insert(Fl_Widget*, void*);
 	static void select_all(Fl_Widget*, void*);
 	static void remove_selected(Fl_Widget*, void*);
+	static void copy_selected(Fl_Widget*, void*);
+	static void paste(Fl_Widget*, void*);
 
 private:
 	std::list<Node_Item*> selected;
@@ -33,4 +36,6 @@ private:
 	void select(Node_Item*);
 	void deselect(Node_Item*);
 	void deselect_all();
+
+	static std::stringstream clipboard;
 };

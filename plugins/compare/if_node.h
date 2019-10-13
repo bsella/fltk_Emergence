@@ -4,7 +4,7 @@
 class If_Node : public Node{
 public:
    	If_Node();
-	static Node* make(void*);
+	static Node* make(std::istream*);
 private:
 	std::vector<Node*> then_program;
 	std::vector<Node*> else_program;
@@ -12,4 +12,5 @@ private:
 	void compile_specific(std::vector<Node*>&, bool)override;
 	void update_types()override;
     bool last_res;
+	inline const char* id()const override;
 };

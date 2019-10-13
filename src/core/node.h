@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <list>
+#include <ostream>
 class Data_t;
 
 class Node{
@@ -28,6 +29,11 @@ protected:
 	static unsigned int last_compile_id;
 	void (*main_func)(Node**, void*);
 	bool valid_types= false;
+
+	virtual const char* id()const=0;
+	virtual void save(std::ostream&)const;
+	friend std::ostream& operator <<(std::ostream&, const Node&);
+	friend std::ostream& operator <<(std::ostream&, const std::list<Node*>&);
 
 private:
 	std::list<Node*> onodes;

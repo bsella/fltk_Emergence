@@ -4,7 +4,7 @@
 #include <FL/Fl_Menu_Item.H>
 #include <FL/Fl_RGB_Image.H>
 
-Output_Node_Item::Output_Node_Item(int x, int y): Node_Item(x,y,50,50, new Output_Node){
+Output_Node_Item::Output_Node_Item(): Node_Item(50,50, new Output_Node){
 	draw_buffer= new unsigned int[_w*_h];
     output_image= new Fl_RGB_Image(reinterpret_cast<const unsigned char*>(draw_buffer), _w, _h, 4);
 }
@@ -13,8 +13,8 @@ Output_Node_Item::~Output_Node_Item(){
 	delete[] draw_buffer;
 }
 
-Node_Item* Output_Node_Item::make(int x, int y, void*){
-	return new Output_Node_Item(x,y);
+Node_Item* Output_Node_Item::make(std::istream*){
+	return new Output_Node_Item;
 }
 void Output_Node_Item::draw_body()const{
 	if(core_node->valid){

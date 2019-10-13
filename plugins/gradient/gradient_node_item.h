@@ -3,9 +3,9 @@
 
 class Gradient_Node_Item : public Node_Item{
 public:
-	Gradient_Node_Item(int, int);
+	Gradient_Node_Item();
     ~Gradient_Node_Item()override;
-	static Node_Item* make(int,int,void*);
+	static Node_Item* make(std::istream*);
 private:
 	std::vector<unsigned int> draw_buffer;
 	void draw_body()const override;

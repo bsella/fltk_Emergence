@@ -9,6 +9,7 @@
 #include <resources.h>
 #include <core/type_manager.h>
 #include <gui/workspace.h>
+#include <gui/binary_save.h>
 
 class Image_Plugin : public _Plugin{
 public:
@@ -23,6 +24,8 @@ void Image_Plugin::init()const{
 	set_func("get_pixel", &Image_Node::get_pixel, {(unsigned)real_id, (unsigned)real_id});
 }
 void Image_Plugin::init_gui()const{
+	map_id_to_node_item("image", &Image_Node_Item::make);
+
 	menu_bar->add("Insert/Other/Image", 0, &Workspace::insert, (void*)&Image_Node_Item::make);
 
 	Toolbox_Category* cat= Toolbox::add_category("Other");

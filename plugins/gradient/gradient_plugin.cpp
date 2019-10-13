@@ -9,6 +9,7 @@
 #include <resources.h>
 #include <core/type_manager.h>
 #include <gui/workspace.h>
+#include <gui/binary_save.h>
 
 class Gradient_Plugin : public _Plugin{
 public:
@@ -23,6 +24,8 @@ void Gradient_Plugin::init()const{
 	set_func("grad", &Gradient_Node::get_color, {(unsigned)real_id});
 }
 void Gradient_Plugin::init_gui()const{
+	map_id_to_node_item("gradient", &Gradient_Node_Item::make);
+
 	menu_bar->add("Insert/Color/Gradient", 0, &Workspace::insert, (void*)&Gradient_Node_Item::make);
 
 	auto cat = Toolbox::add_category("Color");

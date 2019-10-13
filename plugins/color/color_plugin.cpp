@@ -12,6 +12,7 @@
 #include <resources.h>
 #include <core/type_manager.h>
 #include <gui/workspace.h>
+#include <gui/binary_save.h>
 
 class Color_Plugin : public _Plugin{
 public:
@@ -37,6 +38,17 @@ void Color_Plugin::init()const{
 	set_func("value", &Value_Node::value, {(unsigned)color_id});
 }
 void Color_Plugin::init_gui()const{
+	map_id_to_node_item("color", &Color_Node_Item::make);
+	map_id_to_node_item("rgb", &RGB_Node_Item::make);
+	map_id_to_node_item("red", &Red_Node_Item::make);
+	map_id_to_node_item("green", &Green_Node_Item::make);
+	map_id_to_node_item("blue", &Blue_Node_Item::make);
+	map_id_to_node_item("alpha", &Alpha_Node_Item::make);
+	map_id_to_node_item("hsv", &HSV_Node_Item::make);
+	map_id_to_node_item("hue", &Hue_Node_Item::make);
+	map_id_to_node_item("saturation", &Saturation_Node_Item::make);
+	map_id_to_node_item("value", &Value_Node_Item::make);
+
 	menu_bar->add("Insert/Color/_Color", 0, &Workspace::insert, (void*)&Color_Node_Item::make);
 	menu_bar->add("Insert/Color/RGB",    0, &Workspace::insert, (void*)&RGB_Node_Item::make);
 	menu_bar->add("Insert/Color/Red",    0, &Workspace::insert, (void*)&Red_Node_Item::make);

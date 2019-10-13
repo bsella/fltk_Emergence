@@ -9,6 +9,7 @@
 #include <resources.h>
 #include <core/type_manager.h>
 #include <gui/workspace.h>
+#include <gui/binary_save.h>
 
 class Compare_Plugin : public _Plugin{
 public:
@@ -43,6 +44,12 @@ void Compare_Plugin::init()const{
 	set_func("ne", &NE_Node::color_color, {(unsigned)color_id, (unsigned)color_id});
 }
 void Compare_Plugin::init_gui()const{
+	map_id_to_node_item("gt", &GT_Node_Item::make);
+	map_id_to_node_item("lt", &LT_Node_Item::make);
+	map_id_to_node_item("eq", &EQ_Node_Item::make);
+	map_id_to_node_item("ne", &NE_Node_Item::make);
+	map_id_to_node_item("if", &If_Node_Item::make);
+
 	menu_bar->add("Insert/Compare/Greater Than", 0, &Workspace::insert, (void*)&GT_Node_Item::make);
 	menu_bar->add("Insert/Compare/Less Than",    0, &Workspace::insert, (void*)&LT_Node_Item::make);
 	menu_bar->add("Insert/Compare/Equal",        0, &Workspace::insert, (void*)&EQ_Node_Item::make);

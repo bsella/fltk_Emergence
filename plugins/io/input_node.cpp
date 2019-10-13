@@ -22,3 +22,7 @@ void Ratio_Node::execute(){}
 void X_Node::compile_specific(std::vector<Node*>&, bool){}
 void Y_Node::compile_specific(std::vector<Node*>&, bool){}
 void Ratio_Node::compile_specific(std::vector<Node*>&, bool){}
+
+const char* X_Node::id()const{return "x";}
+const char* Y_Node::id()const{return "y";}
+const char* Ratio_Node::id()const{return "ratio";}

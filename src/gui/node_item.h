@@ -1,24 +1,24 @@
 #pragma once
 #include <vector>
-#include "gui/item.h"
-#include "core/node.h"
+#include <gui/item.h>
+#include <core/node.h>
 class Fl_Menu_Item;
 class Node_Item;
-typedef Node_Item* (*make_node_item_t)(int,int,void*);
 
 class Node_Item : public Item{
 public:
-	Node_Item(int x, int y, int w, int h, Node* n);
+	Node_Item(double w, double h, Node* n);
 	virtual ~Node_Item();
 
 	void draw()const override;
-	static make_node_item_t dnd_node_factory;
 	void connect(int, Node_Item*);
 	void disconnect(int);
 	void disconnect_all();
 	bool is_looping(Node_Item*)const;
 	inline Data_t* cache(){return core_node->cache;}
 	virtual void scale(double);
+
+	void save(std::ostream&)const;
 
 protected:
 	Node* core_node;

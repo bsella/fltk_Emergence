@@ -1,9 +1,8 @@
 #include "real_node.h"
 #include <real/real_t.h>
 
-Real_Node::Real_Node(void* ptr): Node(0){
-	if(!ptr) cache= new Real_t;
-    else cache= new Real_t(*static_cast<double*>(ptr));
+Real_Node::Real_Node(std::istream* str): Node(0, "real"){
+	cache= new Real_t(str);
 	uniform= true;
 }
 
@@ -11,8 +10,15 @@ Real_Node::~Real_Node(){
 	delete cache;
 }
 
-Node* Real_Node::make(void* ptr){
+Node* Real_Node::make(std::istream* ptr){
 	return new Real_Node(ptr);
 }
 
 void Real_Node::update_cache(){}
+
+void Real_Node::save(std::ostream& os)const{
+	Node::save(os);
+	static_cast<Real_t*>(cache)->save(os);
+}
+
+const char* Real_Node::id()const{return "real";}

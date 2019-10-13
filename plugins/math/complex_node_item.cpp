@@ -2,11 +2,11 @@
 #include "complex_node.h"
 #include <resources.h>
 
-Complex_Node_Item::Complex_Node_Item(int x, int y): Node_Item(x, y, 50, 50, new Complex_Node){}
+Complex_Node_Item::Complex_Node_Item(): Node_Item(50, 50, new Complex_Node){}
 
 Fl_PNG_Image Complex_Node_Item::icon(RELATIVE("plugins/math/complex.png"));
 
-Node_Item* Complex_Node_Item::make(int x, int y, void*){return new Complex_Node_Item(x,y);}
+Node_Item* Complex_Node_Item::make(std::istream*){return new Complex_Node_Item;}
 
 Fl_Color Complex_Node_Item::color()const{
 	return FL_WHITE;

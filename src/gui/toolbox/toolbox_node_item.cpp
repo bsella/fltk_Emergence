@@ -14,6 +14,8 @@ Toolbox_Node_Item::Toolbox_Node_Item(const char* text, const char* icon_path, ma
 Toolbox_Node_Item::~Toolbox_Node_Item(){}
 
 void Toolbox_Node_Item::mouse_drag_event(int, int){
-	Node_Item::dnd_node_factory = factory;
+	dnd_node_factory = factory;
  	Fl::dnd();
 }
+
+make_node_item_t Toolbox_Node_Item::dnd_node_factory= nullptr;

@@ -18,8 +18,11 @@ void Lerp_Base_Node::init_cache(){
 	}
 }
 
-Node* Lerp_Node::make(void*){return new Lerp_Node;}
-Node* Clamp_Node::make(void*){return new Clamp_Node;}
+Node* Lerp_Node::make(std::istream*){return new Lerp_Node;}
+Node* Clamp_Node::make(std::istream*){return new Clamp_Node;}
+
+const char* Lerp_Node::id()const{return "lerp";}
+const char* Clamp_Node::id()const{return "clamp";}
 
 void Lerp_Node::update_types(){
 	main_func= get_func("lerp", {inodes[0]->cache->id,inodes[1]->cache->id,inodes[2]->cache->id});

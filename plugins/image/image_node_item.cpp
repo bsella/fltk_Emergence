@@ -5,7 +5,7 @@
 #include <FL/Fl_Native_File_Chooser.H>
 #include <resources.h>
 
-Image_Node_Item::Image_Node_Item(int x, int y, const char* ptr): Node_Item(x,y,70,70, new Image_Node(ptr)){
+Image_Node_Item::Image_Node_Item(std::istream* str): Node_Item(70,70, new Image_Node(str)){
     if(static_cast<Image_Node*>(core_node)->image)
         image= static_cast<Image_Node*>(core_node)->image->copy(_w-2, _h-2);
 }
@@ -13,8 +13,8 @@ Image_Node_Item::~Image_Node_Item(){
 	delete image;
 }
 
-Node_Item* Image_Node_Item::make(int x, int y, void* ptr){
-    return new Image_Node_Item(x,y, reinterpret_cast<const char*>(ptr));
+Node_Item* Image_Node_Item::make(std::istream* str){
+    return new Image_Node_Item(str);
 }
 void Image_Node_Item::draw_body()const{
 	if(image)

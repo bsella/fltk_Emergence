@@ -2,18 +2,18 @@
 #include <FL/fl_draw.H>
 #include <resources.h>
 
-X_Node_Item::X_Node_Item(int x, int y): Node_Item(x,y,70,50, new X_Node){}
-Y_Node_Item::Y_Node_Item(int x, int y): Node_Item(x,y,70,50, new Y_Node){}
-Ratio_Node_Item::Ratio_Node_Item(int x, int y): Node_Item(x,y,70,50, new Ratio_Node){}
+X_Node_Item::X_Node_Item(): Node_Item(70,50, new X_Node){}
+Y_Node_Item::Y_Node_Item(): Node_Item(70,50, new Y_Node){}
+Ratio_Node_Item::Ratio_Node_Item(): Node_Item(70,50, new Ratio_Node){}
 
-Node_Item* X_Node_Item::make(int x, int y, void*){
-	return new X_Node_Item(x,y);
+Node_Item* X_Node_Item::make(std::istream*){
+	return new X_Node_Item;
 }
-Node_Item* Y_Node_Item::make(int x, int y, void*){
-	return new Y_Node_Item(x,y);
+Node_Item* Y_Node_Item::make(std::istream*){
+	return new Y_Node_Item;
 }
-Node_Item* Ratio_Node_Item::make(int x, int y, void*){
-	return new Ratio_Node_Item(x,y);
+Node_Item* Ratio_Node_Item::make(std::istream*){
+	return new Ratio_Node_Item;
 }
 
 Fl_PNG_Image X_Node_Item::icon(RELATIVE("plugins/io/x.png"));

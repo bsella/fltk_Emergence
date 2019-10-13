@@ -8,6 +8,7 @@
 #include "output_node_item.h"
 #include <resources.h>
 #include <gui/workspace.h>
+#include <gui/binary_save.h>
 
 class Io_Plugin : public _Plugin{
 public:
@@ -23,6 +24,11 @@ void Io_Plugin::init()const{
 	input_ratio= new Real_t;
 }
 void Io_Plugin::init_gui()const{
+	map_id_to_node_item("x",      &X_Node_Item::make);
+	map_id_to_node_item("y",      &Y_Node_Item::make);
+	map_id_to_node_item("ratio",  &Ratio_Node_Item::make);
+	map_id_to_node_item("output", &Output_Node_Item::make);
+
 	menu_bar->add("Insert/IO/X", 0, &Workspace::insert, (void*)&X_Node_Item::make);
 	menu_bar->add("Insert/IO/Y", 0, &Workspace::insert, (void*)&Y_Node_Item::make);
 	menu_bar->add("Insert/IO/Ratio", 0, &Workspace::insert, (void*)&Ratio_Node_Item::make);

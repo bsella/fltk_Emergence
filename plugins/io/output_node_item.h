@@ -4,9 +4,9 @@ class Fl_RGB_Image;
 
 class Output_Node_Item : public Node_Item{
 public:
-   	Output_Node_Item(int,int);
+   	Output_Node_Item();
    	~Output_Node_Item()override;
-	static Node_Item* make(int,int,void*);
+	static Node_Item* make(std::istream*);
 private:
 	bool image_valid= false;
 	void draw_body()const override;

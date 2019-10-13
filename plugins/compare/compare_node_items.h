@@ -4,7 +4,7 @@
 
 class Compare_Node_Item : public Node_Item{
 public:
-	Compare_Node_Item(int,int, Fl_PNG_Image*, Node*);
+	Compare_Node_Item(Fl_PNG_Image*, Node*);
 protected:
 	Fl_PNG_Image* icon;
 	Fl_Color color()const override;
@@ -13,28 +13,28 @@ protected:
 
 class GT_Node_Item : public Compare_Node_Item{
 public:
-	GT_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	GT_Node_Item();
+	static Node_Item* make(std::istream*);
 	static Fl_PNG_Image icon;
 };
 
 class LT_Node_Item : public Compare_Node_Item{
 public:
-	LT_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	LT_Node_Item();
+	static Node_Item* make(std::istream*);
 	static Fl_PNG_Image icon;
 };
 
 class EQ_Node_Item : public Compare_Node_Item{
 public:
-	EQ_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	EQ_Node_Item();
+	static Node_Item* make(std::istream*);
 	static Fl_PNG_Image icon;
 };
 
 class NE_Node_Item : public Compare_Node_Item{
 public:
-	NE_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	NE_Node_Item();
+	static Node_Item* make(std::istream*);
 	static Fl_PNG_Image icon;
 };

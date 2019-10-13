@@ -18,7 +18,8 @@ Gradient_Node::~Gradient_Node(){
 	delete gradient;
 }
 
-Node* Gradient_Node::make(void* ptr){return new Gradient_Node(static_cast<Gradient*>(ptr));}
+Node* Gradient_Node::make(std::istream*){return new Gradient_Node(nullptr);}
+const char* Gradient_Node::id()const{return "gradient";}
 
 void Gradient_Node::get_color(Node** nodes, void* ptr){
     Gradient_Node* _this= static_cast<Gradient_Node*>(nodes[0]);

@@ -13,6 +13,7 @@
 #include "complex_node.h"
 #include <core/type_manager.h>
 #include <gui/workspace.h>
+#include <gui/binary_save.h>
 
 class Math_Plugin : public _Plugin{
 public:
@@ -90,6 +91,24 @@ void Math_Plugin::init()const{
 	set_func("clamp",&Clamp_Node::cplx,   {(unsigned)complex_id, (unsigned)complex_id, (unsigned)complex_id});
 }
 void Math_Plugin::init_gui()const{
+	map_id_to_node_item("real", &Real_Node_Item::make);
+	map_id_to_node_item("complex", &Complex_Node_Item::make);
+	map_id_to_node_item("add", &Add_Node_Item::make);
+	map_id_to_node_item("sub", &Sub_Node_Item::make);
+	map_id_to_node_item("mul", &Mul_Node_Item::make);
+	map_id_to_node_item("div", &Div_Node_Item::make);
+	map_id_to_node_item("neg", &Neg_Node_Item::make);
+	map_id_to_node_item("sqrt", &Sqrt_Node_Item::make);
+	map_id_to_node_item("abs", &Abs_Node_Item::make);
+	map_id_to_node_item("sin", &Sin_Node_Item::make);
+	map_id_to_node_item("cos", &Cos_Node_Item::make);
+	map_id_to_node_item("min", &Min_Node_Item::make);
+	map_id_to_node_item("max", &Max_Node_Item::make);
+	map_id_to_node_item("pow", &Pow_Node_Item::make);
+	map_id_to_node_item("log", &Log_Node_Item::make);
+	map_id_to_node_item("lerp", &Lerp_Node_Item::make);
+	map_id_to_node_item("clamp", &Clamp_Node_Item::make);
+
 	menu_bar->add("Insert/Math/Real",                 0, &Workspace::insert, (void*)&Real_Node_Item::make);
 	menu_bar->add("Insert/Math/_Complex",             0, &Workspace::insert, (void*)&Complex_Node_Item::make);
 	menu_bar->add("Insert/Math/Add",                  0, &Workspace::insert, (void*)&Add_Node_Item::make);

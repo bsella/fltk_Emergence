@@ -4,10 +4,17 @@
 #include <real/real_t.h>
 #include <FL/Fl_BMP_Image.H>
 #include <FL/Fl_Shared_Image.H>
+#include <istream>
 
-Image_Node::Image_Node(const char* filename): Node(2){
-	if(filename)
+Image_Node::Image_Node(std::istream* str): Node(2){
+	if(str){
+		size_t len;
+		str->read(reinterpret_cast<char*>(&len), sizeof(size_t));
+		char* filename= new char[len];
+		str->read(filename, len);
 		set_image(filename);
+		delete[] filename;
+	}
 	cache= new Color_t;
 }
 Image_Node::~Image_Node(){
@@ -20,7 +27,10 @@ void Image_Node::set_image(const char* filename){
 	if(!image)
 		image= Fl_Shared_Image::get(new Fl_BMP_Image(filename));
 }
-Node* Image_Node::make(void* ptr){return new Image_Node(reinterpret_cast<const char*>(ptr));}
+Node* Image_Node::make(std::istream* str){
+	return new Image_Node(str);
+}
+const char* Image_Node::id()const{return "image";}
 
 static Fl_Image* current_image;
 void Image_Node::get_pixel(Node** nodes, void* ptr){

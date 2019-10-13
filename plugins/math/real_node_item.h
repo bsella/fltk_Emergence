@@ -3,8 +3,8 @@
 
 class Real_Node_Item : public Node_Item{
 public:
-	Real_Node_Item(int, int, void*);
-	static Node_Item* make(int,int,void*);
+	Real_Node_Item(std::istream*);
+	static Node_Item* make(std::istream*);
 private:
 	void draw_body()const override;
 	bool settle()override;

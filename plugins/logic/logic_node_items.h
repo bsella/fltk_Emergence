@@ -4,7 +4,7 @@
 
 class Logic_Node_Item : public Node_Item{
 public:
-	Logic_Node_Item(int,int, Fl_PNG_Image*, Node*);
+	Logic_Node_Item(Fl_PNG_Image*, Node*);
 protected:
 	Fl_PNG_Image* icon;
 	Fl_Color color()const override;
@@ -13,28 +13,28 @@ protected:
 
 class AND_Node_Item : public Logic_Node_Item{
 public:
-	AND_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	AND_Node_Item();
+	static Node_Item* make(std::istream*);
 	static Fl_PNG_Image icon;
 };
 
 class OR_Node_Item : public Logic_Node_Item{
 public:
-	OR_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	OR_Node_Item();
+	static Node_Item* make(std::istream*);
 	static Fl_PNG_Image icon;
 };
 
 class XOR_Node_Item : public Logic_Node_Item{
 public:
-	XOR_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	XOR_Node_Item();
+	static Node_Item* make(std::istream*);
 	static Fl_PNG_Image icon;
 };
 
 class NOT_Node_Item : public Logic_Node_Item{
 public:
-	NOT_Node_Item(int,int);
-	static Node_Item* make(int,int,void*);
+	NOT_Node_Item();
+	static Node_Item* make(std::istream*);
 	static Fl_PNG_Image icon;
 };

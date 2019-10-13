@@ -15,19 +15,31 @@ Cos_Node::Cos_Node(): Math_Node(1){}
 Pow_Node::Pow_Node(): Math_Node(2){}
 Log_Node::Log_Node(): Math_Node(1){}
 
-Node* Add_Node::make(void*){return new Add_Node;}
-Node* Sub_Node::make(void*){return new Sub_Node;}
-Node* Mul_Node::make(void*){return new Mul_Node;}
-Node* Div_Node::make(void*){return new Div_Node;}
-Node* Neg_Node::make(void*){return new Neg_Node;}
-Node* Sqrt_Node::make(void*){return new Sqrt_Node;}
-Node* Abs_Node::make(void*){return new Abs_Node;}
-Node* Sin_Node::make(void*){return new Sin_Node;}
-Node* Cos_Node::make(void*){return new Cos_Node;}
-Node* Min_Node::make(void*){return new Min_Node;}
-Node* Max_Node::make(void*){return new Max_Node;}
-Node* Pow_Node::make(void*){return new Pow_Node;}
-Node* Log_Node::make(void*){return new Log_Node;}
+Node* Add_Node::make(std::istream*){return new Add_Node;}
+Node* Sub_Node::make(std::istream*){return new Sub_Node;}
+Node* Mul_Node::make(std::istream*){return new Mul_Node;}
+Node* Div_Node::make(std::istream*){return new Div_Node;}
+Node* Neg_Node::make(std::istream*){return new Neg_Node;}
+Node* Sqrt_Node::make(std::istream*){return new Sqrt_Node;}
+Node* Abs_Node::make(std::istream*){return new Abs_Node;}
+Node* Sin_Node::make(std::istream*){return new Sin_Node;}
+Node* Cos_Node::make(std::istream*){return new Cos_Node;}
+Node* Min_Node::make(std::istream*){return new Min_Node;}
+Node* Max_Node::make(std::istream*){return new Max_Node;}
+Node* Pow_Node::make(std::istream*){return new Pow_Node;}
+Node* Log_Node::make(std::istream*){return new Log_Node;}
+
+const char* Add_Node::id()const{return "add";}
+const char* Sub_Node::id()const{return "sub";}
+const char* Mul_Node::id()const{return "mul";}
+const char* Div_Node::id()const{return "div";}
+const char* Neg_Node::id()const{return "neg";}
+const char* Sqrt_Node::id()const{return "sqrt";}
+const char* Abs_Node::id()const{return "abs";}
+const char* Sin_Node::id()const{return "sin";}
+const char* Cos_Node::id()const{return "cos";}
+const char* Pow_Node::id()const{return "pow";}
+const char* Log_Node::id()const{return "log";}
 
 void Math_Node::compile_specific(std::vector<Node*>& program, bool check_uniform){
 	Node::compile_specific(program, check_uniform);
@@ -73,58 +85,58 @@ void Math_Node::set_random_func(){
 
 void Add_Node::update_types(){
 	init_cache2(inodes.data());
-	main_func= get_func("add", {inodes[0]->cache->id, inodes[1]->cache->id});
+	main_func= get_func(id(), {inodes[0]->cache->id, inodes[1]->cache->id});
 	set_random_func();
 }
 void Sub_Node::update_types(){
 	init_cache2(inodes.data());
-	main_func= get_func("sub", {inodes[0]->cache->id, inodes[1]->cache->id});
+	main_func= get_func(id(), {inodes[0]->cache->id, inodes[1]->cache->id});
 	set_random_func();
 }
 void Mul_Node::update_types(){
 	init_cache2(inodes.data());
-	main_func= get_func("mul", {inodes[0]->cache->id, inodes[1]->cache->id});
+	main_func= get_func(id(), {inodes[0]->cache->id, inodes[1]->cache->id});
 	set_random_func();
 }
 void Div_Node::update_types(){
 	init_cache2(inodes.data());
-	main_func= get_func("div", {inodes[0]->cache->id, inodes[1]->cache->id});
+	main_func= get_func(id(), {inodes[0]->cache->id, inodes[1]->cache->id});
 	set_random_func();
 }
 void Neg_Node::update_types(){
 	init_cache1(inodes.data());
-	main_func= get_func("neg", {inodes[0]->cache->id});
+	main_func= get_func(id(), {inodes[0]->cache->id});
 	set_random_func();
 }
 void Sqrt_Node::update_types(){
 	init_cache1(inodes.data());
-	main_func= get_func("sqrt", {inodes[0]->cache->id});
+	main_func= get_func(id(), {inodes[0]->cache->id});
 	set_random_func();
 }
 void Abs_Node::update_types(){
 	init_cache1(inodes.data());
 	if(cache==&complex_cache) cache= &real_cache;
-	main_func= get_func("abs", {inodes[0]->cache->id});
+	main_func= get_func(id(), {inodes[0]->cache->id});
 	set_random_func();
 }
 void Sin_Node::update_types(){
 	init_cache1(inodes.data());
-	main_func= get_func("sin", {inodes[0]->cache->id});
+	main_func= get_func(id(), {inodes[0]->cache->id});
 	set_random_func();
 }
 void Cos_Node::update_types(){
 	init_cache1(inodes.data());
-	main_func= get_func("cos", {inodes[0]->cache->id});
+	main_func= get_func(id(), {inodes[0]->cache->id});
 	set_random_func();
 }
 void Pow_Node::update_types(){
 	init_cache2(inodes.data());
-	main_func= get_func("pow", {inodes[0]->cache->id, inodes[1]->cache->id});
+	main_func= get_func(id(), {inodes[0]->cache->id, inodes[1]->cache->id});
 	set_random_func();
 }
 void Log_Node::update_types(){
 	init_cache1(inodes.data());
-	main_func= get_func("log", {inodes[0]->cache->id});
+	main_func= get_func(id(), {inodes[0]->cache->id});
 	set_random_func();
 }
 
@@ -415,3 +427,6 @@ void Min_Node::update_cache(){
 void Max_Node::update_cache(){
 	cache= inodes[!gt_func(inodes[0]->cache, inodes[1]->cache)]->cache;
 }
+
+const char* Min_Node::id()const{return "min";}
+const char* Max_Node::id()const{return "max";}

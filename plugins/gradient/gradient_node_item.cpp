@@ -4,12 +4,12 @@
 #include "gradient.h"
 #include <color/color_t.h>
 
-Gradient_Node_Item::Gradient_Node_Item(int x, int y): Node_Item(x, y, 100, 20, new Gradient_Node){
+Gradient_Node_Item::Gradient_Node_Item(): Node_Item(100, 20, new Gradient_Node){
 	update_draw_buffer();
 }
 Gradient_Node_Item::~Gradient_Node_Item(){}
 
-Node_Item* Gradient_Node_Item::make(int x, int y, void*){return new Gradient_Node_Item(x,y);}
+Node_Item* Gradient_Node_Item::make(std::istream*){return new Gradient_Node_Item;}
 
 void Gradient_Node_Item::draw_body()const{
     if(static_cast<Gradient_Node*>(core_node)->gradient) fl_draw_image(reinterpret_cast<const unsigned char*>(draw_buffer.data()), _x+1, _y+1, _w-2, _h-2, 4);
