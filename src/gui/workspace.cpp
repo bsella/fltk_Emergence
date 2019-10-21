@@ -221,7 +221,7 @@ void Workspace::mouse_click_event(int x, int y, int button){
 	if(button== FL_RIGHT_MOUSE){
 		std::vector<Fl_Menu_Item> menu;
 		int flags = selected.size()? 0:FL_MENU_INACTIVE;
-		menu.push_back(Fl_Menu_Item{"Copy",0,&copy_selected,this,flags,0,0,0,0});
+		menu.push_back(Fl_Menu_Item{"Copy",0,&copy_selected,&selected,flags,0,0,0,0});
 		menu.push_back(Fl_Menu_Item{"Cut",0,0,0,flags,0,0,0,0});
 		menu.push_back(Fl_Menu_Item{"Paste",0,&paste,this,FL_MENU_DIVIDER | clipboard.str().empty(),0,0,0,0});
 		menu.push_back(Fl_Menu_Item{"Delete",0,&remove_selected,this, flags,0,0,0,0});
@@ -248,14 +248,27 @@ void Workspace::insert(Fl_Widget*, void* ptr){
 }
 
 std::stringstream Workspace::clipboard(std::ios::binary | std::ios::in | std::ios::out);
+static const int minus_one= -1;
+#include <map>
 void Workspace::copy_selected(Fl_Widget*, void* ptr){
 	clipboard.str("");
 	clipboard.seekg(0, std::ios::beg);
-	Workspace* ws = (Workspace*)ptr;
-	for(const auto n: ws->selected)
+	std::list<Node_Item*>* nodes = static_cast<std::list<Node_Item*>*>(ptr);
+	int index=0;
+	std::map<Node_Item*, int> node_indices;
+	for(const auto n: *nodes){
 		n->save(clipboard);
+		node_indices[n]= index++;
+	}
 	size_t end=0;
 	clipboard.write(reinterpret_cast<char*>(&end), sizeof(size_t));
+	std::map<Node_Item*,int>::iterator it;
+	for(const auto n: *nodes)
+		for(auto in: n->inodes)
+			if(in!=nullptr && ((it= node_indices.find(in)) != node_indices.end()))
+				clipboard.write(reinterpret_cast<char*>(&it->second), sizeof(int));
+			else
+				clipboard.write(reinterpret_cast<const char*>(&minus_one), sizeof(minus_one));
 }
 void Workspace::paste(Fl_Widget*, void*ptr){
 	size_t len;
@@ -263,6 +276,7 @@ void Workspace::paste(Fl_Widget*, void*ptr){
 	double x,y;
 	clipboard.seekg(0, std::ios::beg);
 	clipboard.read(reinterpret_cast<char*>(&len), sizeof(size_t));
+	std::vector<Node_Item*> new_nodes;
 	while(len){
 		id= new char[len];
 		clipboard.read(id, len);
@@ -275,6 +289,16 @@ void Workspace::paste(Fl_Widget*, void*ptr){
 		new_node->pos_y= y;
 		static_cast<Workspace*>(ptr)->add_node(new_node);
 		clipboard.read(reinterpret_cast<char*>(&len), sizeof(size_t));
+		new_nodes.push_back(new_node);
 	}
+	int temp;
+	for(auto n: new_nodes)
+		for(size_t i=0; i<n->inodes.size(); i++){
+			clipboard.read(reinterpret_cast<char*>(&temp), sizeof(temp));
+			if(temp!=minus_one) n->connect(i, new_nodes[temp]);
+		}
+	static_cast<Workspace*>(ptr)->deselect_all();
+	for(auto n: new_nodes)
+		static_cast<Workspace*>(ptr)->select(n);
 	static_cast<Workspace*>(ptr)->redraw();
 }

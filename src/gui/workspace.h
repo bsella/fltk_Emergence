@@ -15,8 +15,9 @@ public:
 	static void copy_selected(Fl_Widget*, void*);
 	static void paste(Fl_Widget*, void*);
 
-private:
 	std::list<Node_Item*> selected;
+
+private:
 	double zoom;
 	double zero_x, zero_y;
 	void draw()override;

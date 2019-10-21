@@ -32,8 +32,6 @@ protected:
 
 	virtual const char* id()const=0;
 	virtual void save(std::ostream&)const;
-	friend std::ostream& operator <<(std::ostream&, const Node&);
-	friend std::ostream& operator <<(std::ostream&, const std::list<Node*>&);
 
 private:
 	std::list<Node*> onodes;

@@ -23,7 +23,7 @@ public:
 protected:
 	Node* core_node;
 	virtual void context_menu(std::vector<Fl_Menu_Item>&);
-	virtual bool inside(int,int)const;
+	virtual bool inside(int,int)const override;
 	virtual void draw_body()const;
 
 private:

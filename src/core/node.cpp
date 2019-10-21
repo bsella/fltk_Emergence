@@ -93,7 +93,3 @@ void Node::save(std::ostream& os)const{
 	os.write(reinterpret_cast<const char*>(&len), sizeof(size_t));
 	os.write(id(), len);
 }
-std::ostream& operator <<(std::ostream& os, const Node& node){
-	node.save(os);
-	return os;
-}

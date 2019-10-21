@@ -28,7 +28,7 @@ void init_gui(){
 	menu_bar->add("Edit/Undo", "^z", nullptr);
 	menu_bar->add("Edit/_Redo", "^Z", nullptr);
 	menu_bar->add("Edit/Cut", "^x", nullptr);
-	menu_bar->add("Edit/Copy", "^c", &Workspace::copy_selected, workspace);
+	menu_bar->add("Edit/Copy", "^c", &Workspace::copy_selected, &workspace->selected);
 	menu_bar->add("Edit/Paste", "^v", &Workspace::paste, workspace);
 	menu_bar->add("Edit/_Delete", FL_Delete, &Workspace::remove_selected, workspace);
 	menu_bar->add("Edit/Select all", "^a", &Workspace::select_all, workspace);
